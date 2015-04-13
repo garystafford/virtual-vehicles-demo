@@ -9,7 +9,7 @@ The 'Virtual Vehicle' application uses an AngularJS-based web UI to call three, 
 * Valet Service (virtual-valet database)
 
 #### Technologies Used
-* [RestExpress for MongoDB](http://search.maven.org/#artifactdetails%7Ccom.strategicgains.archetype%7Crestexpress-mongodb%7C1.15%7Cmaven-archetype)
+* [RestExpress](http://search.maven.org/#artifactdetails%7Ccom.strategicgains.archetype%7Crestexpress-mongodb%7C1.15%7Cmaven-archetype) for MongoDB
 * [Netty](http://netty.io/)
 * MongoDB
 * [Morphia](https://github.com/mongodb/morphia)

@@ -10,27 +10,35 @@ import com.strategicgains.util.date.DateAdapter;
 import com.strategicgains.util.date.HttpHeaderTimestampAdapter;
 
 /**
- * Assigns the Last-Modified HTTP header on the response for GET responses, if applicable.
- * 
+ * Assigns the Last-Modified HTTP header on the response for GET responses, if
+ * applicable.
+ *
  * @author toddf
  * @since May 15, 2012
  */
 public class LastModifiedHeaderPostprocessor
-implements Postprocessor
-{
-	DateAdapter fmt = new HttpHeaderTimestampAdapter();
+        implements Postprocessor {
 
-	@Override
-	public void process(Request request, Response response)
-	{
-		if (!request.isMethodGet()) return;
-		if (!response.hasBody()) return;
+    DateAdapter fmt = new HttpHeaderTimestampAdapter();
 
-		Object body = response.getBody();
+    /**
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void process(Request request, Response response) {
+        if (!request.isMethodGet()) {
+            return;
+        }
+        if (!response.hasBody()) {
+            return;
+        }
 
-		if (!response.hasHeader(LAST_MODIFIED) && body.getClass().isAssignableFrom(Timestamped.class))
-		{
-			response.addHeader(LAST_MODIFIED, fmt.format(((Timestamped) body).getUpdatedAt()));
-		}
-	}
+        Object body = response.getBody();
+
+        if (!response.hasHeader(LAST_MODIFIED) && body.getClass().isAssignableFrom(Timestamped.class)) {
+            response.addHeader(LAST_MODIFIED, fmt.format(((Timestamped) body).getUpdatedAt()));
+        }
+    }
 }

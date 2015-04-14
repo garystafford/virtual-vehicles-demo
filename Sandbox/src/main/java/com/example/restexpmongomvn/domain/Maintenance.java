@@ -1,13 +1,24 @@
 package com.example.restexpmongomvn.domain;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Maintenance {
 
     private Vehicle vehicle;
 
+    /**
+     *
+     */
     public Maintenance() {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     *
+     * @param vehicle
+     */
     public Maintenance(final Vehicle vehicle) {
         this.vehicle = vehicle;
     }
@@ -17,6 +28,9 @@ public class Maintenance {
      * 
      * @see dependinject.Maintenance#washVehicle()
      */
+    /**
+     *
+     */
     public void washVehicle() {
         vehicle.setClean(true);
     }
@@ -25,6 +39,9 @@ public class Maintenance {
      * (non-Javadoc)
      * 
      * @see dependinject.Maintenance#changeOil()
+     */
+    /**
+     *
      */
     public void changeOil() {
         vehicle.setOilChanged(true);

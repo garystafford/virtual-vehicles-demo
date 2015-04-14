@@ -7,6 +7,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.strategicgains.restexpress.exception.ConfigurationException;
 
+/**
+ *
+ * @author gstafford
+ */
 public class MongoConfig {
 
     private static final String URI_PROPERTY = "mongodb.uri";
@@ -14,6 +18,10 @@ public class MongoConfig {
     private String dbName;
     private MongoClient client;
 
+    /**
+     *
+     * @param p
+     */
     public MongoConfig(Properties p) {
         String uri = p.getProperty(URI_PROPERTY);
 
@@ -30,10 +38,18 @@ public class MongoConfig {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDbName() {
         return dbName;
     }
 
+    /**
+     *
+     * @return
+     */
     public MongoClient getClient() {
         return client;
     }

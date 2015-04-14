@@ -10,48 +10,42 @@ import com.strategicgains.repoexpress.domain.Identifier;
 import com.strategicgains.syntaxe.ValidationEngine;
 
 /**
- * This is the 'service' or 'business logic' layer, where business logic, syntactic and semantic
- * domain validation occurs, along with calls to the persistence layer.
+ * This is the 'service' or 'business logic' layer, where business logic,
+ * syntactic and semantic domain validation occurs, along with calls to the
+ * persistence layer.
  */
-public class ValetService
-{
-	private ValetRepository valets;
-	
-	public ValetService(ValetRepository valetsRepository)
-	{
-		super();
-		this.valets = valetsRepository;
-	}
+public class ValetService {
 
-	public Valet create(Valet entity)
-	{
-		ValidationEngine.validateAndThrow(entity);
-		return valets.create(entity);
-	}
+    private ValetRepository valets;
 
-	public Valet read(Identifier id)
-    {
-		return valets.read(id);
+    public ValetService(ValetRepository valetsRepository) {
+        super();
+        this.valets = valetsRepository;
     }
 
-	public void update(Valet entity)
-    {
-		ValidationEngine.validateAndThrow(entity);
-		valets.update(entity);
+    public Valet create(Valet entity) {
+        ValidationEngine.validateAndThrow(entity);
+        return valets.create(entity);
     }
 
-	public void delete(Identifier id)
-    {
-		valets.delete(id);
+    public Valet read(Identifier id) {
+        return valets.read(id);
     }
 
-	public List<Valet> readAll(QueryFilter filter, QueryRange range, QueryOrder order)
-    {
-		return valets.readAll(filter, range, order);
+    public void update(Valet entity) {
+        ValidationEngine.validateAndThrow(entity);
+        valets.update(entity);
     }
 
-	public long count(QueryFilter filter)
-    {
-		return valets.count(filter);
+    public void delete(Identifier id) {
+        valets.delete(id);
+    }
+
+    public List<Valet> readAll(QueryFilter filter, QueryRange range, QueryOrder order) {
+        return valets.readAll(filter, range, order);
+    }
+
+    public long count(QueryFilter filter) {
+        return valets.count(filter);
     }
 }

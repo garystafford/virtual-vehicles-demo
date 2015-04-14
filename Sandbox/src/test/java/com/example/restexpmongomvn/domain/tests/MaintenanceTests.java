@@ -9,11 +9,19 @@ import com.example.restexpmongomvn.domain.Color;
 import com.example.restexpmongomvn.domain.Maintenance;
 import com.example.restexpmongomvn.domain.Vehicle;
 
+/**
+ *
+ * @author gstafford
+ */
 public class MaintenanceTests {
 
     Vehicle testVehicle;
     Maintenance maintenance;
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         testVehicle = new Vehicle(2015, "Test", "Vehicle", Color.Other,
@@ -21,23 +29,35 @@ public class MaintenanceTests {
         maintenance = new Maintenance(testVehicle);
     }
 
+    /**
+     *
+     */
     @Test
     public final void testMaintenance() {
         maintenance = new Maintenance();
         assertNotNull(maintenance);
     }
 
+    /**
+     *
+     */
     @Test
     public final void testMaintenanceVehicle() {
         assertNotNull(maintenance);
     }
 
+    /**
+     *
+     */
     @Test
     public final void testWashVehicle() {
         maintenance.washVehicle();
         assertEquals(true, testVehicle.isClean());
     }
 
+    /**
+     *
+     */
     @Test
     public final void testChangeOil() {
         maintenance.changeOil();

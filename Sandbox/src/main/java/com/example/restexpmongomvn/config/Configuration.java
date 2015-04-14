@@ -10,6 +10,10 @@ import com.example.restexpmongomvn.domain.Sample;
 import com.example.restexpmongomvn.domain.Vehicle;
 import com.strategicgains.restexpress.util.Environment;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Configuration
         extends Environment {
 
@@ -29,6 +33,10 @@ public class Configuration
     private SampleController sampleController;
     private VehicleController vehicleController;
 
+    /**
+     *
+     * @param p
+     */
     @Override
     protected void fillValues(Properties p) {
         this.port = Integer.parseInt(p.getProperty(PORT_PROPERTY, String.valueOf(RestExpress.DEFAULT_PORT)));
@@ -50,30 +58,58 @@ public class Configuration
         vehicleController = new VehicleController(vehicleRepository);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDefaultFormat() {
         return defaultFormat;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPort() {
         return port;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBaseUrl() {
         return baseUrl;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getExecutorThreadPoolSize() {
         return executorThreadPoolSize;
     }
 
+    /**
+     *
+     * @return
+     */
     public MetricsConfig getMetricsConfig() {
         return metricsSettings;
     }
 
+    /**
+     *
+     * @return
+     */
     public SampleController getSampleController() {
         return sampleController;
     }
 
+    /**
+     *
+     * @return
+     */
     public VehicleController getVehicleController() {
         return vehicleController;
     }

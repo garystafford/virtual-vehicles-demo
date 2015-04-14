@@ -17,12 +17,19 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  * @since Feb 7, 2013
  */
 public class ObjectIdSerializer
-extends JsonSerializer<ObjectId>
-{
-	@Override
-	public void serialize(ObjectId objectId, JsonGenerator json, SerializerProvider provider)
-	throws IOException, JsonProcessingException
-	{
-		json.writeString(objectId.toString());
-	}
+        extends JsonSerializer<ObjectId> {
+
+    /**
+     *
+     * @param objectId
+     * @param json
+     * @param provider
+     * @throws IOException
+     * @throws JsonProcessingException
+     */
+    @Override
+    public void serialize(ObjectId objectId, JsonGenerator json, SerializerProvider provider)
+            throws IOException, JsonProcessingException {
+        json.writeString(objectId.toString());
+    }
 }

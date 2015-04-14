@@ -5,8 +5,17 @@ import org.jboss.netty.handler.codec.http.HttpMethod;
 import com.strategicgains.restexpress.RestExpress;
 import com.example.restexpmongomvn.config.Configuration;
 
+/**
+ *
+ * @author gstafford
+ */
 public abstract class Routes {
 
+    /**
+     *
+     * @param config
+     * @param server
+     */
     public static void define(Configuration config, RestExpress server) {
         //TODO: Your routes here...
 

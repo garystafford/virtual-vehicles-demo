@@ -1,10 +1,17 @@
 package com.example.restexpmongomvn.domain;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Sample
         extends AbstractLinkableEntity {
 
     private String title;
 
+    /**
+     *
+     */
     public Sample() {
         // 
     }

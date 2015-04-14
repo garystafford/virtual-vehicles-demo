@@ -1,5 +1,9 @@
 package com.example.restexpmongomvn.domain;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Vehicle
         extends AbstractLinkableEntity {
 
@@ -11,10 +15,21 @@ public class Vehicle
     private boolean clean = false;
     private boolean oilChanged = false;
 
+    /**
+     *
+     */
     public Vehicle() {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     *
+     * @param year
+     * @param make
+     * @param model
+     * @param color
+     * @param type
+     */
     public Vehicle(final int year, final String make, final String model,
             final Color color, final String type) {
         this.year = year;
@@ -29,6 +44,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#getYear()
      */
+    /**
+     *
+     * @return
+     */
     public int getYear() {
         return year;
     }
@@ -37,6 +56,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setYear(int)
+     */
+    /**
+     *
+     * @param year
      */
     public void setYear(final int year) {
         this.year = year;
@@ -47,6 +70,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#getMake()
      */
+    /**
+     *
+     * @return
+     */
     public String getMake() {
         return make;
     }
@@ -55,6 +82,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setMake(java.lang.String)
+     */
+    /**
+     *
+     * @param make
      */
     public void setMake(final String make) {
         this.make = make;
@@ -65,6 +96,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#getModel()
      */
+    /**
+     *
+     * @return
+     */
     public String getModel() {
         return model;
     }
@@ -73,6 +108,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setModel(java.lang.String)
+     */
+    /**
+     *
+     * @param model
      */
     public void setModel(final String model) {
         this.model = model;
@@ -83,6 +122,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#getColor()
      */
+    /**
+     *
+     * @return
+     */
     public Color getColor() {
         return color;
     }
@@ -91,6 +134,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setColor(dependinject.Color)
+     */
+    /**
+     *
+     * @param color
      */
     public void setColor(final Color color) {
         this.color = color;
@@ -101,6 +148,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#getType()
      */
+    /**
+     *
+     * @return
+     */
     public String getType() {
         return type;
     }
@@ -109,6 +160,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setType(java.lang.String)
+     */
+    /**
+     *
+     * @param type
      */
     public void setType(final String type) {
         this.type = type;
@@ -119,6 +174,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#isClean()
      */
+    /**
+     *
+     * @return
+     */
     public boolean isClean() {
         return clean;
     }
@@ -127,6 +186,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setClean(boolean)
+     */
+    /**
+     *
+     * @param clean
      */
     public void setClean(final boolean clean) {
         this.clean = clean;
@@ -137,6 +200,10 @@ public class Vehicle
      * 
      * @see dependinject.Vehicle#isOilChanged()
      */
+    /**
+     *
+     * @return
+     */
     public boolean isOilChanged() {
         return oilChanged;
     }
@@ -145,6 +212,10 @@ public class Vehicle
      * (non-Javadoc)
      * 
      * @see dependinject.Vehicle#setOilChanged(boolean)
+     */
+    /**
+     *
+     * @param oilChanged
      */
     public void setOilChanged(final boolean oilChanged) {
         this.oilChanged = oilChanged;

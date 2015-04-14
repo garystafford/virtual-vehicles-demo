@@ -22,89 +22,117 @@ import com.example.restexpmongomvn.Constants;
 import com.example.restexpmongomvn.domain.Sample;
 import com.strategicgains.syntaxe.ValidationEngine;
 
-public class SampleController
-{
-	private MongodbEntityRepository<Sample> samples;
-	
-	public SampleController(MongodbEntityRepository<Sample> orderRepository)
-	{
-		super();
-		this.samples = orderRepository;
-	}
+/**
+ *
+ * @author gstafford
+ */
+public class SampleController {
 
-	public String create(Request request, Response response)
-	{
-		Sample order = request.getBodyAs(Sample.class, "Sample details not provided");
-		ValidationEngine.validateAndThrow(order);
-		Sample saved = samples.create(order);
+    private MongodbEntityRepository<Sample> samples;
 
-		// Construct the response for create...
-		response.setResponseCreated();
+    /**
+     *
+     * @param orderRepository
+     */
+    public SampleController(MongodbEntityRepository<Sample> orderRepository) {
+        super();
+        this.samples = orderRepository;
+    }
 
-		// Include the Location header...
-		String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
-		response.addLocationHeader(LinkUtils.formatUrl(locationPattern, Constants.Url.VALET_ID, saved.getId()));
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    public String create(Request request, Response response) {
+        Sample order = request.getBodyAs(Sample.class, "Sample details not provided");
+        ValidationEngine.validateAndThrow(order);
+        Sample saved = samples.create(order);
 
-		// Return the newly-created ID...
-		return saved.getId();
-	}
+        // Construct the response for create...
+        response.setResponseCreated();
 
-	public Sample read(Request request, Response response)
-	{
-		String id = request.getHeader(Constants.Url.VALET_ID, "No Sample ID supplied");
-		Sample sample = samples.read(id);
-		
-		// Add 'self' link
-		String selfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
-		String selfUrl = LinkUtils.formatUrl(selfPattern, Constants.Url.VALET_ID, sample.getId());
-		sample.addLink(new Link(RelTypes.SELF, selfUrl));
+        // Include the Location header...
+        String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
+        response.addLocationHeader(LinkUtils.formatUrl(locationPattern, Constants.Url.VALET_ID, saved.getId()));
 
-		return sample;
-	}
+        // Return the newly-created ID...
+        return saved.getId();
+    }
 
-	public LinkableCollection<Sample> readAll(Request request, Response response)
-	{
-		QueryFilter filter = QueryFilters.parseFrom(request);
-		QueryOrder order = QueryOrders.parseFrom(request);
-		QueryRange range = QueryRanges.parseFrom(request, 20);
-		List<Sample> results = samples.readAll(filter, range, order);
-		long count = samples.count(filter);
-		response.setCollectionResponse(range, results.size(), count);
-		
-		// Add 'self' links
-		String orderSelfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    public Sample read(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.VALET_ID, "No Sample ID supplied");
+        Sample sample = samples.read(id);
 
-		for (Sample result : results)
-		{
-			String selfUrl = LinkUtils.formatUrl(orderSelfPattern, Constants.Url.VALET_ID, result.getId());
-			result.addLink(new Link(RelTypes.SELF, selfUrl));
-		}
+        // Add 'self' link
+        String selfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
+        String selfUrl = LinkUtils.formatUrl(selfPattern, Constants.Url.VALET_ID, sample.getId());
+        sample.addLink(new Link(RelTypes.SELF, selfUrl));
 
-		String selfUrl = request.getNamedUrl(HttpMethod.GET, Constants.Routes.VALET_COLLECTION);
-		LinkableCollection<Sample> wrapper = new LinkableCollection<Sample>(results);
-		wrapper.addLink(new Link(RelTypes.SELF, selfUrl));
-		return wrapper;
-	}
+        return sample;
+    }
 
-	public void update(Request request, Response response)
-	{
-		String id = request.getHeader(Constants.Url.VALET_ID);
-		Sample sample = request.getBodyAs(Sample.class, "Sample details not provided");
-		
-		if (!id.equals(sample.getId()))
-		{
-			throw new BadRequestException("ID in URL and ID in Sample must match");
-		}
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    public LinkableCollection<Sample> readAll(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        QueryOrder order = QueryOrders.parseFrom(request);
+        QueryRange range = QueryRanges.parseFrom(request, 20);
+        List<Sample> results = samples.readAll(filter, range, order);
+        long count = samples.count(filter);
+        response.setCollectionResponse(range, results.size(), count);
 
-		ValidationEngine.validateAndThrow(sample);
-		samples.update(sample);
-		response.setResponseNoContent();
-	}
+        // Add 'self' links
+        String orderSelfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
 
-	public void delete(Request request, Response response)
-	{
-		String id = request.getHeader(Constants.Url.VALET_ID, "No Sample ID supplied");
-		samples.delete(id);
-		response.setResponseNoContent();
-	}
+        for (Sample result : results) {
+            String selfUrl = LinkUtils.formatUrl(orderSelfPattern, Constants.Url.VALET_ID, result.getId());
+            result.addLink(new Link(RelTypes.SELF, selfUrl));
+        }
+
+        String selfUrl = request.getNamedUrl(HttpMethod.GET, Constants.Routes.VALET_COLLECTION);
+        LinkableCollection<Sample> wrapper = new LinkableCollection<Sample>(results);
+        wrapper.addLink(new Link(RelTypes.SELF, selfUrl));
+        return wrapper;
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     */
+    public void update(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.VALET_ID);
+        Sample sample = request.getBodyAs(Sample.class, "Sample details not provided");
+
+        if (!id.equals(sample.getId())) {
+            throw new BadRequestException("ID in URL and ID in Sample must match");
+        }
+
+        ValidationEngine.validateAndThrow(sample);
+        samples.update(sample);
+        response.setResponseNoContent();
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     */
+    public void delete(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.VALET_ID, "No Sample ID supplied");
+        samples.delete(id);
+        response.setResponseNoContent();
+    }
 }

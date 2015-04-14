@@ -17,6 +17,10 @@ import org.junit.Test;
 import com.strategicgains.restexpress.RestExpress;
 import com.example.restexpmongomvn.Main;
 
+/**
+ *
+ * @author gstafford
+ */
 public class SampleControllerTest {
 
     /**
@@ -26,30 +30,44 @@ public class SampleControllerTest {
     private HttpClient httpClient;
     private static final String BASE_URL = "http://localhost:8587";
 
-
+    /**
+     *
+     * @throws Exception
+     */
     @BeforeClass
     public static void beforeClass() throws Exception {
         String[] env = { "dev" };
         server = Main.initializeServer(env);
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void afterClass() {
         server.shutdown();
     }
 
-
+    /**
+     *
+     */
     @Before
     public void beforeEach() {
         httpClient = new DefaultHttpClient();
     }
 
-
+    /**
+     *
+     */
     @After
     public void afterEach() {
         httpClient = null;
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     @Test
     public void postDirectiveReplayRequest() throws IOException {
         HttpGet getRequest = new HttpGet(BASE_URL + "/rest/test/sample/123.json");

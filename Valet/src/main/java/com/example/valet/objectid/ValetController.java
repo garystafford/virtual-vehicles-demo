@@ -21,87 +21,81 @@ import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 
 /**
- * This is the 'controller' layer, where HTTP details are converted to domain concepts and passed to the service layer.
- * Then service layer response information is enhanced with HTTP details, if applicable, for the response.
+ * This is the 'controller' layer, where HTTP details are converted to domain
+ * concepts and passed to the service layer. Then service layer response
+ * information is enhanced with HTTP details, if applicable, for the response.
  * <p/>
- * This controller demonstrates how to process an entity that is identified by a MongoDB ObjectId.
+ * This controller demonstrates how to process an entity that is identified by a
+ * MongoDB ObjectId.
  */
-public class ValetController
-{
-	private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
-	private ValetService service;
+public class ValetController {
 
-	public ValetController(ValetService valetService)
-	{
-		super();
-		this.service = valetService;
-	}
+    private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
+    private ValetService service;
 
-	public Valet create(Request request, Response response)
-	{
-		Valet entity = request.getBodyAs(Valet.class, "Resource details not provided");
-		Valet saved = service.create(entity);
+    public ValetController(ValetService valetService) {
+        super();
+        this.service = valetService;
+    }
 
-		// Construct the response for create...
-		response.setResponseCreated();
+    public Valet create(Request request, Response response) {
+        Valet entity = request.getBodyAs(Valet.class, "Resource details not provided");
+        Valet saved = service.create(entity);
 
-		// Bind the resource with link URL tokens, etc. here...
-		TokenResolver resolver = HyperExpress.bind(Constants.Url.VALET_ID, Identifiers.MONGOID.format(saved.getId()));
+        // Construct the response for create...
+        response.setResponseCreated();
 
-		// Include the Location header...
-		String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
-		response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
+        // Bind the resource with link URL tokens, etc. here...
+        TokenResolver resolver = HyperExpress.bind(Constants.Url.VALET_ID, Identifiers.MONGOID.format(saved.getId()));
 
-		// Return the newly-created resource...
-		return saved;
-	}
+        // Include the Location header...
+        String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
+        response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
 
-	public Valet read(Request request, Response response)
-	{
-		String id = request.getHeader(Constants.Url.VALET_ID, "No resource ID supplied");
-		Valet entity = service.read(Identifiers.MONGOID.parse(id));
+        // Return the newly-created resource...
+        return saved;
+    }
 
-		// enrich the resource with links, etc. here...
-		HyperExpress.bind(Constants.Url.VALET_ID, Identifiers.MONGOID.format(entity.getId()));
+    public Valet read(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.VALET_ID, "No resource ID supplied");
+        Valet entity = service.read(Identifiers.MONGOID.parse(id));
 
-		return entity;
-	}
+        // enrich the resource with links, etc. here...
+        HyperExpress.bind(Constants.Url.VALET_ID, Identifiers.MONGOID.format(entity.getId()));
 
-	public List<Valet> readAll(Request request, Response response)
-	{
-		QueryFilter filter = QueryFilters.parseFrom(request);
-		QueryOrder order = QueryOrders.parseFrom(request);
-		QueryRange range = QueryRanges.parseFrom(request, 20);
-		List<Valet> entities = service.readAll(filter, range, order);
-		long count = service.count(filter);
-		response.setCollectionResponse(range, entities.size(), count);
+        return entity;
+    }
 
-		// Bind the resources in the collection with link URL tokens, etc. here...
-		HyperExpress.tokenBinder(new TokenBinder<Valet>()
-		{
-			@Override
-			public void bind(Valet entity, TokenResolver resolver)
-			{
-				resolver.bind(Constants.Url.VALET_ID, Identifiers.MONGOID.format(entity.getId()));
-			}
-		});
+    public List<Valet> readAll(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        QueryOrder order = QueryOrders.parseFrom(request);
+        QueryRange range = QueryRanges.parseFrom(request, 20);
+        List<Valet> entities = service.readAll(filter, range, order);
+        long count = service.count(filter);
+        response.setCollectionResponse(range, entities.size(), count);
 
-		return entities;
-	}
+        // Bind the resources in the collection with link URL tokens, etc. here...
+        HyperExpress.tokenBinder(new TokenBinder<Valet>() {
+            @Override
+            public void bind(Valet entity, TokenResolver resolver) {
+                resolver.bind(Constants.Url.VALET_ID, Identifiers.MONGOID.format(entity.getId()));
+            }
+        });
 
-	public void update(Request request, Response response)
-	{
-		String id = request.getHeader(Constants.Url.VALET_ID, "No resource ID supplied");
-		Valet entity = request.getBodyAs(Valet.class, "Resource details not provided");
-		entity.setId(Identifiers.MONGOID.parse(id));
-		service.update(entity);
-		response.setResponseNoContent();
-	}
+        return entities;
+    }
 
-	public void delete(Request request, Response response)
-	{
-		String id = request.getHeader(Constants.Url.VALET_ID, "No resource ID supplied");
-		service.delete(Identifiers.MONGOID.parse(id));
-		response.setResponseNoContent();
-	}
+    public void update(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.VALET_ID, "No resource ID supplied");
+        Valet entity = request.getBodyAs(Valet.class, "Resource details not provided");
+        entity.setId(Identifiers.MONGOID.parse(id));
+        service.update(entity);
+        response.setResponseNoContent();
+    }
+
+    public void delete(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.VALET_ID, "No resource ID supplied");
+        service.delete(Identifiers.MONGOID.parse(id));
+        response.setResponseNoContent();
+    }
 }

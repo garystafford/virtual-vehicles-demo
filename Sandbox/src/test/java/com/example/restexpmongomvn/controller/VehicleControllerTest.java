@@ -57,30 +57,51 @@ public class VehicleControllerTest {
     private HttpClient httpClient;
     private static final String BASE_URL = "http://localhost:8587";
 
+    /**
+     *
+     */
     public VehicleControllerTest() {
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     @BeforeClass
     public static void setUpClass() throws IOException {
         String[] env = {"dev"};
         server = Main.initializeServer(env);
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
         server.shutdown();
     }
 
+    /**
+     *
+     */
     @Before
     public void beforeEach() {
         httpClient = new DefaultHttpClient();
     }
 
+    /**
+     *
+     */
     @After
     public void afterEach() {
         httpClient = null;
     }
 
+    /**
+     *
+     * @throws IOException
+     * @deprecated
+     */
     @Test
     @Deprecated
     public void postDirectiveReplayRequest() throws IOException {
@@ -141,6 +162,8 @@ public class VehicleControllerTest {
 
     /**
      * Test of read method, of class VehicleController.
+     * @throws com.fasterxml.jackson.core.JsonProcessingException
+     * @throws java.io.IOException
      */
     @Test
     public void testRead() throws JsonProcessingException, IOException {

@@ -20,17 +20,29 @@ public abstract class AbstractLinkableEntity
 
     private List<Link> links;
 
+    /**
+     *
+     * @return
+     */
     @JsonIgnore
     @Override
     public List<Link> getLinks() {
         return Collections.unmodifiableList(links);
     }
 
+    /**
+     *
+     * @param links
+     */
     @Override
     public void setLinks(List<Link> links) {
         this.links = new ArrayList<Link>(links);
     }
 
+    /**
+     *
+     * @param link
+     */
     @Override
     public void addLink(Link link) {
         if (links == null) {
@@ -40,6 +52,10 @@ public abstract class AbstractLinkableEntity
         links.add(new Link(link));
     }
 
+    /**
+     *
+     * @param links
+     */
     @Override
     public void addAllLinks(Collection<Link> links) {
         for (Link link : links) {

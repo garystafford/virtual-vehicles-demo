@@ -22,15 +22,29 @@ import com.example.restexpmongomvn.Constants;
 import com.example.restexpmongomvn.domain.Vehicle;
 import com.strategicgains.syntaxe.ValidationEngine;
 
+/**
+ *
+ * @author gstafford
+ */
 public class VehicleController {
 
     private MongodbEntityRepository<Vehicle> vehicles;
 
+    /**
+     *
+     * @param vehicleRepository
+     */
     public VehicleController(MongodbEntityRepository<Vehicle> vehicleRepository) {
         super();
         this.vehicles = vehicleRepository;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public String create(Request request, Response response) {
         Vehicle order = request.getBodyAs(Vehicle.class, "Vehicle details not provided");
         ValidationEngine.validateAndThrow(order);
@@ -47,6 +61,12 @@ public class VehicleController {
         return saved.getId();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Vehicle read(Request request, Response response) {
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No Vehicle ID supplied");
         Vehicle vehicle = vehicles.read(id);
@@ -59,6 +79,12 @@ public class VehicleController {
         return vehicle;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public LinkableCollection<Vehicle> readAll(Request request, Response response) {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
@@ -81,6 +107,11 @@ public class VehicleController {
         return wrapper;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     public void update(Request request, Response response) {
         String id = request.getHeader(Constants.Url.VEHICLE_ID);
         Vehicle vehicle = request.getBodyAs(Vehicle.class, "Vehicle details not provided");
@@ -94,6 +125,11 @@ public class VehicleController {
         response.setResponseNoContent();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     public void delete(Request request, Response response) {
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No Vehicle ID supplied");
         vehicles.delete(id);

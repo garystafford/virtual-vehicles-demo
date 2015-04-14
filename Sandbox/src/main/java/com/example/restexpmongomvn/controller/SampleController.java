@@ -42,8 +42,8 @@ public class SampleController
 		response.setResponseCreated();
 
 		// Include the Location header...
-		String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_SAMPLE);
-		response.addLocationHeader(LinkUtils.formatUrl(locationPattern, Constants.Url.SAMPLE_ID, saved.getId()));
+		String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
+		response.addLocationHeader(LinkUtils.formatUrl(locationPattern, Constants.Url.VALET_ID, saved.getId()));
 
 		// Return the newly-created ID...
 		return saved.getId();
@@ -51,12 +51,12 @@ public class SampleController
 
 	public Sample read(Request request, Response response)
 	{
-		String id = request.getHeader(Constants.Url.SAMPLE_ID, "No Sample ID supplied");
+		String id = request.getHeader(Constants.Url.VALET_ID, "No Sample ID supplied");
 		Sample sample = samples.read(id);
 		
 		// Add 'self' link
-		String selfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_SAMPLE);
-		String selfUrl = LinkUtils.formatUrl(selfPattern, Constants.Url.SAMPLE_ID, sample.getId());
+		String selfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
+		String selfUrl = LinkUtils.formatUrl(selfPattern, Constants.Url.VALET_ID, sample.getId());
 		sample.addLink(new Link(RelTypes.SELF, selfUrl));
 
 		return sample;
@@ -72,15 +72,15 @@ public class SampleController
 		response.setCollectionResponse(range, results.size(), count);
 		
 		// Add 'self' links
-		String orderSelfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_SAMPLE);
+		String orderSelfPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VALET);
 
 		for (Sample result : results)
 		{
-			String selfUrl = LinkUtils.formatUrl(orderSelfPattern, Constants.Url.SAMPLE_ID, result.getId());
+			String selfUrl = LinkUtils.formatUrl(orderSelfPattern, Constants.Url.VALET_ID, result.getId());
 			result.addLink(new Link(RelTypes.SELF, selfUrl));
 		}
 
-		String selfUrl = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SAMPLE_COLLECTION);
+		String selfUrl = request.getNamedUrl(HttpMethod.GET, Constants.Routes.VALET_COLLECTION);
 		LinkableCollection<Sample> wrapper = new LinkableCollection<Sample>(results);
 		wrapper.addLink(new Link(RelTypes.SELF, selfUrl));
 		return wrapper;
@@ -88,7 +88,7 @@ public class SampleController
 
 	public void update(Request request, Response response)
 	{
-		String id = request.getHeader(Constants.Url.SAMPLE_ID);
+		String id = request.getHeader(Constants.Url.VALET_ID);
 		Sample sample = request.getBodyAs(Sample.class, "Sample details not provided");
 		
 		if (!id.equals(sample.getId()))
@@ -103,7 +103,7 @@ public class SampleController
 
 	public void delete(Request request, Response response)
 	{
-		String id = request.getHeader(Constants.Url.SAMPLE_ID, "No Sample ID supplied");
+		String id = request.getHeader(Constants.Url.VALET_ID, "No Sample ID supplied");
 		samples.delete(id);
 		response.setResponseNoContent();
 	}

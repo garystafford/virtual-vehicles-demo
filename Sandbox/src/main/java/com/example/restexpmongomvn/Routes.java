@@ -13,13 +13,13 @@ public abstract class Routes {
         server.uri("/rest/test/sample/{sampleId}.{format}",
                 config.getSampleController())
                 .method(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE)
-                .name(Constants.Routes.SINGLE_SAMPLE);
+                .name(Constants.Routes.SINGLE_VALET);
 
         server.uri("/rest/test/samples.{format}",
                 config.getSampleController())
                 .action("readAll", HttpMethod.GET)
                 .method(HttpMethod.POST)
-                .name(Constants.Routes.SAMPLE_COLLECTION);
+                .name(Constants.Routes.VALET_COLLECTION);
 
         server.uri("/restexpress/vehicle/{vehicleId}.{format}",
                 config.getVehicleController())

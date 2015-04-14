@@ -13,12 +13,12 @@
 	 -->
 	<description>Virtual Valet Microservice
 
-Project based on Maven Archetype:
-RestExpress-MongoDB-Scaffold:
+Project built from Maven Archetype:
+restexpress-mongodb 1.15:
 A Basic, MongoDB-backed Service Suite</description>
 	<url>https://github.com/RestExpress/RestExpress-Scaffold</url>
-	<groupId>com.example.ms</groupId>
-	<artifactId>Vehicle</artifactId>
+	<groupId>com.example</groupId>
+	<artifactId>Valet</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -26,47 +26,47 @@ A Basic, MongoDB-backed Service Suite</description>
 		<dependency>
 			<groupId>com.strategicgains</groupId>
 			<artifactId>RestExpress</artifactId>
-			<version>0.9.4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.strategicgains</groupId>
-			<artifactId>HyperExpress</artifactId>
-			<version>1.0.2</version>
+			<version>0.11.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.strategicgains</groupId>
 			<artifactId>Syntaxe</artifactId>
-			<version>0.4.6</version>
+			<version>0.4.9</version>
 		</dependency>
 		<dependency>
 			<groupId>com.strategicgains.repoexpress</groupId>
 			<artifactId>repoexpress-mongodb</artifactId>
-			<version>0.3.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.strategicgains.domain-eventing</groupId>
-			<artifactId>domain-eventing-core</artifactId>
-			<version>0.4.3</version>
+			<version>0.4.5</version>
 		</dependency>
 		<dependency>
 			<groupId>com.strategicgains.plugin-express</groupId>
 			<artifactId>CacheControlPlugin</artifactId>
-			<version>0.1.4</version>
+			<version>0.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.strategicgains</groupId>
+			<artifactId>HyperExpressPlugin</artifactId>
+			<version>2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.strategicgains.plugin-express</groupId>
 			<artifactId>MetricsPlugin</artifactId>
-			<version>0.1.4</version>
+			<version>0.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.strategicgains.plugin-express</groupId>
-			<artifactId>RoutesMetadataPlugin</artifactId>
-			<version>0.1.4</version>
+			<artifactId>SwaggerPlugin</artifactId>
+			<version>0.3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.codahale.metrics</groupId>
+			<groupId>com.strategicgains.plugin-express</groupId>
+			<artifactId>CORSPlugin</artifactId>
+			<version>0.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-graphite</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -81,26 +81,17 @@ A Basic, MongoDB-backed Service Suite</description>
 			<scope>test</scope>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.2.5</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
-		<defaultGoal>compile</defaultGoal>
-
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -109,7 +100,7 @@ A Basic, MongoDB-backed Service Suite</description>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<configuration>
-					<mainClass>com.example.ms.vehicle.Main</mainClass>
+					<mainClass>com.example.valet.Main</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -122,7 +113,7 @@ A Basic, MongoDB-backed Service Suite</description>
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>./lib/</classpathPrefix>
-							<mainClass>com.example.ms.vehicle.Main</mainClass>
+							<mainClass>com.example.valet.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

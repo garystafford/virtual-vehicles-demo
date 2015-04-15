@@ -81,6 +81,12 @@ A Basic, MongoDB-backed Service Suite</description>
 			<scope>test</scope>
 			<optional>true</optional>
 		</dependency>
+	 <dependency>
+	  <groupId>com.strategicgains.plugin-express</groupId>
+	  <artifactId>RoutesMetadataPlugin</artifactId>
+	  <version>0.1.4</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>

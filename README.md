@@ -36,3 +36,18 @@ According to their website, [RestExpress](https://github.com/RestExpress) compos
  * Implement Jenkins for automated CI and deployment of services
  * Implement messaging bus (RabbitMQ) and/or HTTP-based service-to-service communication (paintVehicle() example).
  * Implement [Graphite](http://graphite.readthedocs.org/en/latest/overview.html) enterprise-scale monitoring tool. Graphite integration native to RestExpress.
+
+ #### Client Feature Supported by RESTful API
+ * createVehicle() --> POST to Vehicle Service
+ * disposeVehicle(oid) --> DELETE to Vehicle Service
+ * viewVehicleCollection --> GET to Vehicle Service
+ * driveVehicle(oid) --> PUT to Vehicle Service
+  
+ * washVehicle(oid) --> POST to Maintenance Service
+ * changeOil(oid) --> POST to Maintenance Service
+ * paintVehicle(oid) --> POST to Maintenance Service
+ * viewMaintenanceRecordByVehicle(oid) --> GET to Maintenance Service
+  
+ * valetParkVehicle(oid) --> POST to Valet Service
+ * valetRetieveVehicle(oid) --> PUT to Valet Service
+ * viewParkingRecordsByVehicle(oid) --> GET to Valet Service

@@ -7,13 +7,13 @@ import org.restexpress.RestExpress;
 public abstract class Routes {
 
     public static void define(Configuration config, RestExpress server) {
-        server.uri("/virtual/maintenances/{oid}.{format}", config.getMaintenanceController())
+        server.uri("/virtual/maintenance/record/{oid}.{format}", config.getRecordController())
                 .method(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE)
-                .name(Constants.Routes.SINGLE_MAINTENANCE);
+                .name(Constants.Routes.SINGLE_RECORD);
 
-        server.uri("/virtual/maintenances.{format}", config.getMaintenanceController())
+        server.uri("/virtual/maintenance/records.{format}", config.getRecordController())
                 .action("readAll", HttpMethod.GET)
                 .method(HttpMethod.POST)
-                .name(Constants.Routes.MAINTENANCE_COLLECTION);
+                .name(Constants.Routes.RECORD_COLLECTION);
     }
 }

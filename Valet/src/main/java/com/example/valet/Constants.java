@@ -9,8 +9,7 @@ public class Constants {
     public class Url {
 
         //TODO: Your URL parameter names here...
-
-        public static final String VALET_ID = "oid";
+        public static final String TRANSACTION_ID = "oid";
     }
 
     /**
@@ -20,7 +19,7 @@ public class Constants {
      */
     public class Routes {
 
-        public static final String SINGLE_VALET = "valet.single.route";
-        public static final String VALET_COLLECTION = "valet.collection.route";
+        public static final String SINGLE_TRANSACTION = "valet.single.route";
+        public static final String TRANSACTION_COLLECTION = "valet.collection.route";
     }
 }

@@ -1,6 +1,6 @@
 package com.example.valet.serialization;
 
-import com.example.valet.objectid.Valet;
+import com.example.valet.objectid.Transaction;
 import org.restexpress.serialization.xml.XstreamXmlProcessor;
 
 public class XmlSerializationProcessor
@@ -8,7 +8,7 @@ public class XmlSerializationProcessor
 
     public XmlSerializationProcessor() {
         super();
-        alias("valet", Valet.class);
+        alias("valet", Transaction.class);
 //		alias("element_name", Element.class);
 //		alias("element_name", Element.class);
 //		alias("element_name", Element.class);

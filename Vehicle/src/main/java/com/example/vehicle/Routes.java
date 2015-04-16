@@ -16,7 +16,7 @@ public abstract class Routes {
      * @param server
      */
     public static void define(Configuration config, RestExpress server) {
-        server.uri("/virtual/vehicles/{oid}.{format}", config.getVehicleController())
+        server.uri("/virtual/vehicle/{oid}.{format}", config.getVehicleController())
                 .method(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE)
                 .name(Constants.Routes.SINGLE_VEHICLE);
 

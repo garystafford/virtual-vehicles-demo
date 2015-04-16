@@ -14,38 +14,38 @@ import com.strategicgains.syntaxe.ValidationEngine;
  * syntactic and semantic domain validation occurs, along with calls to the
  * persistence layer.
  */
-public class ValetService {
+public class TransactionService {
 
-    private ValetRepository valets;
+    private TransactionRepository transactions;
 
-    public ValetService(ValetRepository valetsRepository) {
+    public TransactionService(TransactionRepository transactionsRepository) {
         super();
-        this.valets = valetsRepository;
+        this.transactions = transactionsRepository;
     }
 
-    public Valet create(Valet entity) {
+    public Transaction create(Transaction entity) {
         ValidationEngine.validateAndThrow(entity);
-        return valets.create(entity);
+        return transactions.create(entity);
     }
 
-    public Valet read(Identifier id) {
-        return valets.read(id);
+    public Transaction read(Identifier id) {
+        return transactions.read(id);
     }
 
-    public void update(Valet entity) {
+    public void update(Transaction entity) {
         ValidationEngine.validateAndThrow(entity);
-        valets.update(entity);
+        transactions.update(entity);
     }
 
     public void delete(Identifier id) {
-        valets.delete(id);
+        transactions.delete(id);
     }
 
-    public List<Valet> readAll(QueryFilter filter, QueryRange range, QueryOrder order) {
-        return valets.readAll(filter, range, order);
+    public List<Transaction> readAll(QueryFilter filter, QueryRange range, QueryOrder order) {
+        return transactions.readAll(filter, range, order);
     }
 
     public long count(QueryFilter filter) {
-        return valets.count(filter);
+        return transactions.count(filter);
     }
 }

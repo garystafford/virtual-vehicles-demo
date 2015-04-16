@@ -14,38 +14,38 @@ import com.strategicgains.syntaxe.ValidationEngine;
  * syntactic and semantic domain validation occurs, along with calls to the
  * persistence layer.
  */
-public class MaintenanceService {
+public class RecordService {
 
-    private MaintenanceRepository maintenances;
+    private RecordRepository records;
 
-    public MaintenanceService(MaintenanceRepository maintenancesRepository) {
+    public RecordService(RecordRepository maintenancesRepository) {
         super();
-        this.maintenances = maintenancesRepository;
+        this.records = maintenancesRepository;
     }
 
-    public Maintenance create(Maintenance entity) {
+    public Record create(Record entity) {
         ValidationEngine.validateAndThrow(entity);
-        return maintenances.create(entity);
+        return records.create(entity);
     }
 
-    public Maintenance read(Identifier id) {
-        return maintenances.read(id);
+    public Record read(Identifier id) {
+        return records.read(id);
     }
 
-    public void update(Maintenance entity) {
+    public void update(Record entity) {
         ValidationEngine.validateAndThrow(entity);
-        maintenances.update(entity);
+        records.update(entity);
     }
 
     public void delete(Identifier id) {
-        maintenances.delete(id);
+        records.delete(id);
     }
 
-    public List<Maintenance> readAll(QueryFilter filter, QueryRange range, QueryOrder order) {
-        return maintenances.readAll(filter, range, order);
+    public List<Record> readAll(QueryFilter filter, QueryRange range, QueryOrder order) {
+        return records.readAll(filter, range, order);
     }
 
     public long count(QueryFilter filter) {
-        return maintenances.count(filter);
+        return records.count(filter);
     }
 }

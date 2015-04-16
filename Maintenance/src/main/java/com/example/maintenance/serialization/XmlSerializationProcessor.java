@@ -1,6 +1,6 @@
 package com.example.maintenance.serialization;
 
-import com.example.maintenance.objectid.Maintenance;
+import com.example.maintenance.objectid.Record;
 import org.restexpress.serialization.xml.XstreamXmlProcessor;
 
 public class XmlSerializationProcessor
@@ -8,7 +8,7 @@ public class XmlSerializationProcessor
 
     public XmlSerializationProcessor() {
         super();
-        alias("maintenance", Maintenance.class);
+        alias("maintenance", Record.class);
 //		alias("element_name", Element.class);
 //		alias("element_name", Element.class);
 //		alias("element_name", Element.class);

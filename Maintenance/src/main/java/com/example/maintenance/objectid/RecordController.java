@@ -22,63 +22,63 @@ import com.strategicgains.repoexpress.mongodb.Identifiers;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
- * concepts and passed to the maintenance layer. Then maintenance layer response
+ * concepts and passed to the record layer. Then record layer response
  * information is enhanced with HTTP details, if applicable, for the response.
  * <p/>
  * This controller demonstrates how to process an entity that is identified by a
  * MongoDB ObjectId.
  */
-public class MaintenanceController {
+public class RecordController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
-    private MaintenanceService maintenance;
+    private RecordService service;
 
-    public MaintenanceController(MaintenanceService maintenanceService) {
+    public RecordController(RecordService recordService) {
         super();
-        this.maintenance = maintenanceService;
+        this.service = recordService;
     }
 
-    public Maintenance create(Request request, Response response) {
-        Maintenance entity = request.getBodyAs(Maintenance.class, "Resource details not provided");
-        Maintenance saved = maintenance.create(entity);
+    public Record create(Request request, Response response) {
+        Record entity = request.getBodyAs(Record.class, "Resource details not provided");
+        Record saved = service.create(entity);
 
         // Construct the response for create...
         response.setResponseCreated();
 
         // Bind the resource with link URL tokens, etc. here...
-        TokenResolver resolver = HyperExpress.bind(Constants.Url.MAINTENANCE_ID, Identifiers.MONGOID.format(saved.getId()));
+        TokenResolver resolver = HyperExpress.bind(Constants.Url.RECORD_ID, Identifiers.MONGOID.format(saved.getId()));
 
         // Include the Location header...
-        String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_MAINTENANCE);
+        String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_RECORD);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
 
         // Return the newly-created resource...
         return saved;
     }
 
-    public Maintenance read(Request request, Response response) {
-        String id = request.getHeader(Constants.Url.MAINTENANCE_ID, "No resource ID supplied");
-        Maintenance entity = maintenance.read(Identifiers.MONGOID.parse(id));
+    public Record read(Request request, Response response) {
+        String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
+        Record entity = service.read(Identifiers.MONGOID.parse(id));
 
         // enrich the resource with links, etc. here...
-        HyperExpress.bind(Constants.Url.MAINTENANCE_ID, Identifiers.MONGOID.format(entity.getId()));
+        HyperExpress.bind(Constants.Url.RECORD_ID, Identifiers.MONGOID.format(entity.getId()));
 
         return entity;
     }
 
-    public List<Maintenance> readAll(Request request, Response response) {
+    public List<Record> readAll(Request request, Response response) {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
-        List<Maintenance> entities = maintenance.readAll(filter, range, order);
-        long count = maintenance.count(filter);
+        List<Record> entities = service.readAll(filter, range, order);
+        long count = service.count(filter);
         response.setCollectionResponse(range, entities.size(), count);
 
         // Bind the resources in the collection with link URL tokens, etc. here...
-        HyperExpress.tokenBinder(new TokenBinder<Maintenance>() {
+        HyperExpress.tokenBinder(new TokenBinder<Record>() {
             @Override
-            public void bind(Maintenance entity, TokenResolver resolver) {
-                resolver.bind(Constants.Url.MAINTENANCE_ID, Identifiers.MONGOID.format(entity.getId()));
+            public void bind(Record entity, TokenResolver resolver) {
+                resolver.bind(Constants.Url.RECORD_ID, Identifiers.MONGOID.format(entity.getId()));
             }
         });
 
@@ -86,16 +86,16 @@ public class MaintenanceController {
     }
 
     public void update(Request request, Response response) {
-        String id = request.getHeader(Constants.Url.MAINTENANCE_ID, "No resource ID supplied");
-        Maintenance entity = request.getBodyAs(Maintenance.class, "Resource details not provided");
+        String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
+        Record entity = request.getBodyAs(Record.class, "Resource details not provided");
         entity.setId(Identifiers.MONGOID.parse(id));
-        maintenance.update(entity);
+        service.update(entity);
         response.setResponseNoContent();
     }
 
     public void delete(Request request, Response response) {
-        String id = request.getHeader(Constants.Url.MAINTENANCE_ID, "No resource ID supplied");
-        maintenance.delete(Identifiers.MONGOID.parse(id));
+        String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
+        service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
     }
 }

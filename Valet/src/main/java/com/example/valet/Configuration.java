@@ -3,9 +3,9 @@ package com.example.valet;
 import java.util.Properties;
 
 import org.restexpress.RestExpress;
-import com.example.valet.objectid.ValetController;
-import com.example.valet.objectid.ValetRepository;
-import com.example.valet.objectid.ValetService;
+import com.example.valet.objectid.TransactionController;
+import com.example.valet.objectid.TransactionRepository;
+import com.example.valet.objectid.TransactionService;
 import org.restexpress.util.Environment;
 
 import com.strategicgains.repoexpress.mongodb.MongoConfig;
@@ -25,7 +25,7 @@ public class Configuration
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
 
-    private ValetController valetController;
+    private TransactionController transactionController;
 
     @Override
     protected void fillValues(Properties p) {
@@ -38,9 +38,9 @@ public class Configuration
     }
 
     private void initialize(MongoConfig mongo) {
-        ValetRepository valetsOidRepository = new ValetRepository(mongo.getClient(), mongo.getDbName());
-        ValetService valetOidService = new ValetService(valetsOidRepository);
-        valetController = new ValetController(valetOidService);
+        TransactionRepository valetsOidRepository = new TransactionRepository(mongo.getClient(), mongo.getDbName());
+        TransactionService valetOidService = new TransactionService(valetsOidRepository);
+        transactionController = new TransactionController(valetOidService);
     }
 
     public int getPort() {
@@ -59,7 +59,7 @@ public class Configuration
         return metricsSettings;
     }
 
-    public ValetController getValetController() {
-        return valetController;
+    public TransactionController getTransactionController() {
+        return transactionController;
     }
 }

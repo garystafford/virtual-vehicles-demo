@@ -2,9 +2,9 @@ package com.example.maintenance;
 
 import java.util.Properties;
 import org.restexpress.RestExpress;
-import com.example.maintenance.objectid.MaintenanceController;
-import com.example.maintenance.objectid.MaintenanceRepository;
-import com.example.maintenance.objectid.MaintenanceService;
+import com.example.maintenance.objectid.RecordController;
+import com.example.maintenance.objectid.RecordRepository;
+import com.example.maintenance.objectid.RecordService;
 import org.restexpress.util.Environment;
 import com.strategicgains.repoexpress.mongodb.MongoConfig;
 import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
@@ -23,7 +23,7 @@ public class Configuration
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
 
-    private MaintenanceController maintenanceController;
+    private RecordController recordController;
 
     @Override
     protected void fillValues(Properties p) {
@@ -36,9 +36,9 @@ public class Configuration
     }
 
     private void initialize(MongoConfig mongo) {
-        MaintenanceRepository maintenanceRepository = new MaintenanceRepository(mongo.getClient(), mongo.getDbName());
-        MaintenanceService maintenanceService = new MaintenanceService(maintenanceRepository);
-        maintenanceController = new MaintenanceController(maintenanceService);
+        RecordRepository recordRepository = new RecordRepository(mongo.getClient(), mongo.getDbName());
+        RecordService recordService = new RecordService(recordRepository);
+        recordController = new RecordController(recordService);
     }
 
     public int getPort() {
@@ -57,7 +57,7 @@ public class Configuration
         return metricsSettings;
     }
 
-    public MaintenanceController getMaintenanceController() {
-        return maintenanceController;
+    public RecordController getRecordController() {
+        return recordController;
     }
 }

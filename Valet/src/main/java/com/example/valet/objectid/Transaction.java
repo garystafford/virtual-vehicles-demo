@@ -5,9 +5,9 @@ import com.strategicgains.repoexpress.mongodb.AbstractMongodbEntity;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
- * This is a valet entity identified by a MongoDB ObjectID (instead of a UUID).
+ * This is a transaction entity identified by a MongoDB ObjectID (instead of a UUID).
  * It also contains createdAt and updatedAt properties that are automatically
- * maintained by the persistence layer (ValetRepository).
+ * maintained by the persistence layer (TransactionTransactionRepository).
  */
 @Entity("transactions")
 public class Transaction

@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
  * This is a vehicle entity identified by a MongoDB ObjectID (instead of a
  * UUID). It also contains createdAt and updatedAt properties that are
  * automatically maintained by the persistence layer
- * (VehicleOidEntityRepository).
+ * (VehicleRepository).
  */
 @Entity("vehicles")
 public class Vehicle

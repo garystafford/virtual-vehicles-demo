@@ -5,9 +5,9 @@ import com.strategicgains.repoexpress.mongodb.AbstractMongodbEntity;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
- * This is a RECORD entity identified by a MongoDB ObjectID (instead of a
+ * This is a record entity identified by a MongoDB ObjectID (instead of a
  * UUID). It also contains createdAt and updatedAt properties that are
- * automatically maintained by the persistence layer (MaintenanceRepository).
+ * automatically maintained by the persistence layer (RecordRepository).
  */
 @Entity("maintenances")
 public class Record

@@ -7,8 +7,7 @@ import org.mongodb.morphia.annotations.Entity;
 /**
  * This is a vehicle entity identified by a MongoDB ObjectID (instead of a
  * UUID). It also contains createdAt and updatedAt properties that are
- * automatically maintained by the persistence layer
- * (VehicleRepository).
+ * automatically maintained by the persistence layer (VehicleRepository).
  */
 @Entity("vehicles")
 public class Vehicle
@@ -18,7 +17,7 @@ public class Vehicle
     private int year;
     private String make;
     private String model;
-    private Color color;
+    private String color;
     private String type;
     private int mileage;
 
@@ -35,14 +34,16 @@ public class Vehicle
      * @param model
      * @param color
      * @param type
+     * @param mileage
      */
     public Vehicle(final int year, final String make, final String model,
-            final Color color, final String type) {
+            final String color, final String type, final int mileage) {
         this.year = year;
         this.make = make;
         this.model = model;
         this.color = color;
         this.type = type;
+        this.mileage = mileage;
     }
 
     @Override
@@ -95,14 +96,14 @@ public class Vehicle
     /**
      * @return the color
      */
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
     /**
      * @param color the color to set
      */
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

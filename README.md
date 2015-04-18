@@ -38,14 +38,14 @@ taf
  * Implement [Graphite](http://graphite.readthedocs.org/en/latest/overview.html) enterprise-scale monitoring tool. Graphite integration native to RestExpress.
 
  #### Client Feature Supported by RESTful API
- * createVehicle() --> POST to Vehicle Service
- * disposeVehicle(oid) --> DELETE to Vehicle Service
+ * buyVehicle() --> POST to Vehicle Service
+ * sellVehicle(oid) --> DELETE to Vehicle Service
  * viewVehicleCollection --> GET to Vehicle Service
  * driveVehicle(oid) --> PUT to Vehicle Service
  * washVehicle(oid) --> POST to Maintenance Service
  * changeOil(oid) --> POST to Maintenance Service
  * paintVehicle(oid) --> POST to Maintenance Service
  * viewMaintenanceRecordsByVehicle(oid) --> GET to Maintenance Service
- * valetParkVehicle(oid) --> POST to Valet Service
- * valetRetieveVehicle(oid) --> PUT to Valet Service
- * viewParkingRecordsByVehicle(oid) --> GET to Valet Service
+ * parkVehicle(oid) --> POST to Valet Service
+ * retieveVehicle(oid) --> PUT to Valet Service
+ * viewValetTransactionsByVehicle(oid) --> GET to Valet Service

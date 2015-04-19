@@ -1,0 +1,9 @@
+<section data-ng-controller="VehiclesController" data-ng-init="find()">
+    <h2>Vehicle Collection</h2>
+
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="vehicle in vehicles">
+            {{vehicle.year}} {{vehicle.color}} {{vehicle.make}} {{vehicle.model}} {{vehicle.type}}
+        </li>
+    </ul>
+</section>

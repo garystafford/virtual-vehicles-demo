@@ -1,0 +1,34 @@
+<div class="" data-ng-controller="VehiclesController">
+  <h1>Example view from your new awesome package</h1>
+  <h2>Package: {{package.name}}</h2>
+
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="vehicle in vehicles">
+            <b>{{vehicle.year}} {{vehicle.color}} {{vehicle.make}} {{vehicle.model}} {{vehicle.type}} </b>
+        </li>
+    </ul>
+
+    <ol>
+    <li>
+      <a href="vehicles/example/anyone">Server route that anyone can access</a>
+    </li>
+    <li>
+      <a href="vehicles/example/auth">Server route that requires authentication</a>
+    </li>
+    <li>
+      <a href="vehicles/example/admin">Server route that requires admin user</a>
+    </li>
+    <li>
+      <a href="vehicles/example/render">Raw Html rendering example from using swig</a>
+    </li>
+  </ol>
+  <h3><img src="/vehicles/assets/img/logo.png" /></h3>
+  </br>
+  <p class="alert alert-info">You can find your package in /packages/vehicles</p>
+  </br>
+  <p class="alert alert-warning">MEAN versions prior to 0.3.2 will be in /node_modules/vehicles</p>
+  </br>
+  <h3><a href="http://www.mean.io/#!/docs">Documentation</a></h3>
+  </br>
+</div>
+

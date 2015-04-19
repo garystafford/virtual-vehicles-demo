@@ -35,21 +35,21 @@ angular.module('mean.vehicles').config(['$stateProvider',
             })
             .state('create vehicle', {
                 url: '/virtual/vehicles/create',
-                templateUrl: 'vehicles/views/create.html',
+                templateUrl: './vehicles/views/create.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
             .state('edit vehicle', {
                 url: '/virtual/vehicles/:vehicleId/edit',
-                templateUrl: 'vehicles/views/edit.html',
+                templateUrl: './vehicles/views/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
             .state('vehicle by id', {
                 url: '/virtual/vehicles/:vehicleId',
-                templateUrl: 'vehicles/views/view.html',
+                templateUrl: './vehicles/views/view.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }

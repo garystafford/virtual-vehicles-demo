@@ -27,7 +27,7 @@ angular.module('mean.vehicles').config(['$stateProvider',
         $stateProvider
             .state('all vehicles', {
                 url: '/virtual/vehicles',
-                templateUrl: 'vehicles/views/list.html',
+                templateUrl: './vehicles/views/list.html',
                 //controller : 'VehiclesController',
                 resolve: {
                     loggedin: checkLoggedin

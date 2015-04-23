@@ -3,17 +3,15 @@
 var request = require('request');
 require('request').debug = true;
 
-var host = 'http://localhost:8581/virtual/vehicles';
+var host = 'http://localhost:8585/virtual/valet/transactions';
 
-exports.getVehicles = function (req, res) {
-
+exports.getValetTransactions = function (req, res) {
     request(host, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             res.type('application/javascript');
             res.jsonp({
-                'vehicles': JSON.parse(body)._embedded.vehicles
+                "transactions": JSON.parse(body)._embedded.transactions
             });
-            //console.log(body);
         } else {
             console.error(error);
         }

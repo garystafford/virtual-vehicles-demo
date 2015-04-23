@@ -1,20 +1,22 @@
-## Java Microservices Demo
+## Java Microservices / Node.js Demo
 **_This project is still in early stage development_**
 
-Java-based microservices demonstration, using [RestExpress](https://github.com/RestExpress), MongoDB, AngularJS, and HAProxy.
+Java-based microservices demonstration, using [RestExpress](https://github.com/RestExpress), MongoDB, Node.js, Express, AngularJS, and HAProxy.
 
 #### Virtual Vehicle Application
 The 'Virtual Vehicle' application allows a user to create a collection of virtual vehicles, maintain their vehicles, and use a virtual valet service to park the their vehicles. The 'Virtual Vehicle' application uses an AngularJS-based web UI to call three, load-balanced, highly-available, Java EE, RestExpress-based microservices. Following current microservice architectural patterns, each service has it's own MongoDB data-source.
-* Vehicle Service (virtual_vehicle database)
-* Maintenance Service (virtual_maintenance database)
-* Valet Service (virtual_valet database)
+* Vehicle Service (virtual_vehicle Mongo database)
+* Maintenance Service (virtual_maintenance Mongo database)
+* Valet Service (virtual_valet Mongo database)
 
 #### Technologies Used
 * [RestExpress](http://search.maven.org/#artifactdetails%7Ccom.strategicgains.archetype%7Crestexpress-mongodb%7C1.15%7Cmaven-archetype)
+* [Netty](http://netty.io/)
 * MongoDB
+* Node.js
+* Express
 * AngularJS
 * HAProxy
-* [Netty](http://netty.io/)
 * Java EE, Maven, NetBeans, Git, GitHub
 * VirtualBox, Vagrant, Foreman, Puppet, Jenkins
 

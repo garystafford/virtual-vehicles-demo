@@ -41,14 +41,14 @@ angular.module('mean.vehicles').config(['$stateProvider',
                 }
             })
             .state('edit vehicle', {
-                url: '/virtual/vehicles/:vehicleId/edit',
+                url: '/virtual/vehicle/:vehicleId/edit',
                 templateUrl: './vehicles/views/edit.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
             })
             .state('vehicle by id', {
-                url: '/virtual/vehicles/:vehicleId',
+                url: '/virtual/vehicle/:vehicleId',
                 templateUrl: './vehicles/views/view.html',
                 resolve: {
                     loggedin: checkLoggedin

@@ -18,6 +18,7 @@ import org.restexpress.Response;
 public class AuthenticationController {
 
     static final String MOCK_API_KEY = "e0a7ace4-a19c-4952-89ce-882a4109194f";
+    static final String JWT_SECRET = "super secret";
 
     public AuthenticationController() {
         super();
@@ -41,9 +42,9 @@ public class AuthenticationController {
         try {
             String apikey = request.getQueryStringMap().get(Constants.Url.API_KEY);
             if (apikey == null) {
-                return "No API Key Supplied (jwt?api_key=...)";
+                return "No API key supplied";
             }
-            JWTSigner jwts = new JWTSigner("secret");
+            JWTSigner jwts = new JWTSigner(JWT_SECRET);
             Map<String, Object> payload = new HashMap<>();
 //            payload.put("iss", "example-api.com");
 //            payload.put("sub", "Virtual Vehicles Application");
@@ -66,7 +67,7 @@ public class AuthenticationController {
             String jwt = request.getHeader(Constants.Url.JWT, "No JWT supplied");
 
             Map<String, Object> decodedPayload
-                    = new JWTVerifier("secret").verify(jwt);
+                    = new JWTVerifier(JWT_SECRET).verify(jwt);
             if (decodedPayload.get("api-key").equals(MOCK_API_KEY)) {
                 if (Long.parseLong(decodedPayload.get("exp").toString())
                         > System.currentTimeMillis() / 1000) {

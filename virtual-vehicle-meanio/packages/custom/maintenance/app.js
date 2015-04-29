@@ -19,7 +19,7 @@ Maintenance.register(function(app, auth, database) {
   //We are adding a link to the main menu for all authenticated users
   Maintenance.menus.add({
     title: 'Maintenance Records',
-    link: 'all maintenance',
+    link: 'all maintenance records',
     roles: ['authenticated'],
     menu: 'main'
   });

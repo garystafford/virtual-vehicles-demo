@@ -19,7 +19,7 @@ Valet.register(function(app, auth, database) {
   //We are adding a link to the main menu for all authenticated users
   Valet.menus.add({
     title: 'Valet Transactions',
-    link: 'all valet',
+    link: 'all valet transactions',
     roles: ['authenticated'],
     menu: 'main'
   });

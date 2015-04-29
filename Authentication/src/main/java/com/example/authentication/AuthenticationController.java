@@ -68,15 +68,16 @@ public class AuthenticationController {
 
             Map<String, Object> decodedPayload
                     = new JWTVerifier(JWT_SECRET).verify(jwt);
-            if (decodedPayload.get("api-key").equals(MOCK_API_KEY)) {
-                if (Long.parseLong(decodedPayload.get("exp").toString())
-                        > System.currentTimeMillis() / 1000) {
-                    return true;
-                }
+
+            if (decodedPayload.get("api-key").equals(MOCK_API_KEY)
+                    && Long.parseLong(decodedPayload.get("exp").toString())
+                    > System.currentTimeMillis() / 1000) {
+                return true;
             }
         } catch (IllegalStateException illegalStateException) {
             return false;
         }
+
         return false;
     }
 

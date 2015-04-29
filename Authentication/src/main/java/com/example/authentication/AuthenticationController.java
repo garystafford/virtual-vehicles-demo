@@ -25,7 +25,8 @@ public class AuthenticationController {
 
     public Object createApiKey(Request request, Response response) {
         // Mocking out the creation and storage of API Key
-        // for virtual-vehicles.com with a static uuid        
+        // for virtual-vehicles.com with a static uuid
+        // https://www.famkruithof.net/uuid/uuidgen
         return MOCK_API_KEY;
     }
 

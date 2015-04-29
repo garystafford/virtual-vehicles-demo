@@ -7,19 +7,14 @@ import org.restexpress.RestExpress;
 public abstract class Routes {
 
     public static void define(Configuration config, RestExpress server) {
-        //TODO: Your routes here...
-        server.uri("/auth0/apikey", config.getSampleController())
-                .action("createApiKey", HttpMethod.GET)
-                .name(Constants.Routes.SINGLE_SAMPLE);
-
-        server.uri("/auth0/jwt", config.getSampleController())
-                .action("createJwt", HttpMethod.GET)
-                .name(Constants.Routes.SINGLE_SAMPLE);
-
-        server.uri("/auth0/jwt/{jwt}", config.getSampleController())
-                .action("validateJwt", HttpMethod.GET)
-                .name(Constants.Routes.SINGLE_SAMPLE);
-// or...
-//		server.regex("/some.regex", config.getRouteController());
+        // Get API key
+        server.uri("/virtual/auth/apikey", config.getSampleController())
+                .action("createApiKey", HttpMethod.GET);
+        // Get JWT by passing API key
+        server.uri("/virtual/auth/jwt", config.getSampleController())
+                .action("createJwt", HttpMethod.GET);
+        // Validate JWT by passing JWT
+        server.uri("/virtual/auth/jwt/{jwt}", config.getSampleController())
+                .action("validateJwt", HttpMethod.GET);
     }
 }

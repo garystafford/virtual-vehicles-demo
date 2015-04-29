@@ -1,4 +1,4 @@
-## Java Microservices Integration with MEAN Stack Application Demo
+## Java Microservices Integration with MEAN Stack Demo
 **_This project is still in early stage development_**
 
 Java-based microservices integration with MEAN Stack demonstration. Uses the MEAN Stack, [RestExpress](https://github.com/RestExpress), Java, [Netty](http://netty.io/), JWT, and HAProxy.

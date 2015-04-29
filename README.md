@@ -1,21 +1,22 @@
-## Java Microservices / Node.js Demo
+## Java Microservices Integration with MEAN Stack Application Demo
 **_This project is still in early stage development_**
 
-Java-based microservices demonstration, using [RestExpress](https://github.com/RestExpress), MongoDB, Node.js, Express, AngularJS, and HAProxy.
+Java-based microservices integration with MEAN Stack demonstration. Uses the MEAN Stack, [RestExpress](https://github.com/RestExpress), Java, [Netty](http://netty.io/), JWT, and HAProxy.
 
 #### Virtual Vehicle Application
-The 'Virtual Vehicle' application allows a user to create a collection of virtual vehicles, maintain their vehicles, and use a virtual valet service to park the their vehicles. The 'Virtual Vehicle' application uses an AngularJS-based web UI to call three, load-balanced, highly-available, Java EE, RestExpress-based microservices. Following current microservice architectural patterns, each service has it's own MongoDB data-source.
+The 'Virtual Vehicle' application allows a user to create a collection of virtual vehicles, maintain their vehicles, and use a virtual valet service to park the their vehicles. The 'Virtual Vehicle' application uses an AngularJS-based web UI to call (4), load-balanced, highly-available, Java EE, RestExpress-based microservices. Following current microservice architectural patterns, each service has it's own MongoDB data-source.
 * Vehicle Service (virtual_vehicle Mongo database)
 * Maintenance Service (virtual_maintenance Mongo database)
 * Valet Service (virtual_valet Mongo database)
+* Authentication Service (no datasource required for demo)
 
 #### Technologies Used
 * [RestExpress](http://search.maven.org/#artifactdetails%7Ccom.strategicgains.archetype%7Crestexpress-mongodb%7C1.15%7Cmaven-archetype)
 * [Netty](http://netty.io/)
 * MongoDB
-* Node.js
-* Express
 * AngularJS
+* Express
+* Node.js
 * HAProxy
 * Java EE, Maven, NetBeans, Git, GitHub
 * VirtualBox, Vagrant, Foreman, Puppet, Jenkins
@@ -26,9 +27,9 @@ taf
 #### Project Goals
 * Short-term
  * User Foreman, Puppet, Vagrant, and VirtualBox to fully provision environment with HAProxy, Apache Web Server, Java, and microservices.
- * Create and manually deploy (3) HAProxy load-balanced, RestExpress-based microservices services running on (3) nodes (VMs).
- * Ensure services start on restart
- * Ensure each load-balanced service pool has it's own NoSQL MongoDB databases. (3) total databases.
+ * Create and manually deploy (4) HAProxy load-balanced, RestExpress-based microservices services running on (4) nodes (VMs).
+ * Ensure services start on restart.
+ * Ensure each load-balanced service pool has it's own NoSQL MongoDB databases. (4) total databases.
  * Ensure services testable in Postman or similar tool. No AngularJS-based client interface/UI.
  * Do not implement service-to-service communication via HTTP or messaging bus, etc.
 * Medium-term

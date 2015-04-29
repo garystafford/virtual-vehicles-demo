@@ -16,10 +16,9 @@ public abstract class Routes {
                 .action("createJwt", HttpMethod.GET)
                 .name(Constants.Routes.SINGLE_SAMPLE);
 
-//		server.uri("/your/route/here.{format}", config.getSampleController())
-//			.action("readAll", HttpMethod.GET)
-//			.method(HttpMethod.POST)
-//			.name(Constants.Routes.SAMPLE_COLLECTION);
+        server.uri("/auth0/jwt/{jwt}", config.getSampleController())
+                .action("validateJwt", HttpMethod.GET)
+                .name(Constants.Routes.SINGLE_SAMPLE);
 // or...
 //		server.regex("/some.regex", config.getRouteController());
     }

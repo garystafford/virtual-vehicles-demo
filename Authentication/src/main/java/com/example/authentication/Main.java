@@ -10,7 +10,7 @@ import org.restexpress.util.Environment;
 
 public class Main
 {
-	private static final String SERVICE_NAME = "TODO: Enter service name";
+	private static final String SERVICE_NAME = "virtual-authentication";
 
 	public static void main(String[] args) throws Exception
 	{

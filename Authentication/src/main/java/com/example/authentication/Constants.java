@@ -3,12 +3,13 @@ package com.example.authentication;
 public class Constants
 {
 	/**
-	 * These define the URL parmaeters used in the route definition strings (e.g. '{userId}').
+	 * These define the URL parameters used in the route definition strings (e.g. '{userId}').
 	 */
 	public class Url
 	{
 		//TODO: Your URL parameter names here...
-		public static final String SAMPLE_ID = "sampleId";
+		public static final String API_KEY = "api_key";
+		public static final String JWT = "jwt";
 	}
 
 	/**

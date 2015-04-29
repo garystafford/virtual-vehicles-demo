@@ -14,9 +14,10 @@ import java.util.Map;
 
 import org.restexpress.Request;
 import org.restexpress.Response;
-import org.apache.commons.lang.RandomStringUtils;
 
 public class AuthenticationController {
+
+    static final String MOCK_API_KEY = "e0a7ace4-a19c-4952-89ce-882a4109194f";
 
     public AuthenticationController() {
         super();
@@ -24,11 +25,8 @@ public class AuthenticationController {
 
     public Object createApiKey(Request request, Response response) {
         // Mocking out the creation and storage of api_key
-        // for virtual-vehicles.com
-        
-        // String api_key = RandomStringUtils.randomAlphanumeric(24);
-        
-        return "e0a7ace4-a19c-4952-89ce-882a4109194f"; //uuid
+        // for virtual-vehicles.com with a static uuid        
+        return MOCK_API_KEY;
     }
 
     public Object createJwt(Request request, Response response)
@@ -40,8 +38,11 @@ public class AuthenticationController {
         long epoch_expire = epoch_now + 86400; // plus 1 day
 
         try {
-
-            JWTSigner jwts = new JWTSigner("secret goes here!");
+            String apikey = request.getQueryStringMap().get(Constants.Url.API_KEY);
+            if (apikey == null) {
+                return "Please supply an API Key (jwt?api_key=...)";
+            }
+            JWTSigner jwts = new JWTSigner("secret");
             Map<String, Object> payload = new HashMap<>();
 //            payload.put("iss", "example-api.com");
 //            payload.put("sub", "Virtual Vehicles Application");
@@ -51,14 +52,30 @@ public class AuthenticationController {
             payload.put("api-key", request.getQueryStringMap().get("api_key"));
 
             jwt = jwts.sign(payload);
-//            System.out.println(jwt);
-//            Map<String, Object> decodedPayload
-//                    = new JWTVerifier("super secret goes here!").verify(jwt);
-//            System.out.println(decodedPayload);
         } catch (IllegalStateException illegalStateException) {
             return "Invalid Token! " + illegalStateException;
         }
         return jwt;
+    }
+
+    public Object validateJwt(Request request, Response response)
+            throws NoSuchAlgorithmException, InvalidKeyException, IOException,
+            SignatureException, JWTVerifyException {
+        try {
+            String jwt = request.getHeader(Constants.Url.JWT, "No JWT supplied");
+
+            Map<String, Object> decodedPayload
+                    = new JWTVerifier("secret").verify(jwt);
+            if (decodedPayload.get("api-key").equals(MOCK_API_KEY)) {
+                if (Long.parseLong(decodedPayload.get("exp").toString())
+                        > System.currentTimeMillis() / 1000) {
+                    return true;
+                }
+            }
+        } catch (IllegalStateException illegalStateException) {
+            return false;
+        }
+        return false;
     }
 
     public Object read(Request request, Response response) {

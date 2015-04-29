@@ -24,7 +24,7 @@ public class AuthenticationController {
     }
 
     public Object createApiKey(Request request, Response response) {
-        // Mocking out the creation and storage of api_key
+        // Mocking out the creation and storage of API Key
         // for virtual-vehicles.com with a static uuid        
         return MOCK_API_KEY;
     }
@@ -40,7 +40,7 @@ public class AuthenticationController {
         try {
             String apikey = request.getQueryStringMap().get(Constants.Url.API_KEY);
             if (apikey == null) {
-                return "Please supply an API Key (jwt?api_key=...)";
+                return "No API Key Supplied (jwt?api_key=...)";
             }
             JWTSigner jwts = new JWTSigner("secret");
             Map<String, Object> payload = new HashMap<>();
@@ -49,7 +49,7 @@ public class AuthenticationController {
 //            payload.put("aud", "virtual-vehicles.com");
             payload.put("ait", epoch_now);
             payload.put("exp", epoch_expire);
-            payload.put("api-key", request.getQueryStringMap().get("api_key"));
+            payload.put("api-key", apikey);
 
             jwt = jwts.sign(payload);
         } catch (IllegalStateException illegalStateException) {

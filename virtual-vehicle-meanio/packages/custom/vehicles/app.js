@@ -18,7 +18,7 @@ Vehicles.register(function (app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Vehicles.menus.add({
-        title: 'Vehicles',
+        title: 'Vehicle Collection',
         link : 'all vehicles',
         roles: ['authenticated'],
         menu : 'main'

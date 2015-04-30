@@ -1,4 +1,5 @@
 com/example/vehicle/Constants.class
+com/example/authenticate/AuthenticateJwt.class
 com/example/vehicle/serialization/ObjectIdDeserializer.class
 com/example/vehicle/serialization/SerializationProvider.class
 com/example/vehicle/serialization/XstreamOidConverter.class

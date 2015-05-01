@@ -1,3 +1,4 @@
+//http://www.mkyong.com/webservices/jax-rs/restfull-java-client-with-java-net-url/
 package com.example.authenticate;
 
 import java.io.BufferedReader;

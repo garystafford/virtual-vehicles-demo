@@ -4,12 +4,13 @@
 Java-based microservices integration with MEAN Stack demonstration. Uses the MEAN Stack, [RestExpress](https://github.com/RestExpress), Java, [Netty](http://netty.io/), JWT, and HAProxy.
 
 #### Virtual Vehicles Microservices / API
-The 'Virtual Vehicles' API (virtual-vehicles.com) exposes a vehicle-themed collection of load-balanced, highly-available, Java EE, RestExpress-based microservices. The RESTful microservices follow current microservice architectural patterns. Each service has it's own MongoDB datasource.  
-Leveraging the 'Virtual Vehicles' API, we will build an web-based minimally-viable application, 'My Virtual Cars' (myvirtualcars.com). This application, built on the MEAN Stack, will allow users to create a collection of virtual vehicles, maintain and service their vehicles, and use a virtual valet service to park the their vehicles.
+The 'Virtual Vehicles' API (virtual-vehicles.com) exposes a vehicle-themed collection of load-balanced, highly-available, Java EE, RestExpress-based microservices. The RESTful microservices follow current microservice architectural patterns. Each service has it's own MongoDB datasource. Service include:
 * Vehicle Service (virtual_vehicle Mongo database)
 * Maintenance Service (virtual_maintenance Mongo database)
 * Valet Service (virtual_valet Mongo database)
 * Authentication Service (virtual_authentication database)
+
+Leveraging the 'Virtual Vehicles' API, we will build an web-based minimally-viable application, 'My Virtual Cars' (myvirtualcars.com). This application, built on the MEAN Stack, will allow users to create a collection of virtual vehicles, maintain and service their vehicles, and use a virtual valet service to park the their vehicles.
 
 #### Technologies Used
 * [RestExpress](http://search.maven.org/#artifactdetails%7Ccom.strategicgains.archetype%7Crestexpress-mongodb%7C1.15%7Cmaven-archetype)
@@ -21,10 +22,11 @@ Leveraging the 'Virtual Vehicles' API, we will build an web-based minimally-viab
  * AngularJS
  * Express
  * Node.js
-* NetBeans, WebStorm IDEs
+ * JWT for authentication
+* NetBeans and WebStorm IDEs
 * Git, GitHub SCM
 * VirtualBox, Vagrant, Foreman, Puppet, Jenkins for CI and CD
-* HAProxy
+* HAProxy for load-balancing
 
 #### About RestExpress
 According to their website, [RestExpress](https://github.com/RestExpress) composes best-of-breed open-source tools to enable quickly creating RESTful microservices that embrace industry best practices. Built from the ground-up for container-less, microservice architectures, RestExpress is the easiest way to create RESTful APIs in Java. An extremely Lightweight, Fast, REST Engine and API for Java. A thin wrapper on Netty IO HTTP handling, RestExpress lets you create performant, stand-alone REST APIs rapidly.

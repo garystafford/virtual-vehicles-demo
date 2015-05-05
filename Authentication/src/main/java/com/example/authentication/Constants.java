@@ -10,7 +10,9 @@ public class Constants {
 
         public static final String CLIENT_ID = "oid";
         public static final String API_KEY = "api_key";
+        public static final String SECRET = "secret";
         public static final String JWT = "jwt";
+        public static final String ISS = "virtual-vehicles.com";
     }
 
     /**
@@ -21,6 +23,8 @@ public class Constants {
     public class Routes {
 
         public static final String SINGLE_CLIENT = "client.single.route";
+        public static final String CLIENT_COUNT = "client.count.route";
+        public static final String CLIENT_FIND = "client.find.route";
         public static final String CLIENT_COLLECTION = "client.collection.route";
     }
 }

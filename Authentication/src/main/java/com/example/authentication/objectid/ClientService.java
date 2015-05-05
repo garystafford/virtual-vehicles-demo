@@ -16,11 +16,11 @@ import com.strategicgains.syntaxe.ValidationEngine;
  */
 public class ClientService {
 
-    private ClientRepository clients;
+    private final ClientRepository clients;
 
-    public ClientService(ClientRepository samplesRepository) {
+    public ClientService(ClientRepository clientRepository) {
         super();
-        this.clients = samplesRepository;
+        this.clients = clientRepository;
     }
 
     public Client create(Client entity) {
@@ -48,5 +48,9 @@ public class ClientService {
 
     public long count(QueryFilter filter) {
         return clients.count(filter);
+    }
+
+    public List<Client> find(QueryFilter filter) {
+        return clients.find(filter);
     }
 }

@@ -33,7 +33,7 @@ import org.apache.commons.lang.RandomStringUtils;
 public class ClientController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
-    private ClientService service;
+    private final ClientService service;
 
     public ClientController(ClientService clientService) {
         super();
@@ -112,5 +112,17 @@ public class ClientController {
                 "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
+    }
+
+    public long count(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        long count = service.count(filter);
+        return count;
+    }
+
+    public String find(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        List<Client> clients = service.find(filter);
+        return clients.get(0).getSecret();
     }
 }

@@ -31,7 +31,6 @@ public class JsonSerializationProcessor
     @Override
     protected void initializeModule(SimpleModule module) {
         super.initializeModule(module);
-
         // For MongoDB ObjectId as entity identifiers...
         module.addDeserializer(ObjectId.class, new ObjectIdDeserializer());
         module.addSerializer(ObjectId.class, new ObjectIdSerializer());

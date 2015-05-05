@@ -16,7 +16,7 @@ import com.strategicgains.syntaxe.ValidationEngine;
  */
 public class VehicleService {
 
-    private VehicleRepository vehicles;
+    private final VehicleRepository vehicles;
 
     /**
      *

@@ -1,7 +1,5 @@
 package com.example.valet.serialization;
 
-import java.util.UUID;
-
 import org.bson.types.ObjectId;
 import org.restexpress.ContentType;
 import org.restexpress.serialization.json.JacksonJsonProcessor;

@@ -16,7 +16,7 @@ import com.strategicgains.syntaxe.ValidationEngine;
  */
 public class TransactionService {
 
-    private TransactionRepository transactions;
+    private final TransactionRepository transactions;
 
     public TransactionService(TransactionRepository transactionsRepository) {
         super();

@@ -16,7 +16,7 @@ import com.strategicgains.syntaxe.ValidationEngine;
  */
 public class RecordService {
 
-    private RecordRepository records;
+    private final RecordRepository records;
 
     public RecordService(RecordRepository maintenancesRepository) {
         super();

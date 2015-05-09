@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.bind.DatatypeConverter;
 import org.restexpress.Request;
 import org.restexpress.Response;
 
@@ -23,53 +22,66 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 public class JwtController {
+
+    private static Logger log = LogManager.getLogger(JwtController.class.getName());
+    private static String baseUrlAndPort;
 
     public JwtController() {
         super();
     }
 
-    public Object createJwt(Request request, Response response)
-            throws NoSuchAlgorithmException, InvalidKeyException, IOException,
-            SignatureException, JWTVerifyException {
-        String apikey;
-        String secret;
-        String jwt;
-        // http://www.epochconverter.com/
-        long epoch_now = System.currentTimeMillis() / 1000;
-        long epoch_expire = epoch_now + 86400; // plus 1 day
+    public JwtController(String baseUrlAndPort) {
+        JwtController.baseUrlAndPort = baseUrlAndPort;
+    }
+
+    public Object createJwt(Request request, Response response) {
+        String apiKey, secret, jwt;
 
         try {
-            apikey = request.getQueryStringMap().get(Constants.Url.API_KEY);
-            if (apikey == null) {
-                return "No API key supplied";
+            apiKey = request.getQueryStringMap().get(Constants.Url.API_KEY);
+            if (apiKey == null) {
+                log.error("request.getQueryStringMap().get(Constants.Url.API_KEY)"
+                        + "... failed: API key is null");
+                return "API key is null";
             }
             secret = request.getQueryStringMap().get(Constants.Url.SECRET);
             if (secret == null) {
-                return "No Secret supplied";
+                log.error("request.getQueryStringMap().get(Constants.Url.SECRET)"
+                        + "... failed: Secret is null");
+                return "Secret is null";
             }
+
+            // http://www.epochconverter.com/
+            long epoch_now = System.currentTimeMillis() / 1000;
+            long epoch_expire = epoch_now + 86400; // plus 1 day
+
             JWTSigner jwts = new JWTSigner(secret);
             Map<String, Object> payload = new HashMap<>();
             payload.put("iss", Constants.Url.ISS);
             payload.put("ait", epoch_now);
             payload.put("exp", epoch_expire);
-            payload.put("api-key", apikey);
-
+            payload.put("apiKey", apiKey);
             jwt = jwts.sign(payload);
-        } catch (IllegalStateException illegalStateException) {
-            return "Invalid Token! " + illegalStateException;
+        } catch (Exception e) {
+            log.error("createJwt(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
+            log.debug("createJwt(...) failed: " + ExceptionUtils.getStackTrace(e));
+            return "JWT creation failed";
         }
         return jwt;
     }
 
-    public Object validateJwt(Request request, Response response)
-            throws NoSuchAlgorithmException, InvalidKeyException, IOException,
-            SignatureException, JWTVerifyException, ParseException {
+    public Object validateJwt(Request request, Response response) {
         try {
             String jwt = request.getHeader(Constants.Url.JWT, "No JWT supplied");
             String alg = getSignatureAlgorithm(jwt);
@@ -78,47 +90,63 @@ public class JwtController {
             Map<String, Object> decodedPayload
                     = new JWTVerifier(secret).verify(jwt);
 
-            if (alg.equals("HS256")
-                    && Long.parseLong(decodedPayload.get("exp").toString())
-                    > System.currentTimeMillis() / 1000) {
-                return true;
+            if (!alg.equals("HS256") // prevent hack using 'none'
+                    || Long.parseLong(decodedPayload.get("exp").toString())
+                    <= System.currentTimeMillis() / 1000) {
+                return false;
             }
-        } catch (IllegalStateException illegalStateException) {
+        } catch (RuntimeException | NoSuchAlgorithmException | InvalidKeyException | IOException | SignatureException | JWTVerifyException e) {
+            log.error("validateJwt(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
+            log.debug("validateJwt(...) failed: " + ExceptionUtils.getStackTrace(e));
             return false;
         }
 
-        return false;
+        return true;
     }
 
-    private String getApiKey(String jwt) throws ParseException,
-            UnsupportedEncodingException {
-        String[] base64EncodedSegments = jwt.split(Pattern.quote("."));
-        String base64EncodedClaims = base64EncodedSegments[1];
-        byte[] decoded = Base64.decodeBase64(base64EncodedClaims);
-        String claims = new String(decoded, "UTF-8") + "\n";
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(claims);
-        String apiKey = json.get("api-key").toString();
+    private String getApiKey(String jwt) {
+        String apiKey = "";
+        try {
+            String[] base64EncodedSegments = jwt.split(Pattern.quote("."));
+            String base64EncodedClaims = base64EncodedSegments[1];
+            byte[] decoded = Base64.decodeBase64(base64EncodedClaims);
+            String claims = new String(decoded, "UTF-8") + "\n";
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(claims);
+            log.info("JWT claims: " + json.toJSONString());
+            apiKey = json.get("apiKey").toString();
+        } catch (UnsupportedEncodingException | ParseException e) {
+            log.error("getApiKey(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
+            log.debug("getApiKey(...) failed: " + ExceptionUtils.getStackTrace(e));
+            return "Get API key failed";
+        }
         return apiKey;
     }
 
-    private String getSignatureAlgorithm(String jwt) throws ParseException,
-            UnsupportedEncodingException {
-        String[] base64EncodedSegments = jwt.split(Pattern.quote("."));
-        String base64EncodedHeader = base64EncodedSegments[0];
-        byte[] decoded = Base64.decodeBase64(base64EncodedHeader);
-        String header = new String(decoded, "UTF-8") + "\n";
-        JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(header);
-        String alg = json.get("alg").toString();
+    private String getSignatureAlgorithm(String jwt) {
+        String alg = "";
+        try {
+            String[] base64EncodedSegments = jwt.split(Pattern.quote("."));
+            String base64EncodedHeader = base64EncodedSegments[0];
+            byte[] decoded = Base64.decodeBase64(base64EncodedHeader);
+            String header = new String(decoded, "UTF-8") + "\n";
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(header);
+            log.info("JWT header: " + json.toJSONString());
+            alg = json.get("alg").toString();
+        } catch (UnsupportedEncodingException | ParseException e) {
+            log.error("validateJwt(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
+            log.debug("validateJwt(...) failed: " + ExceptionUtils.getStackTrace(e));
+            return "Get signature algorithm failed";
+        }
         return alg;
     }
 
-    private static String getSecret(String apiKey) throws RuntimeException {
-        String output;
-        String secret = null;
+    private static String getSecret(String apiKey) {
+        String output, secret = "";
         try {
-            URL url = new URL("http://localhost:8587/virtual/clients/find");
+            URL url = new URL(baseUrlAndPort + "/clients/secrets/find");
+            log.info("Authentication service URL called: " + url);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -129,8 +157,6 @@ public class JwtController {
                 System.out.println(conn.getResponseCode());
                 return String.valueOf("Failed : HTTP error code : "
                         + conn.getResponseCode());
-//                throw new RuntimeException("Failed : HTTP error code : "
-//                        + conn.getResponseCode());
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -140,12 +166,10 @@ public class JwtController {
                 secret = output;
             }
             conn.disconnect();
-        } catch (MalformedURLException e) {
-            return e.getMessage();
-
         } catch (IOException e) {
-            return e.getMessage();
-        }
+            log.error("getSecret(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
+            log.debug("getSecret(...) failed: " + ExceptionUtils.getStackTrace(e));
+            return "Get secret failed";        }
         return secret.replaceAll("\"", "");
     }
 

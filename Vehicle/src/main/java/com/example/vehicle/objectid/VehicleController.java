@@ -1,5 +1,6 @@
 package com.example.vehicle.objectid;
 
+import com.example.authenticate.AuthenticateJwt;
 import java.util.List;
 
 import io.netty.handler.codec.http.HttpMethod;
@@ -31,15 +32,21 @@ import com.strategicgains.repoexpress.mongodb.Identifiers;
 public class VehicleController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
-    private VehicleService service;
+    private final VehicleService service;
+    private final String baseUrl;
+    private final int authPort;
 
     /**
      *
      * @param vehicleService
+     * @param baseUrl
+     * @param authPort
      */
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, String baseUrl, int authPort) {
         super();
         this.service = vehicleService;
+        this.baseUrl = baseUrl;
+        this.authPort = authPort;
     }
 
     /**
@@ -89,6 +96,9 @@ public class VehicleController {
      * @return
      */
     public List<Vehicle> readAll(Request request, Response response) {
+        if (!AuthenticateJwt.authenticateJwt(request, baseUrl, authPort)) {
+            return null;
+        }
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);

@@ -21,16 +21,17 @@ public class Configuration
     private static final String DEFAULT_EXECUTOR_THREAD_POOL_SIZE = "20";
 
     private static final String PORT_PROPERTY = "port";
-    //private static final String BASE_URL_PROPERTY = "base.url";
-    private static final String BASE_URL_PROPERTY = "base.url" + "port";
-
-    private static final String EXECUTOR_THREAD_POOL_SIZE = "executor.threadPool.size";
+    private static final String BASE_URL_PROPERTY = "base.url";
+    private static final String AUTHENTICATION_PORT = "authentication.port";
+    private static final String EXECUTOR_THREAD_POOL_SIZE
+            = "executor.threadPool.size";
 
     private int port;
     private String baseUrl;
+    private String baseUrlAndPort;
+    private int authenticationPort;
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
-
     private VehicleController vehicleController;
 
     /**
@@ -39,9 +40,14 @@ public class Configuration
      */
     @Override
     protected void fillValues(Properties p) {
-        this.port = Integer.parseInt(p.getProperty(PORT_PROPERTY, String.valueOf(RestExpress.DEFAULT_PORT)));
-        this.baseUrl = p.getProperty(BASE_URL_PROPERTY, "http://localhost:" + String.valueOf(port));
-        this.executorThreadPoolSize = Integer.parseInt(p.getProperty(EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
+        this.port = Integer.parseInt(p.getProperty(PORT_PROPERTY,
+                String.valueOf(RestExpress.DEFAULT_PORT)));
+        this.baseUrl = p.getProperty(BASE_URL_PROPERTY, "http://localhost");
+        this.baseUrlAndPort = baseUrl + ":" + port;
+        this.authenticationPort = Integer.parseInt(p.getProperty(
+                AUTHENTICATION_PORT, String.valueOf(port)));
+        this.executorThreadPoolSize = Integer.parseInt(p.getProperty(
+                EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
         this.metricsSettings = new MetricsConfig(p);
         MongoConfig mongo = new MongoConfig(p);
         initialize(mongo);
@@ -50,12 +56,12 @@ public class Configuration
     private void initialize(MongoConfig mongo) {
         VehicleRepository vehiclesRepository = new VehicleRepository(mongo.getClient(), mongo.getDbName());
         VehicleService vehicleService = new VehicleService(vehiclesRepository);
-        vehicleController = new VehicleController(vehicleService);
+        vehicleController = new VehicleController(vehicleService, baseUrl, authenticationPort);
     }
 
     /**
      *
-     * @return
+     * @return port
      */
     public int getPort() {
         return port;
@@ -63,10 +69,25 @@ public class Configuration
 
     /**
      *
-     * @return
+     * @return baseUrl
      */
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    /**
+     *
+     * @return baseUrlAndPort
+     */
+    public String getBaseUrlAndPort() {
+        return baseUrlAndPort;
+    }
+
+    /**
+     * @return authenticationPort
+     */
+    public int getAuthenticationPort() {
+        return authenticationPort;
     }
 
     /**
@@ -87,7 +108,7 @@ public class Configuration
 
     /**
      *
-     * @return
+     * @return vehicleController
      */
     public VehicleController getVehicleController() {
         return vehicleController;

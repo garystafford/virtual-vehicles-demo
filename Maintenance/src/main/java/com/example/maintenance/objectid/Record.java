@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Entity;
  * UUID). It also contains createdAt and updatedAt properties that are
  * automatically maintained by the persistence layer (RecordRepository).
  */
-@Entity("maintenances")
+@Entity("records")
 public class Record
         extends AbstractMongodbEntity
         implements Linkable {

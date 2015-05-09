@@ -110,6 +110,18 @@ A Basic, MongoDB-backed Service Suite</description>
 	  <artifactId>json-simple</artifactId>
 	  <version>1.1.1</version>
 	 </dependency>
+	 <dependency>
+	  <groupId>org.apache.logging.log4j</groupId>
+	  <artifactId>log4j-api</artifactId>
+	  <version>2.2</version>
+	  <type>jar</type>
+	 </dependency>
+	 <dependency>
+	  <groupId>org.apache.commons</groupId>
+	  <artifactId>commons-lang3</artifactId>
+	  <version>3.3.2</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>

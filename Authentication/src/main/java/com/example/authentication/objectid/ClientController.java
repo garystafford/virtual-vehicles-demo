@@ -120,9 +120,14 @@ public class ClientController {
         return count;
     }
 
-    public String find(Request request, Response response) {
+    public String findClientSecret(Request request, Response response) {
+        List<Client> clients = find(request, response);
+        return clients.get(0).getSecret();
+    }
+
+    public List<Client> find(Request request, Response response) {
         QueryFilter filter = QueryFilters.parseFrom(request);
         List<Client> clients = service.find(filter);
-        return clients.get(0).getSecret();
+        return clients;
     }
 }

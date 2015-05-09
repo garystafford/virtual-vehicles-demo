@@ -7,48 +7,63 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.restexpress.Request;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class AuthenticateJwt {
 
-    public static void main(String[] args) {
-        System.out.println(authenticate());
-    }
+    private static Logger log = LogManager.getLogger(AuthenticateJwt.class.getName());
 
-    private static boolean authenticate() throws RuntimeException {
+    public static boolean authenticateJwt(Request request, String baseUrl, int authPort) {
+        String jwt;
+
         try {
-            String jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGkta2V5Ijoi"
-                    + "ZTBhN2FjZTQtYTE5Yy00OTUyLTg5Y2UtODgyYTQxMDkxOTRmIiwiZXhwI"
-                    + "joxNDMwNDQ4NTAxLCJhaXQiOjE0MzAzNjIxMDF9.lB5fRz5IqLsNzpNFL"
-                    + "3aFlJKROKaqhMrw4llOUzDDv1k";
+            log.info("request.getUrl(): " + request.getUrl());
+            jwt = (request.getHeader("Authorization").split(" "))[1];
+            if (jwt == null) {
+                log.error("request.getHeader(\"Authorization\")... failed: JWT is null");
+                return false;
+            }
+        } catch (NullPointerException e) {
+            log.error("request.getHeader(\"Authorization\")... failed: "
+                    + ExceptionUtils.getRootCauseMessage(e));
+            log.debug(ExceptionUtils.getStackTrace(e));
+            return false;
+        }
 
-            URL url = new URL("http://localhost:8587/virtual/auth/jwt/" + jwt);
-
+        try {
+            URL url = new URL(baseUrl + ":" + authPort + "/jwts/" + jwt);
+            log.info("Authentication service URL called: " + url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 
             if (conn.getResponseCode() != 200) {
-                System.out.println(conn.getResponseCode());
+                log.error(conn.getResponseCode() + ": "
+                        + conn.getResponseMessage());
                 return false;
-//                throw new RuntimeException("Failed : HTTP error code : "
-//                        + conn.getResponseCode());
+
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
             String output;
-            System.out.println("Output from Server .... \n");
+            log.info("Output from Server:");
             while ((output = br.readLine()) != null) {
-                //System.out.println(output);
+                log.info(output);
             }
             conn.disconnect();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            log.error(ExceptionUtils.getRootCauseMessage(e));
+            log.debug(ExceptionUtils.getStackTrace(e));
             return false;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(ExceptionUtils.getRootCauseMessage(e));
+            log.debug(ExceptionUtils.getStackTrace(e));
             return false;
         }
         return true;

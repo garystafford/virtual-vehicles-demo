@@ -16,11 +16,11 @@ public abstract class Routes {
      * @param server
      */
     public static void define(Configuration config, RestExpress server) {
-        server.uri("/virtual/vehicle/{oid}.{format}", config.getVehicleController())
+        server.uri("/vehicles/{oid}.{format}", config.getVehicleController())
                 .method(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE)
                 .name(Constants.Routes.SINGLE_VEHICLE);
 
-        server.uri("/virtual/vehicles.{format}", config.getVehicleController())
+        server.uri("/vehicles.{format}", config.getVehicleController())
                 .action("readAll", HttpMethod.GET)
                 .method(HttpMethod.POST)
                 .name(Constants.Routes.VEHICLE_COLLECTION);

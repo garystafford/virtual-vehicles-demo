@@ -70,7 +70,7 @@ public class Main {
         Configuration config = loadEnvironment(args);
         RestExpress server = new RestExpress()
                 .setName(SERVICE_NAME)
-                .setBaseUrl(config.getBaseUrl())
+                .setBaseUrl(config.getBaseUrlAndPort())
                 .setExecutorThreadCount(config.getExecutorThreadPoolSize())
                 .addMessageObserver(new SimpleConsoleLogMessageObserver());
 

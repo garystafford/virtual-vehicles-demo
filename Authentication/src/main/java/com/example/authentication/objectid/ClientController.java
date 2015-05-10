@@ -121,13 +121,22 @@ public class ClientController {
     }
 
     public String findClientSecret(Request request, Response response) {
-        List<Client> clients = find(request, response);
-        return clients.get(0).getSecret();
+        List<Client> entities = find(request, response);
+        return entities.get(0).getSecret();
     }
 
     public List<Client> find(Request request, Response response) {
         QueryFilter filter = QueryFilters.parseFrom(request);
-        List<Client> clients = service.find(filter);
-        return clients;
+        List<Client> entities = service.find(filter);
+        // Bind the resources in the collection with link URL tokens, etc. here...
+        HyperExpress.tokenBinder(new TokenBinder<Client>() {
+            @Override
+            public void bind(Client entity, TokenResolver resolver) {
+                resolver.bind(Constants.Url.CLIENT_ID,
+                        Identifiers.MONGOID.format(entity.getId()));
+            }
+        });
+
+        return entities;
     }
 }

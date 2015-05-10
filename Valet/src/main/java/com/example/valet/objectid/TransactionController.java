@@ -31,7 +31,7 @@ import com.strategicgains.repoexpress.mongodb.Identifiers;
 public class TransactionController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
-    private TransactionService service;
+    private final TransactionService service;
 
     public TransactionController(TransactionService valetService) {
         super();

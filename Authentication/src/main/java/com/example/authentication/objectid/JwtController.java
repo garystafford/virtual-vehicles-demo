@@ -20,9 +20,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -145,7 +143,7 @@ public class JwtController {
     private static String getSecret(String apiKey) {
         String output, secret = "";
         try {
-            URL url = new URL(baseUrlAndPort + "/clients/secrets/find");
+            URL url = new URL(baseUrlAndPort + "/clients/utils/find/secrets");
             log.info("Authentication service URL called: " + url);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

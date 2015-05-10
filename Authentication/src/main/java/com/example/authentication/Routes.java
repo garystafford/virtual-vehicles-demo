@@ -21,17 +21,17 @@ public abstract class Routes {
                 .name(Constants.Routes.SINGLE_CLIENT);
 
         // Find client using queryfilter
-        server.uri("/clients/find.{format}", config.getClientController())
+        server.uri("/clients/utils/find.{format}", config.getClientController())
                 .action("find", HttpMethod.GET)
                 .name(Constants.Routes.CLIENT_FIND);
 
                 // Find client secret using queryfilter for apiKey
-        server.uri("/clients/secrets/find.{format}", config.getClientController())
+        server.uri("/clients/utils/find/secrets.{format}", config.getClientController())
                 .action("findClientSecret", HttpMethod.GET)
                 .name(Constants.Routes.CLIENT_FIND_SECRET);
 
         // Find client count using queryfilter
-        server.uri("/clients/count.{format}", config.getClientController())
+        server.uri("/clients/utils/count.{format}", config.getClientController())
                 .action("count", HttpMethod.GET)
                 .name(Constants.Routes.CLIENT_COUNT);
 

@@ -1,7 +1,7 @@
 ## Microservices / RESTful API Integration with MEAN Stack Demo
 **_This project is still in early stage development_**
 
-Develop a well-architected and well-documented RESTful API example, built on a tightly-integrated collection of Java EE-based microservices. Build a MEANRAD Stack application, which relies on the RESTful API for a majority of functionality. Ensure the services are highly-available, secure, and scalable.
+Develop a well-architected and well-documented RESTful API example, built on a tightly-integrated collection of Java EE-based microservices. Build a MEAN Stack application, which relies on the RESTful API for a majority of functionality. Ensure the services are highly-available, secure, and scalable.
 
 #### Virtual Vehicles Microservices / RESTful API
 The 'Virtual Vehicles' RESTful API (api.virtual-vehicles.com) exposes a vehicle-themed collection of load-balanced, highly-available, Java EE, RestExpress-based microservices. The RESTful microservices follow much of current microservice architectural patterns. Each service has it's own MongoDB datasource. Services include:
@@ -18,16 +18,16 @@ Leveraging the 'Virtual Vehicles' RESTful API, we will build an web-based minima
 * [Netty](http://netty.io/)
 * Java EE
 * Maven
-* MEAN Stack
+* [MEAN Stack](http://mean.io/#!/)
  * MongoDB
  * AngularJS
  * Express
  * Node.js
- * JWT for authentication
-* NetBeans and WebStorm IDEs
-* Git, GitHub SCM
+ * [JSON Web Tokens (JWT)](http://jwt.io) for authentication
 * VirtualBox, Vagrant, Foreman, Puppet, Jenkins for CI and CD
 * HAProxy for load-balancing
+* NetBeans and WebStorm IDEs
+* Git, GitHub SCM
 
 #### About RestExpress
 According to their website, [RestExpress](https://github.com/RestExpress) composes best-of-breed open-source tools to enable quickly creating RESTful microservices that embrace industry best practices. Built from the ground-up for container-less, microservice architectures, RestExpress is the easiest way to create RESTful APIs in Java. An extremely Lightweight, Fast, REST Engine and API for Java. A thin wrapper on Netty IO HTTP handling, RestExpress lets you create performant, stand-alone REST APIs rapidly.

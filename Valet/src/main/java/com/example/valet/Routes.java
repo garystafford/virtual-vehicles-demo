@@ -15,5 +15,11 @@ public abstract class Routes {
                 .action("readAll", HttpMethod.GET)
                 .method(HttpMethod.POST)
                 .name(Constants.Routes.TRANSACTION_COLLECTION);
+
+        // Find vehicle using queryfilter
+        server.uri("/valet/transactions/utils/find.{format}", config.getTransactionController())
+                .action("find", HttpMethod.GET)
+                .name(Constants.Routes.TRANSACTION_FIND);
+
     }
 }

@@ -15,5 +15,11 @@ public abstract class Routes {
                 .action("readAll", HttpMethod.GET)
                 .method(HttpMethod.POST)
                 .name(Constants.Routes.RECORD_COLLECTION);
+
+        // Find records using queryfilter
+        server.uri("/maintenance/records/utils/find.{format}", config.getRecordController())
+                .action("find", HttpMethod.GET)
+                .name(Constants.Routes.RECORD_FIND);
+
     }
 }

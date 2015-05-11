@@ -8,6 +8,7 @@ com/example/authentication/Constants$Url.class
 com/example/authentication/Relationships.class
 com/example/authentication/Constants.class
 com/example/authentication/objectid/ClientController$1.class
+com/example/authentication/objectid/ClientController$2.class
 com/example/authentication/Main.class
 com/example/authentication/Routes.class
 com/example/authentication/serialization/ObjectIdDeserializer.class

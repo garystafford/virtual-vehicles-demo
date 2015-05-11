@@ -21,5 +21,6 @@ public class Constants {
 
         public static final String SINGLE_RECORD = "maintenance.single.route";
         public static final String RECORD_COLLECTION = "maintenance.collection.route";
+        public static final String RECORD_FIND = "maintenance.find.route";
     }
 }

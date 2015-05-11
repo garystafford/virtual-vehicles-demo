@@ -140,4 +140,19 @@ public class VehicleController {
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
     }
+
+    public List<Vehicle> find(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        List<Vehicle> entities = service.find(filter);
+        // Bind the resources in the collection with link URL tokens, etc. here...
+        HyperExpress.tokenBinder(new TokenBinder<Vehicle>() {
+            @Override
+            public void bind(Vehicle entity, TokenResolver resolver) {
+                resolver.bind(Constants.Url.VEHICLE_ID,
+                        Identifiers.MONGOID.format(entity.getId()));
+            }
+        });
+
+        return entities;
+    }
 }

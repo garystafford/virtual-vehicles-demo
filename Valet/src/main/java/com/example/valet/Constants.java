@@ -21,5 +21,6 @@ public class Constants {
 
         public static final String SINGLE_TRANSACTION = "valet.single.route";
         public static final String TRANSACTION_COLLECTION = "valet.collection.route";
+        public static final String TRANSACTION_FIND = "valet.find.route";
     }
 }

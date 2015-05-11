@@ -82,4 +82,8 @@ public class VehicleService {
     public long count(QueryFilter filter) {
         return vehicles.count(filter);
     }
+
+    public List<Vehicle> find(QueryFilter filter) {
+        return vehicles.find(filter);
+    }
 }

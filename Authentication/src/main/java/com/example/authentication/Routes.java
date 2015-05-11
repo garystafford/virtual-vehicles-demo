@@ -8,11 +8,11 @@ public abstract class Routes {
 
     public static void define(Configuration config, RestExpress server) {
         // Create a new JWT by passing API key and secret
-        server.uri("/jwts", config.getJwtController())
+        server.uri("/jwts.{format}", config.getJwtController())
                 .action("createJwt", HttpMethod.GET);
 
         // Validate a JWT by passing JWT
-        server.uri("/jwts/{jwt}", config.getJwtController(config.getBaseUrlAndPort()))
+        server.uri("/jwts/{jwt}.{format}", config.getJwtController(config.getBaseUrlAndPort()))
                 .action("validateJwt", HttpMethod.GET);
 
         // Read, modify, delete single client

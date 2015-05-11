@@ -31,7 +31,7 @@ import com.strategicgains.repoexpress.mongodb.Identifiers;
 public class RecordController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
-    private RecordService service;
+    private final RecordService service;
 
     public RecordController(RecordService recordService) {
         super();
@@ -97,5 +97,20 @@ public class RecordController {
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
+    }
+
+    public List<Record> find(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        List<Record> entities = service.find(filter);
+        // Bind the resources in the collection with link URL tokens, etc. here...
+        HyperExpress.tokenBinder(new TokenBinder<Record>() {
+            @Override
+            public void bind(Record entity, TokenResolver resolver) {
+                resolver.bind(Constants.Url.RECORD_ID,
+                        Identifiers.MONGOID.format(entity.getId()));
+            }
+        });
+
+        return entities;
     }
 }

@@ -98,4 +98,19 @@ public class TransactionController {
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
     }
+
+    public List<Transaction> find(Request request, Response response) {
+        QueryFilter filter = QueryFilters.parseFrom(request);
+        List<Transaction> entities = service.find(filter);
+        // Bind the resources in the collection with link URL tokens, etc. here...
+        HyperExpress.tokenBinder(new TokenBinder<Transaction>() {
+            @Override
+            public void bind(Transaction entity, TokenResolver resolver) {
+                resolver.bind(Constants.Url.TRANSACTION_ID,
+                        Identifiers.MONGOID.format(entity.getId()));
+            }
+        });
+
+        return entities;
+    }
 }

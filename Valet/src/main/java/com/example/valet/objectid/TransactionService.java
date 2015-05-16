@@ -48,8 +48,4 @@ public class TransactionService {
     public long count(QueryFilter filter) {
         return transactions.count(filter);
     }
-
-    public List<Transaction> find(QueryFilter filter) {
-        return transactions.find(filter);
-    }
 }

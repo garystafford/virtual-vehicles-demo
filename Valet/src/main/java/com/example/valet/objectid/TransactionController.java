@@ -70,6 +70,8 @@ public class TransactionController {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
+        boolean countOnly = Boolean.parseBoolean(
+                request.getQueryStringMap().getOrDefault("countOnly", "false"));
         List<Transaction> entities = service.readAll(filter, range, order);
         long count = service.count(filter);
         response.setCollectionResponse(range, entities.size(), count);
@@ -82,6 +84,10 @@ public class TransactionController {
             }
         });
 
+        if (countOnly) { // only return count in Content-Range header
+            entities.clear();
+            return entities;
+        }
         return entities;
     }
 
@@ -97,20 +103,5 @@ public class TransactionController {
         String id = request.getHeader(Constants.Url.TRANSACTION_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
-    }
-
-    public List<Transaction> find(Request request, Response response) {
-        QueryFilter filter = QueryFilters.parseFrom(request);
-        List<Transaction> entities = service.find(filter);
-        // Bind the resources in the collection with link URL tokens, etc. here...
-        HyperExpress.tokenBinder(new TokenBinder<Transaction>() {
-            @Override
-            public void bind(Transaction entity, TokenResolver resolver) {
-                resolver.bind(Constants.Url.TRANSACTION_ID,
-                        Identifiers.MONGOID.format(entity.getId()));
-            }
-        });
-
-        return entities;
     }
 }

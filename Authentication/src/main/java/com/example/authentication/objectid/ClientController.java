@@ -81,8 +81,11 @@ public class ClientController {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
+        boolean countOnly = Boolean.parseBoolean(
+                request.getQueryStringMap().getOrDefault("countOnly", "false"));
         List<Client> entities = service.readAll(filter, range, order);
         long count = service.count(filter);
+
         response.setCollectionResponse(range, entities.size(), count);
 
         // Bind the resources in the collection with link URL tokens, etc. here...
@@ -94,6 +97,10 @@ public class ClientController {
             }
         });
 
+        if (countOnly) { // only return count in Content-Range header
+            entities.clear();
+            return entities;
+        }
         return entities;
     }
 
@@ -104,6 +111,7 @@ public class ClientController {
                 "Resource details not provided");
         entity.setId(Identifiers.MONGOID.parse(id));
         service.update(entity);
+
         response.setResponseNoContent();
     }
 
@@ -114,29 +122,8 @@ public class ClientController {
         response.setResponseNoContent();
     }
 
-    public long count(Request request, Response response) {
-        QueryFilter filter = QueryFilters.parseFrom(request);
-        long count = service.count(filter);
-        return count;
-    }
-
     public String findClientSecret(Request request, Response response) {
-        List<Client> entities = find(request, response);
+        List<Client> entities = readAll(request, response);
         return entities.get(0).getSecret();
-    }
-
-    public List<Client> find(Request request, Response response) {
-        QueryFilter filter = QueryFilters.parseFrom(request);
-        List<Client> entities = service.find(filter);
-        // Bind the resources in the collection with link URL tokens, etc. here...
-        HyperExpress.tokenBinder(new TokenBinder<Client>() {
-            @Override
-            public void bind(Client entity, TokenResolver resolver) {
-                resolver.bind(Constants.Url.CLIENT_ID,
-                        Identifiers.MONGOID.format(entity.getId()));
-            }
-        });
-
-        return entities;
     }
 }

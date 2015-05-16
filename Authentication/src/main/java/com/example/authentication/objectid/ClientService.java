@@ -50,7 +50,7 @@ public class ClientService {
         return clients.count(filter);
     }
 
-    public List<Client> find(QueryFilter filter) {
-        return clients.find(filter);
-    }
+//    public List<Client> find(QueryFilter filter) {
+//        return clients.find(filter);
+//    }
 }

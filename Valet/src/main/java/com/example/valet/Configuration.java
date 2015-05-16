@@ -1,5 +1,6 @@
 package com.example.valet;
 
+import com.example.utilities.DiagnosticController;
 import java.util.Properties;
 
 import org.restexpress.RestExpress;
@@ -27,6 +28,7 @@ public class Configuration
     private MetricsConfig metricsSettings;
 
     private TransactionController transactionController;
+    private DiagnosticController diagnosticController;
 
     @Override
     protected void fillValues(Properties p) {
@@ -42,6 +44,8 @@ public class Configuration
         TransactionRepository valetsOidRepository = new TransactionRepository(mongo.getClient(), mongo.getDbName());
         TransactionService valetOidService = new TransactionService(valetsOidRepository);
         transactionController = new TransactionController(valetOidService);
+        diagnosticController = new DiagnosticController();
+
     }
 
     public int getPort() {
@@ -62,5 +66,9 @@ public class Configuration
 
     public TransactionController getTransactionController() {
         return transactionController;
+    }
+
+    public DiagnosticController getDiagnosticController() {
+        return diagnosticController;
     }
 }

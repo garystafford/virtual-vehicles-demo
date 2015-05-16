@@ -7,6 +7,7 @@ import com.example.authentication.objectid.ClientController;
 import com.example.authentication.objectid.ClientRepository;
 import com.example.authentication.objectid.ClientService;
 import com.example.authentication.objectid.JwtController;
+import com.example.utilities.DiagnosticController;
 
 import org.restexpress.util.Environment;
 
@@ -32,6 +33,7 @@ public class Configuration
     private MetricsConfig metricsSettings;
     private ClientController clientController;
     private JwtController jwtController;
+    private DiagnosticController diagnosticController;
 
     @Override
     protected void fillValues(Properties p) {
@@ -54,6 +56,8 @@ public class Configuration
         ClientService clientService = new ClientService(clientRepository);
         clientController = new ClientController(clientService);
         jwtController = new JwtController();
+        diagnosticController = new DiagnosticController();
+
     }
 
     /**
@@ -105,5 +109,9 @@ public class Configuration
 
     Object getJwtController(String baseUrlAndPort) {
         return new JwtController(baseUrlAndPort);
+    }
+
+    public DiagnosticController getDiagnosticController() {
+        return diagnosticController;
     }
 }

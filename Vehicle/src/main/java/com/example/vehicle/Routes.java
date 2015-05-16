@@ -25,12 +25,7 @@ public abstract class Routes {
                 .method(HttpMethod.POST)
                 .name(Constants.Routes.VEHICLE_COLLECTION);
 
-        // Find vehicle using queryfilter
-        server.uri("/vehicles/utils/find.{format}", config.getVehicleController())
-                .action("find", HttpMethod.GET)
-                .name(Constants.Routes.VEHICLE_FIND);
-
-        // or REGEX matching routes...
-        // server.regex("/some.regex", config.getRouteController());
+        server.uri("/vehicles/utils/ping.{format}", config.getDiagnosticController())
+                .action("ping", HttpMethod.GET);
     }
 }

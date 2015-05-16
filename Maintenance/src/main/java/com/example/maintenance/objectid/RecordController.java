@@ -70,6 +70,8 @@ public class RecordController {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
+        boolean countOnly = Boolean.parseBoolean(
+                request.getQueryStringMap().getOrDefault("countOnly", "false"));
         List<Record> entities = service.readAll(filter, range, order);
         long count = service.count(filter);
         response.setCollectionResponse(range, entities.size(), count);
@@ -82,6 +84,10 @@ public class RecordController {
             }
         });
 
+        if (countOnly) { // only return count in Content-Range header
+            entities.clear();
+            return entities;
+        }
         return entities;
     }
 
@@ -97,20 +103,5 @@ public class RecordController {
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
-    }
-
-    public List<Record> find(Request request, Response response) {
-        QueryFilter filter = QueryFilters.parseFrom(request);
-        List<Record> entities = service.find(filter);
-        // Bind the resources in the collection with link URL tokens, etc. here...
-        HyperExpress.tokenBinder(new TokenBinder<Record>() {
-            @Override
-            public void bind(Record entity, TokenResolver resolver) {
-                resolver.bind(Constants.Url.RECORD_ID,
-                        Identifiers.MONGOID.format(entity.getId()));
-            }
-        });
-
-        return entities;
     }
 }

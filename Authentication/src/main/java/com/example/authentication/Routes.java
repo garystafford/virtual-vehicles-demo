@@ -20,25 +20,18 @@ public abstract class Routes {
                 .method(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE)
                 .name(Constants.Routes.SINGLE_CLIENT);
 
-        // Find client using queryfilter
-        server.uri("/clients/utils/find.{format}", config.getClientController())
-                .action("find", HttpMethod.GET)
-                .name(Constants.Routes.CLIENT_FIND);
-
-                // Find client secret using queryfilter for apiKey
-        server.uri("/clients/utils/find/secrets.{format}", config.getClientController())
-                .action("findClientSecret", HttpMethod.GET)
-                .name(Constants.Routes.CLIENT_FIND_SECRET);
-
-        // Find client count using queryfilter
-        server.uri("/clients/utils/count.{format}", config.getClientController())
-                .action("count", HttpMethod.GET)
-                .name(Constants.Routes.CLIENT_COUNT);
-
-        // Create and aead all clients
+        // Create client, read all clients
         server.uri("/clients.{format}", config.getClientController())
                 .action("readAll", HttpMethod.GET)
                 .method(HttpMethod.POST)
                 .name(Constants.Routes.CLIENT_COLLECTION);
+
+        // Find client secret based on API key filter - INTERNAL USE ONLY
+        server.uri("/clients/find/secret.{format}", config.getClientController())
+                .action("findClientSecret", HttpMethod.GET)
+                .name(Constants.Routes.CLIENT_FIND_SECRET);
+
+        server.uri("/clients/utils/ping.{format}", config.getDiagnosticController())
+                .action("ping", HttpMethod.GET);
     }
 }

@@ -102,6 +102,8 @@ public class VehicleController {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
+        boolean countOnly = Boolean.parseBoolean(
+                request.getQueryStringMap().getOrDefault("countOnly", "false"));
         List<Vehicle> entities = service.readAll(filter, range, order);
         long count = service.count(filter);
         response.setCollectionResponse(range, entities.size(), count);
@@ -114,6 +116,10 @@ public class VehicleController {
             }
         });
 
+        if (countOnly) { // only return count in Content-Range header
+            entities.clear();
+            return entities;
+        }
         return entities;
     }
 
@@ -139,20 +145,5 @@ public class VehicleController {
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();
-    }
-
-    public List<Vehicle> find(Request request, Response response) {
-        QueryFilter filter = QueryFilters.parseFrom(request);
-        List<Vehicle> entities = service.find(filter);
-        // Bind the resources in the collection with link URL tokens, etc. here...
-        HyperExpress.tokenBinder(new TokenBinder<Vehicle>() {
-            @Override
-            public void bind(Vehicle entity, TokenResolver resolver) {
-                resolver.bind(Constants.Url.VEHICLE_ID,
-                        Identifiers.MONGOID.format(entity.getId()));
-            }
-        });
-
-        return entities;
     }
 }

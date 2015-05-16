@@ -1,5 +1,6 @@
 package com.example.vehicle;
 
+import com.example.utilities.DiagnosticController;
 import java.util.Properties;
 
 import org.restexpress.RestExpress;
@@ -33,6 +34,7 @@ public class Configuration
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
     private VehicleController vehicleController;
+    private DiagnosticController diagnosticController;
 
     /**
      *
@@ -57,6 +59,8 @@ public class Configuration
         VehicleRepository vehiclesRepository = new VehicleRepository(mongo.getClient(), mongo.getDbName());
         VehicleService vehicleService = new VehicleService(vehiclesRepository);
         vehicleController = new VehicleController(vehicleService, baseUrl, authenticationPort);
+        diagnosticController = new DiagnosticController();
+
     }
 
     /**
@@ -112,5 +116,9 @@ public class Configuration
      */
     public VehicleController getVehicleController() {
         return vehicleController;
+    }
+
+    public DiagnosticController getDiagnosticController() {
+        return diagnosticController;
     }
 }

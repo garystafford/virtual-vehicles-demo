@@ -5,6 +5,7 @@ import org.restexpress.RestExpress;
 import com.example.maintenance.objectid.RecordController;
 import com.example.maintenance.objectid.RecordRepository;
 import com.example.maintenance.objectid.RecordService;
+import com.example.utilities.DiagnosticController;
 import org.restexpress.util.Environment;
 import com.strategicgains.repoexpress.mongodb.MongoConfig;
 import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
@@ -25,6 +26,7 @@ public class Configuration
     private MetricsConfig metricsSettings;
 
     private RecordController recordController;
+    private DiagnosticController diagnosticController;
 
     @Override
     protected void fillValues(Properties p) {
@@ -40,6 +42,7 @@ public class Configuration
         RecordRepository recordRepository = new RecordRepository(mongo.getClient(), mongo.getDbName());
         RecordService recordService = new RecordService(recordRepository);
         recordController = new RecordController(recordService);
+        diagnosticController = new DiagnosticController();
     }
 
     public int getPort() {
@@ -60,5 +63,9 @@ public class Configuration
 
     public RecordController getRecordController() {
         return recordController;
+    }
+
+    public DiagnosticController getDiagnosticController() {
+        return diagnosticController;
     }
 }

@@ -48,8 +48,4 @@ public class RecordService {
     public long count(QueryFilter filter) {
         return records.count(filter);
     }
-
-    public List<Record> find(QueryFilter filter) {
-        return records.find(filter);
-    }
 }

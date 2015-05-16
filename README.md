@@ -1,3 +1,5 @@
+[![Stories in Ready](https://badge.waffle.io/garystafford/virtual-vehicle-demo.svg?label=ready&title=Ready)](http://waffle.io/garystafford/virtual-vehicle-demo)  
+
 ## Microservices / RESTful API Integration with MEAN Stack Demo
 **_This project is still in early stage development_**
 

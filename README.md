@@ -1,6 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/garystafford/virtual-vehicle-demo.svg?label=ready&title=Ready)](http://waffle.io/garystafford/virtual-vehicle-demo)  
 
-## Microservices / RESTful API Integration with MEAN Stack Demo
+## Example Microservices-based REST API with RestExpress, JAVA, and MongoDB
 **_This project is still in early stage development_**
 
 Develop a well-architected and well-documented RESTful API example, built on a tightly-integrated collection of Java EE-based microservices. Build a MEAN Stack application, which relies on the RESTful API for a majority of functionality. Ensure the services are highly-available, secure, and scalable.
@@ -36,11 +36,12 @@ According to their website, [RestExpress](https://github.com/RestExpress) compos
 
 #### Project Goals
 * Immediate Goals
- * Create 'Virtual Vehicles' RestExpress-based microservices
- * Use RESTful HTTP-based service-to-service communication for now.
- * Add JWT authentication for all RESTful calls.
- * Test all service operations in Postman or similar RESTful tool.
- * Document Services and API completely.
+ * Create a set of 'Virtual Vehicles' RestExpress-based microservices
+ * Use RESTful HTTP-based service-to-service communications
+ * Add JWT authentication for all resources
+ * Test all resources in Postman or similar RESTful tool
+ * Document the REST API completely
+ * Impliment JUnit unit tests and log4j2 logging for all services
 * Short-term Goals
  * Create MEAN Stack based, 'My Virtual Cars' application, leveraging 'Virtual Vehicles' microservices.
  * Create JUnit unit tests in project. New RestExpress archetype does not have jUnit tests.

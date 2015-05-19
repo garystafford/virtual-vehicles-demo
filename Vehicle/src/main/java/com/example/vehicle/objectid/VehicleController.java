@@ -33,20 +33,14 @@ public class VehicleController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final VehicleService service;
-    private final String baseUrl;
-    private final int authPort;
 
     /**
      *
      * @param vehicleService
-     * @param baseUrl
-     * @param authPort
      */
-    public VehicleController(VehicleService vehicleService, String baseUrl, int authPort) {
+    public VehicleController(VehicleService vehicleService) {
         super();
         this.service = vehicleService;
-        this.baseUrl = baseUrl;
-        this.authPort = authPort;
     }
 
     /**
@@ -96,7 +90,7 @@ public class VehicleController {
      * @return
      */
     public List<Vehicle> readAll(Request request, Response response) {
-        if (!AuthenticateJwt.authenticateJwt(request, baseUrl, authPort)) {
+        if (!AuthenticateJwt.authenticateJwt(request)) {
             return null;
         }
         QueryFilter filter = QueryFilters.parseFrom(request);

@@ -16,9 +16,10 @@ public class AuthenticateJwt {
 
     private static final Logger LOG = LogManager.getLogger(AuthenticateJwt.class.getName());
 
-    public static boolean authenticateJwt(Request request, String baseUrl, int authPort) {
+    public static boolean authenticateJwt(Request request) {
         String jwt;
-
+        String baseUrl = System.getenv("VIRTUAL_VEHICLES_BASE_URL");
+        String authPort = System.getenv("VIRTUAL_VEHICLES_AUTH_PORT");
         try {
             LOG.info("request.getUrl(): " + request.getUrl());
             jwt = (request.getHeader("Authorization").split(" "))[1];

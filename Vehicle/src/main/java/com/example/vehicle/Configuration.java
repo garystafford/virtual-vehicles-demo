@@ -24,13 +24,11 @@ public class Configuration
     private static final String PORT_PROPERTY = "port";
     private static final String BASE_URL_PROPERTY = "base.url";
     private static final String AUTHENTICATION_PORT = "authentication.port";
-    private static final String EXECUTOR_THREAD_POOL_SIZE
-            = "executor.threadPool.size";
+    private static final String EXECUTOR_THREAD_POOL_SIZE = "executor.threadPool.size";
 
     private int port;
     private String baseUrl;
     private String baseUrlAndPort;
-    private int authenticationPort;
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
     private VehicleController vehicleController;
@@ -46,8 +44,6 @@ public class Configuration
                 String.valueOf(RestExpress.DEFAULT_PORT)));
         this.baseUrl = p.getProperty(BASE_URL_PROPERTY, "http://localhost");
         this.baseUrlAndPort = baseUrl + ":" + port;
-        this.authenticationPort = Integer.parseInt(p.getProperty(
-                AUTHENTICATION_PORT, String.valueOf(port)));
         this.executorThreadPoolSize = Integer.parseInt(p.getProperty(
                 EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
         this.metricsSettings = new MetricsConfig(p);
@@ -58,7 +54,7 @@ public class Configuration
     private void initialize(MongoConfig mongo) {
         VehicleRepository vehiclesRepository = new VehicleRepository(mongo.getClient(), mongo.getDbName());
         VehicleService vehicleService = new VehicleService(vehiclesRepository);
-        vehicleController = new VehicleController(vehicleService, baseUrl, authenticationPort);
+        vehicleController = new VehicleController(vehicleService);
         diagnosticController = new DiagnosticController();
 
     }
@@ -85,13 +81,6 @@ public class Configuration
      */
     public String getBaseUrlAndPort() {
         return baseUrlAndPort;
-    }
-
-    /**
-     * @return authenticationPort
-     */
-    public int getAuthenticationPort() {
-        return authenticationPort;
     }
 
     /**

@@ -17,9 +17,7 @@ public class AuthenticateJwt {
     private static final Logger LOG = LogManager.getLogger(AuthenticateJwt.class.getName());
 
     public static boolean authenticateJwt(Request request, String baseUrlAndAuthPort) {
-        String jwt;
-        String output = "";
-        String valid = "";
+        String jwt, output, valid = "";
 
         try {
             LOG.info("request.getUrl(): " + request.getUrl());

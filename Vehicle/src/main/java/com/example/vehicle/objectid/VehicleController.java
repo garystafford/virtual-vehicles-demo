@@ -20,6 +20,7 @@ import com.strategicgains.hyperexpress.builder.TokenBinder;
 import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -33,14 +34,17 @@ public class VehicleController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final VehicleService service;
+    private final String baseUrlAndAuthPort;
 
     /**
      *
      * @param vehicleService
+     * @param baseUrlAndAuthPort
      */
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, String baseUrlAndAuthPort) {
         super();
         this.service = vehicleService;
+        this.baseUrlAndAuthPort = baseUrlAndAuthPort;
     }
 
     /**
@@ -90,15 +94,17 @@ public class VehicleController {
      * @return
      */
     public List<Vehicle> readAll(Request request, Response response) {
-        if (!AuthenticateJwt.authenticateJwt(request)) {
-            return null;
+        List<Vehicle> entities = null;
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return entities;
         }
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
         boolean countOnly = Boolean.parseBoolean(
                 request.getQueryStringMap().getOrDefault("countOnly", "false"));
-        List<Vehicle> entities = service.readAll(filter, range, order);
+        entities = service.readAll(filter, range, order);
         long count = service.count(filter);
         response.setCollectionResponse(range, entities.size(), count);
 

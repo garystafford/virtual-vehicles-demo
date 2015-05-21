@@ -33,14 +33,11 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class JwtController {
 
     private static final Logger LOG = LogManager.getLogger(JwtController.class.getName());
-    private static String baseUrlAndPort;
-
-    public JwtController() {
-        super();
-    }
+    private final String baseUrlAndPort;
 
     public JwtController(String baseUrlAndPort) {
-        JwtController.baseUrlAndPort = baseUrlAndPort;
+        super();
+        this.baseUrlAndPort = baseUrlAndPort;
     }
 
     public Object createJwt(Request request, Response response) {
@@ -140,10 +137,10 @@ public class JwtController {
         return alg;
     }
 
-    private static String getSecret(String apiKey) {
+    private String getSecret(String apiKey) {
         String output, secret = "";
         try {
-            URL url = new URL(baseUrlAndPort + "/clients/utils/find/secrets");
+            URL url = new URL(baseUrlAndPort + "/clients/find/secret");
             LOG.info("Authentication service URL called: " + url);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

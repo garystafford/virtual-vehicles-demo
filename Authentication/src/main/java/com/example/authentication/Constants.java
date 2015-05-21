@@ -23,9 +23,6 @@ public class Constants {
     public class Routes {
 
         public static final String SINGLE_CLIENT = "client.single.route";
-        public static final String CLIENT_COUNT = "client.count.route";
-        public static final String CLIENT_FIND = "client.find.route";
-        public static final String CLIENT_FIND_SECRET = "client.find.secret.route";
         public static final String CLIENT_COLLECTION = "client.collection.route";
     }
 }

@@ -21,7 +21,7 @@ public class Configuration
 
     private static final String PORT_PROPERTY = "port";
     private static final String BASE_URL_PROPERTY = "base.url";
-    private static final String AUTHENTICATION_PORT = "authentication.port";
+    private static final String AUTHENTICATION_PORT = "port";
     private static final String EXECUTOR_THREAD_POOL_SIZE
             = "executor.threadPool.size";
 
@@ -55,7 +55,7 @@ public class Configuration
                 mongo.getClient(), mongo.getDbName());
         ClientService clientService = new ClientService(clientRepository);
         clientController = new ClientController(clientService);
-        jwtController = new JwtController();
+        jwtController = new JwtController(getBaseUrlAndPort());
         diagnosticController = new DiagnosticController();
 
     }
@@ -105,10 +105,6 @@ public class Configuration
 
     public JwtController getJwtController() {
         return jwtController;
-    }
-
-    Object getJwtController(String baseUrlAndPort) {
-        return new JwtController(baseUrlAndPort);
     }
 
     public DiagnosticController getDiagnosticController() {

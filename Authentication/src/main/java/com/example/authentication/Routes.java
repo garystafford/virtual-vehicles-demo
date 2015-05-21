@@ -12,7 +12,7 @@ public abstract class Routes {
                 .action("createJwt", HttpMethod.GET);
 
         // Validate a JWT by passing JWT
-        server.uri("/jwts/{jwt}.{format}", config.getJwtController(config.getBaseUrlAndPort()))
+        server.uri("/jwts/{jwt}", config.getJwtController())
                 .action("validateJwt", HttpMethod.GET);
 
         // Read, modify, delete single client
@@ -28,8 +28,7 @@ public abstract class Routes {
 
         // Find client secret based on API key filter - INTERNAL USE ONLY
         server.uri("/clients/find/secret.{format}", config.getClientController())
-                .action("findClientSecret", HttpMethod.GET)
-                .name(Constants.Routes.CLIENT_FIND_SECRET);
+                .action("findClientSecret", HttpMethod.GET);
 
         server.uri("/clients/utils/ping.{format}", config.getDiagnosticController())
                 .action("ping", HttpMethod.GET);

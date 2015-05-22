@@ -1,4 +1,3 @@
-//http://www.mkyong.com/webservices/jax-rs/restfull-java-client-with-java-net-url/
 package com.example.authenticate;
 
 import java.io.BufferedReader;
@@ -40,7 +39,6 @@ public class AuthenticateJwt {
                 LOG.error(conn.getResponseCode() + ": "
                         + conn.getResponseMessage());
                 return false;
-
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(

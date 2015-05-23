@@ -19,6 +19,7 @@ import com.strategicgains.hyperexpress.builder.TokenBinder;
 import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -91,12 +92,22 @@ public class RecordController {
         return entities;
     }
 
-    public void update(Request request, Response response) {
+    public Record update(Request request, Response response) {
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         Record entity = request.getBodyAs(Record.class, "Resource details not provided");
         entity.setId(Identifiers.MONGOID.parse(id));
         service.update(entity);
-        response.setResponseNoContent();
+
+        // new per http://stackoverflow.com/a/827045/580268
+        entity = service.read(Identifiers.MONGOID.parse(id));
+        response.setResponseStatus(HttpResponseStatus.CREATED);
+
+        // enrich the resource with links, etc. here...
+        HyperExpress.bind(Constants.Url.RECORD_ID, Identifiers.MONGOID.format(entity.getId()));
+
+        return entity;
+        // original response returned nothing
+        //response.setResponseNoContent();
     }
 
     public void delete(Request request, Response response) {

@@ -54,6 +54,10 @@ public class VehicleController {
      * @return
      */
     public Vehicle create(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         Vehicle entity = request.getBodyAs(Vehicle.class, "Resource details not provided");
         Vehicle saved = service.create(entity);
 
@@ -78,6 +82,10 @@ public class VehicleController {
      * @return
      */
     public Vehicle read(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");
         Vehicle entity = service.read(Identifiers.MONGOID.parse(id));
 
@@ -94,17 +102,15 @@ public class VehicleController {
      * @return
      */
     public List<Vehicle> readAll(Request request, Response response) {
-        List<Vehicle> entities = null;
         if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
-            return entities;
+            return null;
         }
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
-        boolean countOnly = Boolean.parseBoolean(
-                request.getQueryStringMap().getOrDefault("countOnly", "false"));
-        entities = service.readAll(filter, range, order);
+        boolean countOnly = Boolean.parseBoolean(request.getQueryStringMap().getOrDefault("countOnly", "false"));
+        List<Vehicle> entities = service.readAll(filter, range, order);
         long count = service.count(filter);
         response.setCollectionResponse(range, entities.size(), count);
 
@@ -127,13 +133,29 @@ public class VehicleController {
      *
      * @param request
      * @param response
+     * @return
      */
-    public void update(Request request, Response response) {
+    public Vehicle update(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");
         Vehicle entity = request.getBodyAs(Vehicle.class, "Resource details not provided");
         entity.setId(Identifiers.MONGOID.parse(id));
         service.update(entity);
-        response.setResponseNoContent();
+
+        // new per http://stackoverflow.com/a/827045/580268
+        entity = service.read(Identifiers.MONGOID.parse(id));
+        response.setResponseStatus(HttpResponseStatus.CREATED);
+
+        // enrich the resource with links, etc. here...
+        HyperExpress.bind(Constants.Url.VEHICLE_ID, Identifiers.MONGOID.format(entity.getId()));
+
+        return entity;
+
+        // original response returned nothing
+        //response.setResponseNoContent();
     }
 
     /**
@@ -142,6 +164,9 @@ public class VehicleController {
      * @param response
      */
     public void delete(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+        }
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();

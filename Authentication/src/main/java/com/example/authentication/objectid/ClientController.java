@@ -19,6 +19,7 @@ import com.strategicgains.hyperexpress.builder.TokenBinder;
 import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
 import org.apache.commons.lang.RandomStringUtils;
 
@@ -104,7 +105,7 @@ public class ClientController {
         return entities;
     }
 
-    public void update(Request request, Response response) {
+    public Client update(Request request, Response response) {
         String id = request.getHeader(Constants.Url.CLIENT_ID,
                 "No resource ID supplied");
         Client entity = request.getBodyAs(Client.class,
@@ -112,7 +113,16 @@ public class ClientController {
         entity.setId(Identifiers.MONGOID.parse(id));
         service.update(entity);
 
-        response.setResponseNoContent();
+        // new per http://stackoverflow.com/a/827045/580268
+        entity = service.read(Identifiers.MONGOID.parse(id));
+        response.setResponseStatus(HttpResponseStatus.CREATED);
+
+        // enrich the resource with links, etc. here...
+        HyperExpress.bind(Constants.Url.CLIENT_ID, Identifiers.MONGOID.format(entity.getId()));
+
+        return entity;
+        // original response returned nothing
+        //response.setResponseNoContent();
     }
 
     public void delete(Request request, Response response) {

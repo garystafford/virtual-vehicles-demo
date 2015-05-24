@@ -15,6 +15,12 @@ public class AuthenticateJwt {
 
     private static final Logger LOG = LogManager.getLogger(AuthenticateJwt.class.getName());
 
+    /**
+     *
+     * @param request
+     * @param baseUrlAndAuthPort
+     * @return
+     */
     public static boolean authenticateJwt(Request request, String baseUrlAndAuthPort) {
         String jwt, output, valid = "";
 

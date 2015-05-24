@@ -1,5 +1,6 @@
 package com.example.valet.objectid;
 
+import com.example.authenticate.AuthenticateJwt;
 import java.util.List;
 
 import io.netty.handler.codec.http.HttpMethod;
@@ -33,13 +34,19 @@ public class TransactionController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final TransactionService service;
+    private final String baseUrlAndAuthPort;
 
-    public TransactionController(TransactionService valetService) {
+    public TransactionController(TransactionService valetService, String baseUrlAndAuthPort) {
         super();
         this.service = valetService;
+        this.baseUrlAndAuthPort = baseUrlAndAuthPort;
     }
 
     public Transaction create(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         Transaction entity = request.getBodyAs(Transaction.class, "Resource details not provided");
         Transaction saved = service.create(entity);
 
@@ -58,6 +65,10 @@ public class TransactionController {
     }
 
     public Transaction read(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         String id = request.getHeader(Constants.Url.TRANSACTION_ID, "No resource ID supplied");
         Transaction entity = service.read(Identifiers.MONGOID.parse(id));
 
@@ -68,6 +79,10 @@ public class TransactionController {
     }
 
     public List<Transaction> readAll(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
@@ -93,6 +108,10 @@ public class TransactionController {
     }
 
     public Transaction update(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         String id = request.getHeader(Constants.Url.TRANSACTION_ID, "No resource ID supplied");
         Transaction entity = request.getBodyAs(Transaction.class, "Resource details not provided");
         entity.setId(Identifiers.MONGOID.parse(id));
@@ -112,6 +131,9 @@ public class TransactionController {
     }
 
     public void delete(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+        }
         String id = request.getHeader(Constants.Url.TRANSACTION_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();

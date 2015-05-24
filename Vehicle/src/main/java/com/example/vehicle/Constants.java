@@ -27,6 +27,5 @@ public class Constants {
     public class Routes {
         public static final String SINGLE_VEHICLE = "vehicle.single.route";
         public static final String VEHICLE_COLLECTION = "vehicle.collection.route";
-        public static final String VEHICLE_FIND = "vehicle.find.route";
     }
 }

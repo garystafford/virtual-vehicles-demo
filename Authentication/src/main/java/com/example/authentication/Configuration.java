@@ -17,18 +17,24 @@ import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
 public class Configuration
         extends Environment {
 
+    private static final String DEFAULT_BASE_URL = "http://localhost";
     private static final String DEFAULT_EXECUTOR_THREAD_POOL_SIZE = "20";
+
+    private static final String DEFAULT_JWT_EXPIRE_LENGTH = "36000"; // 10 hours
+    private static final String DEFAULT_JWT_ISSUER = "Virtual-Vehicles";
 
     private static final String PORT_PROPERTY = "port";
     private static final String BASE_URL_PROPERTY = "base.url";
-    private static final String AUTHENTICATION_PORT = "port";
-    private static final String EXECUTOR_THREAD_POOL_SIZE
-            = "executor.threadPool.size";
+    private static final String EXECUTOR_THREAD_POOL_SIZE = "executor.threadPool.size";
+
+    private static final String JWT_EXPIRE_LENGTH = "jwt.expire.length";
+    private static final String JWT_ISSUER = "jwt.issuer";
 
     private int port;
     private String baseUrl;
     private String baseUrlAndPort;
-    private int authenticationPort;
+    private int jwtExpireLength;
+    private String jwtIssuer;
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
     private ClientController clientController;
@@ -39,10 +45,12 @@ public class Configuration
     protected void fillValues(Properties p) {
         this.port = Integer.parseInt(p.getProperty(PORT_PROPERTY,
                 String.valueOf(RestExpress.DEFAULT_PORT)));
-        this.baseUrl = p.getProperty(BASE_URL_PROPERTY, "http://localhost");
+        this.baseUrl = p.getProperty(BASE_URL_PROPERTY, DEFAULT_BASE_URL);
         this.baseUrlAndPort = baseUrl + ":" + port;
-        this.authenticationPort = Integer.parseInt(p.getProperty(
-                AUTHENTICATION_PORT, String.valueOf(port)));
+        this.jwtExpireLength = Integer.parseInt(p.getProperty(
+                JWT_EXPIRE_LENGTH, DEFAULT_JWT_EXPIRE_LENGTH));
+        this.jwtIssuer = p.getProperty(
+                JWT_ISSUER, DEFAULT_JWT_ISSUER);
         this.executorThreadPoolSize = Integer.parseInt(p.getProperty(
                 EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
         this.metricsSettings = new MetricsConfig(p);
@@ -55,9 +63,8 @@ public class Configuration
                 mongo.getClient(), mongo.getDbName());
         ClientService clientService = new ClientService(clientRepository);
         clientController = new ClientController(clientService);
-        jwtController = new JwtController(getBaseUrlAndPort());
+        jwtController = new JwtController(getBaseUrlAndPort(), getJwtExpireLength(), getJwtIssuer());
         diagnosticController = new DiagnosticController();
-
     }
 
     /**
@@ -85,10 +92,17 @@ public class Configuration
     }
 
     /**
-     * @return authenticationPort
+     * @return the jwtExpireLength
      */
-    public int getAuthenticationPort() {
-        return authenticationPort;
+    public int getJwtExpireLength() {
+        return jwtExpireLength;
+    }
+
+    /**
+     * @return the jwtIssuer
+     */
+    public String getJwtIssuer() {
+        return jwtIssuer;
     }
 
     public int getExecutorThreadPoolSize() {

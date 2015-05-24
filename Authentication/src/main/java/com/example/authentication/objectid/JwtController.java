@@ -34,10 +34,20 @@ public class JwtController {
 
     private static final Logger LOG = LogManager.getLogger(JwtController.class.getName());
     private final String baseUrlAndPort;
+    private final int jwtExpireLength;
+    private final String jwtIssuer;
 
-    public JwtController(String baseUrlAndPort) {
+    /**
+     *
+     * @param baseUrlAndPort
+     * @param jwtExpireLength
+     * @param jwtIssuer
+     */
+    public JwtController(String baseUrlAndPort, int jwtExpireLength, String jwtIssuer) {
         super();
         this.baseUrlAndPort = baseUrlAndPort;
+        this.jwtExpireLength = jwtExpireLength;
+        this.jwtIssuer = jwtIssuer;
     }
 
     public Object createJwt(Request request, Response response) {
@@ -59,11 +69,11 @@ public class JwtController {
 
             // http://www.epochconverter.com/
             long epoch_now = System.currentTimeMillis() / 1000;
-            long epoch_expire = epoch_now + 86400; // plus 1 day
+            long epoch_expire = epoch_now + jwtExpireLength;
 
             JWTSigner jwts = new JWTSigner(secret);
             Map<String, Object> payload = new HashMap<>();
-            payload.put("iss", Constants.Url.ISS);
+            payload.put("iss", jwtIssuer);
             payload.put("ait", epoch_now);
             payload.put("exp", epoch_expire);
             payload.put("apiKey", apiKey);

@@ -1,5 +1,6 @@
 package com.example.maintenance.objectid;
 
+import com.example.authenticate.AuthenticateJwt;
 import java.util.List;
 
 import io.netty.handler.codec.http.HttpMethod;
@@ -33,13 +34,19 @@ public class RecordController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final RecordService service;
+    private final String baseUrlAndAuthPort;
 
-    public RecordController(RecordService recordService) {
+    public RecordController(RecordService recordService, String baseUrlAndAuthPort) {
         super();
         this.service = recordService;
+        this.baseUrlAndAuthPort = baseUrlAndAuthPort;
     }
 
     public Record create(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         Record entity = request.getBodyAs(Record.class, "Resource details not provided");
         Record saved = service.create(entity);
 
@@ -58,6 +65,10 @@ public class RecordController {
     }
 
     public Record read(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         Record entity = service.read(Identifiers.MONGOID.parse(id));
 
@@ -68,6 +79,10 @@ public class RecordController {
     }
 
     public List<Record> readAll(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
         QueryRange range = QueryRanges.parseFrom(request, 20);
@@ -93,6 +108,10 @@ public class RecordController {
     }
 
     public Record update(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+            return null;
+        }
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         Record entity = request.getBodyAs(Record.class, "Resource details not provided");
         entity.setId(Identifiers.MONGOID.parse(id));
@@ -111,6 +130,9 @@ public class RecordController {
     }
 
     public void delete(Request request, Response response) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+            response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
+        }
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
         response.setResponseNoContent();

@@ -12,7 +12,6 @@ public class Constants {
         public static final String API_KEY = "apiKey";
         public static final String SECRET = "secret";
         public static final String JWT = "jwt";
-        public static final String ISS = "virtual-vehicles.com";
     }
 
     /**

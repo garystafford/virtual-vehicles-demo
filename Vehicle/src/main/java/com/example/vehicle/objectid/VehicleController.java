@@ -35,6 +35,7 @@ public class VehicleController {
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final VehicleService service;
     private final String baseUrlAndAuthPort;
+    private final AuthenticateJwt jwtImpl = new AuthenticateJwt();
 
     /**
      *
@@ -54,7 +55,7 @@ public class VehicleController {
      * @return
      */
     public Vehicle create(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -82,7 +83,7 @@ public class VehicleController {
      * @return
      */
     public Vehicle read(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -102,7 +103,7 @@ public class VehicleController {
      * @return
      */
     public List<Vehicle> readAll(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -136,7 +137,7 @@ public class VehicleController {
      * @return
      */
     public Vehicle update(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -164,7 +165,7 @@ public class VehicleController {
      * @param response
      */
     public void delete(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
         }
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");

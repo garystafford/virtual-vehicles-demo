@@ -1,6 +1,6 @@
 language: java
 jdk: oraclejdk8
 script:
-  - cd Vehicles
+  - cd Vehicle
   - mvn clean install
   - mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"

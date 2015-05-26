@@ -1,6 +1,19 @@
 language: java
 jdk: oraclejdk8
 script:
-  - cd Vehicle
+  - cd Authentication
   - mvn clean install
-  - mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
+  - nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
+
+  - cd ../Maintenance
+  - mvn clean install
+  - nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
+
+  - cd ../Valet
+  - mvn clean install
+  - nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
+  
+  - cd ../Vehicle
+  - mvn clean install
+  - nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
+  - cd ../virtual-vehicle-meanio/

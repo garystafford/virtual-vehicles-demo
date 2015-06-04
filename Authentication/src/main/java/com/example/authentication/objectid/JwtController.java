@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.restexpress.Request;
 import org.restexpress.Response;
@@ -193,47 +191,5 @@ public class JwtController {
             return "Get secret failed";
         }
         return secret.replaceAll("\"", "");
-    }
-
-    /**
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    public Object read(Request request, Response response) {
-        //TODO: Your 'GET' logic here...
-        return null;
-    }
-
-    /**
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    public List<Object> readAll(Request request, Response response) {
-        //TODO: Your 'GET collection' logic here...
-        return Collections.emptyList();
-    }
-
-    /**
-     *
-     * @param request
-     * @param response
-     */
-    public void update(Request request, Response response) {
-        //TODO: Your 'PUT' logic here...
-        response.setResponseNoContent();
-    }
-
-    /**
-     *
-     * @param request
-     * @param response
-     */
-    public void delete(Request request, Response response) {
-        //TODO: Your 'DELETE' logic here...
-        response.setResponseNoContent();
     }
 }

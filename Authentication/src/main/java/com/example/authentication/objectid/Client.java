@@ -19,6 +19,9 @@ public class Client
     private String secret;
     private String apiKey;
 
+    /**
+     *
+     */
     public Client() {
     }
 

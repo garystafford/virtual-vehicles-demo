@@ -22,6 +22,11 @@ public class LastModifiedHeaderPostprocessor
 
     DateAdapter fmt = new HttpHeaderTimestampAdapter();
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     @Override
     public void process(Request request, Response response) {
         if (!request.isMethodGet()) {

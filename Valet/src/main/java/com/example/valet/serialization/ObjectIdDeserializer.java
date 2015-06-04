@@ -10,9 +10,21 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 
+/**
+ *
+ * @author gstafford
+ */
 public class ObjectIdDeserializer
         extends JsonDeserializer<ObjectId> {
 
+    /**
+     *
+     * @param json
+     * @param context
+     * @return
+     * @throws IOException
+     * @throws JsonProcessingException
+     */
     @Override
     public ObjectId deserialize(JsonParser json, DeserializationContext context)
             throws IOException, JsonProcessingException {

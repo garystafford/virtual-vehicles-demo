@@ -30,6 +30,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+/**
+ *
+ * @author gstafford
+ */
 public class JwtController {
 
     private static final Logger LOG = LogManager.getLogger(JwtController.class.getName());
@@ -50,6 +54,12 @@ public class JwtController {
         this.jwtIssuer = jwtIssuer;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Object createJwt(Request request, Response response) {
         String apiKey, secret, jwt;
 
@@ -86,6 +96,12 @@ public class JwtController {
         return jwt;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Object validateJwt(Request request, Response response) {
         try {
             String jwt = request.getHeader(Constants.Url.JWT, "No JWT supplied");
@@ -179,21 +195,43 @@ public class JwtController {
         return secret.replaceAll("\"", "");
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Object read(Request request, Response response) {
         //TODO: Your 'GET' logic here...
         return null;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public List<Object> readAll(Request request, Response response) {
         //TODO: Your 'GET collection' logic here...
         return Collections.emptyList();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     public void update(Request request, Response response) {
         //TODO: Your 'PUT' logic here...
         response.setResponseNoContent();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     public void delete(Request request, Response response) {
         //TODO: Your 'DELETE' logic here...
         response.setResponseNoContent();

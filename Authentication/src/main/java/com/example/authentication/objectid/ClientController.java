@@ -36,11 +36,21 @@ public class ClientController {
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final ClientService service;
 
+    /**
+     *
+     * @param clientService
+     */
     public ClientController(ClientService clientService) {
         super();
         this.service = clientService;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Client create(Request request, Response response) {
         Client entity = request.getBodyAs(Client.class,
                 "Resource details not provided");
@@ -66,6 +76,12 @@ public class ClientController {
         return saved;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Client read(Request request, Response response) {
         String id = request.getHeader(Constants.Url.CLIENT_ID,
                 "No resource ID supplied");
@@ -78,6 +94,12 @@ public class ClientController {
         return entity;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public List<Client> readAll(Request request, Response response) {
         QueryFilter filter = QueryFilters.parseFrom(request);
         QueryOrder order = QueryOrders.parseFrom(request);
@@ -105,6 +127,12 @@ public class ClientController {
         return entities;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Client update(Request request, Response response) {
         String id = request.getHeader(Constants.Url.CLIENT_ID,
                 "No resource ID supplied");
@@ -125,6 +153,11 @@ public class ClientController {
         //response.setResponseNoContent();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     public void delete(Request request, Response response) {
         String id = request.getHeader(Constants.Url.CLIENT_ID,
                 "No resource ID supplied");
@@ -132,6 +165,12 @@ public class ClientController {
         response.setResponseNoContent();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public String findClientSecret(Request request, Response response) {
         List<Client> entities = readAll(request, response);
         return entities.get(0).getSecret();

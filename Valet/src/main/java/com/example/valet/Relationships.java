@@ -7,8 +7,16 @@ import com.example.valet.objectid.Transaction;
 import com.strategicgains.hyperexpress.HyperExpress;
 import com.strategicgains.hyperexpress.RelTypes;
 
+/**
+ *
+ * @author gstafford
+ */
 public abstract class Relationships {
 
+    /**
+     *
+     * @param server
+     */
     public static void define(RestExpress server) {
         Map<String, String> routes = server.getRouteUrlsByName();
 

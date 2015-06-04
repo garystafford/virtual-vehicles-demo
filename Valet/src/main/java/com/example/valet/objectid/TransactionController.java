@@ -36,12 +36,23 @@ public class TransactionController {
     private final TransactionService service;
     private final String baseUrlAndAuthPort;
 
+    /**
+     *
+     * @param valetService
+     * @param baseUrlAndAuthPort
+     */
     public TransactionController(TransactionService valetService, String baseUrlAndAuthPort) {
         super();
         this.service = valetService;
         this.baseUrlAndAuthPort = baseUrlAndAuthPort;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Transaction create(Request request, Response response) {
         if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
@@ -64,6 +75,12 @@ public class TransactionController {
         return saved;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Transaction read(Request request, Response response) {
         if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
@@ -78,6 +95,12 @@ public class TransactionController {
         return entity;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public List<Transaction> readAll(Request request, Response response) {
         if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
@@ -107,6 +130,12 @@ public class TransactionController {
         return entities;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     public Transaction update(Request request, Response response) {
         if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
@@ -130,6 +159,11 @@ public class TransactionController {
         //response.setResponseNoContent();
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     public void delete(Request request, Response response) {
         if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);

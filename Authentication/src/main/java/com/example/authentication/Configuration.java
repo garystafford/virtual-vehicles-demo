@@ -14,6 +14,10 @@ import org.restexpress.util.Environment;
 import com.strategicgains.repoexpress.mongodb.MongoConfig;
 import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Configuration
         extends Environment {
 
@@ -41,6 +45,10 @@ public class Configuration
     private JwtController jwtController;
     private DiagnosticController diagnosticController;
 
+    /**
+     *
+     * @param p
+     */
     @Override
     protected void fillValues(Properties p) {
         this.port = Integer.parseInt(p.getProperty(PORT_PROPERTY,
@@ -105,22 +113,42 @@ public class Configuration
         return jwtIssuer;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getExecutorThreadPoolSize() {
         return executorThreadPoolSize;
     }
 
+    /**
+     *
+     * @return
+     */
     public MetricsConfig getMetricsConfig() {
         return metricsSettings;
     }
 
+    /**
+     *
+     * @return
+     */
     public ClientController getClientController() {
         return clientController;
     }
 
+    /**
+     *
+     * @return
+     */
     public JwtController getJwtController() {
         return jwtController;
     }
 
+    /**
+     *
+     * @return
+     */
     public DiagnosticController getDiagnosticController() {
         return diagnosticController;
     }

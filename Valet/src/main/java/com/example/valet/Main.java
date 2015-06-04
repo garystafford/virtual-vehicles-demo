@@ -39,16 +39,31 @@ import com.strategicgains.restexpress.plugin.metrics.MetricsPlugin;
 import com.strategicgains.restexpress.plugin.swagger.SwaggerPlugin;
 import com.strategicgains.syntaxe.ValidationException;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Main {
 
     private static final String SERVICE_NAME = "virtual-valet";
     private static final Logger LOG = LoggerFactory.getLogger(SERVICE_NAME);
 
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         RestExpress server = initializeServer(args);
         server.awaitShutdown();
     }
 
+    /**
+     *
+     * @param args
+     * @return
+     * @throws IOException
+     */
     public static RestExpress initializeServer(String[] args) throws IOException {
         RestExpress.setSerializationProvider(new SerializationProvider());
 

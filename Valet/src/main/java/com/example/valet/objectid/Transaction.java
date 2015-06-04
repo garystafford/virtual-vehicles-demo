@@ -21,9 +21,20 @@ public class Transaction
     private int parkingSpot;
     private String notes;
 
+    /**
+     *
+     */
     public Transaction() {
     }
 
+    /**
+     *
+     * @param vehicleId
+     * @param dateTimeIn
+     * @param parkingLot
+     * @param parkingSpot
+     * @param notes
+     */
     public Transaction(final String vehicleId, final String dateTimeIn,
             final String parkingLot, final int parkingSpot,
             final String notes) {

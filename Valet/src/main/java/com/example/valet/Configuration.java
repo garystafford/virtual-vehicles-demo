@@ -12,6 +12,10 @@ import org.restexpress.util.Environment;
 import com.strategicgains.repoexpress.mongodb.MongoConfig;
 import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Configuration
         extends Environment {
 
@@ -35,6 +39,10 @@ public class Configuration
     private TransactionController transactionController;
     private DiagnosticController diagnosticController;
 
+    /**
+     *
+     * @param p
+     */
     @Override
     protected void fillValues(Properties p) {
         this.port = Integer.parseInt(p.getProperty(PORT,
@@ -113,10 +121,18 @@ public class Configuration
         return metricsSettings;
     }
 
+    /**
+     *
+     * @return
+     */
     public TransactionController getTransactionController() {
         return transactionController;
     }
 
+    /**
+     *
+     * @return
+     */
     public DiagnosticController getDiagnosticController() {
         return diagnosticController;
     }

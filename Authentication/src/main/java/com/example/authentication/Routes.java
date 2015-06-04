@@ -4,8 +4,17 @@ import io.netty.handler.codec.http.HttpMethod;
 
 import org.restexpress.RestExpress;
 
+/**
+ *
+ * @author gstafford
+ */
 public abstract class Routes {
 
+    /**
+     *
+     * @param config
+     * @param server
+     */
     public static void define(Configuration config, RestExpress server) {
         // Create a new JWT by passing API key and secret
         server.uri("/jwts.{format}", config.getJwtController())

@@ -1,5 +1,9 @@
 package com.example.authentication;
 
+/**
+ *
+ * @author gstafford
+ */
 public class Constants {
 
     /**
@@ -8,9 +12,24 @@ public class Constants {
      */
     public class Url {
 
+        /**
+         *
+         */
         public static final String CLIENT_ID = "oid";
+
+        /**
+         *
+         */
         public static final String API_KEY = "apiKey";
+
+        /**
+         *
+         */
         public static final String SECRET = "secret";
+
+        /**
+         *
+         */
         public static final String JWT = "jwt";
     }
 
@@ -21,7 +40,14 @@ public class Constants {
      */
     public class Routes {
 
+        /**
+         *
+         */
         public static final String SINGLE_CLIENT = "client.single.route";
+
+        /**
+         *
+         */
         public static final String CLIENT_COLLECTION = "client.collection.route";
     }
 }

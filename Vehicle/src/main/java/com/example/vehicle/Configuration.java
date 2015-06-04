@@ -130,6 +130,10 @@ public class Configuration
         return vehicleController;
     }
 
+    /**
+     *
+     * @return
+     */
     public DiagnosticController getDiagnosticController() {
         return diagnosticController;
     }

@@ -9,9 +9,16 @@ import com.strategicgains.hyperexpress.domain.hal.HalResource;
 import com.strategicgains.hyperexpress.serialization.jackson.HalResourceDeserializer;
 import com.strategicgains.hyperexpress.serialization.jackson.HalResourceSerializer;
 
+/**
+ *
+ * @author gstafford
+ */
 public class JsonSerializationProcessor
         extends JacksonJsonProcessor {
 
+    /**
+     *
+     */
     public JsonSerializationProcessor() {
         super();
         addSupportedMediaTypes(ContentType.HAL_JSON);

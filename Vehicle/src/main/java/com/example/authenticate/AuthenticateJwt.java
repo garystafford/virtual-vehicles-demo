@@ -11,10 +11,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+/**
+ *
+ * @author gstafford
+ */
 public class AuthenticateJwt {
 
     private static final Logger LOG = LogManager.getLogger(AuthenticateJwt.class.getName());
 
+    /**
+     *
+     * @param request
+     * @param baseUrlAndAuthPort
+     * @return
+     */
     public boolean authenticateJwt(Request request, String baseUrlAndAuthPort) {
         String jwt, output, valid = "";
 

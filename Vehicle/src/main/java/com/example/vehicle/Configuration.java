@@ -20,11 +20,13 @@ public class Configuration
         extends Environment {
 
     private static final String DEFAULT_BASE_URL = "http://localhost";
+    private static final String DEFAULT_SERVICE_NAME = "vehicle-service";
     private static final String DEFAULT_AUTHENTICATION_PORT = "8082";
     private static final String DEFAULT_EXECUTOR_THREAD_POOL_SIZE = "20";
 
     private static final String PORT = "port";
     private static final String BASE_URL = "base.url";
+    private static final String SERVICE_NAME = "service.name";
     private static final String AUTHENTICATION_PORT = "authentication.port";
     private static final String EXECUTOR_THREAD_POOL_SIZE = "executor.threadPool.size";
 
@@ -35,7 +37,8 @@ public class Configuration
     private String baseUrlAndAuthPort;
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
-    
+    private String serviceName;
+
     private VehicleController vehicleController;
     private DiagnosticController diagnosticController;
 
@@ -52,7 +55,7 @@ public class Configuration
         this.authPort = Integer.parseInt(p.getProperty(
                 AUTHENTICATION_PORT, String.valueOf(DEFAULT_AUTHENTICATION_PORT)));
         this.baseUrlAndAuthPort = baseUrl + ":" + authPort;
-
+        this.serviceName = p.getProperty(SERVICE_NAME, DEFAULT_SERVICE_NAME);
         this.executorThreadPoolSize = Integer.parseInt(p.getProperty(
                 EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
         this.metricsSettings = new MetricsConfig(p);
@@ -136,5 +139,19 @@ public class Configuration
      */
     public DiagnosticController getDiagnosticController() {
         return diagnosticController;
+    }
+
+    /**
+     * @return the serviceName
+     */
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    /**
+     * @param serviceName the serviceName to set
+     */
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 }

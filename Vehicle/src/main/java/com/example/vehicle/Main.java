@@ -42,8 +42,7 @@ import static org.restexpress.Flags.Auth.PUBLIC_ROUTE;
  */
 public class Main {
 
-    private static final String SERVICE_NAME = "virtual-vehicle";
-    private static final Logger LOG = LoggerFactory.getLogger(SERVICE_NAME);
+    private static Logger LOG;
 
     /**
      *
@@ -65,8 +64,9 @@ public class Main {
         RestExpress.setSerializationProvider(new SerializationProvider());
 
         Configuration config = loadEnvironment(args);
+        LOG = LoggerFactory.getLogger(config.getServiceName());
         RestExpress server = new RestExpress()
-                .setName(SERVICE_NAME)
+                .setName(config.getServiceName())
                 .setBaseUrl(config.getBaseUrlAndPort())
                 .setExecutorThreadCount(config.getExecutorThreadPoolSize())
                 .addMessageObserver(new SimpleConsoleLogMessageObserver());

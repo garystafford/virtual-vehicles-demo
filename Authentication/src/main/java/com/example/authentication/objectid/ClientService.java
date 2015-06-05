@@ -83,8 +83,4 @@ public class ClientService {
     public long count(QueryFilter filter) {
         return clients.count(filter);
     }
-
-//    public List<Client> find(QueryFilter filter) {
-//        return clients.find(filter);
-//    }
 }

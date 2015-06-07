@@ -35,9 +35,9 @@ public class Configuration
     private String baseUrlAndPort;
     private int authPort;
     private String baseUrlAndAuthPort;
+    private String serviceName;
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
-    private String serviceName;
 
     private VehicleController vehicleController;
     private DiagnosticController diagnosticController;

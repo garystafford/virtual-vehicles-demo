@@ -173,7 +173,7 @@ public class JwtController {
             conn.setRequestProperty("filter", "apiKey::" + apiKey);
 
             if (conn.getResponseCode() != 200) {
-                System.out.println(conn.getResponseCode());
+                //System.out.println(conn.getResponseCode());
                 return String.valueOf("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }

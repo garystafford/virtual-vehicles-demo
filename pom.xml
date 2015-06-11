@@ -16,5 +16,6 @@
         <module>Maintenance</module>
         <module>Valet</module>
         <module>Vehicle</module>
+        <module>Authentication</module>
     </modules>
 </project>

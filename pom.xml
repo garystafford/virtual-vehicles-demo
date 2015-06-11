@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>Virtual-Vehicles API</name>
+    <description>Virtual-Vehicles API
+        https://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Example_3
+    </description>
+    <url>https://github.com/garystafford/virtual-vehicle-demo</url>
+    <groupId>com.example</groupId>
+    <artifactId>Virtual-Vehicles-API</artifactId>
+    <version>1</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>Maintenance</module>
+        <module>Valet</module>
+        <module>Vehicle</module>
+    </modules>
+</project>

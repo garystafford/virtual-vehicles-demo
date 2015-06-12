@@ -22,6 +22,9 @@ public class Configuration
         extends Environment {
 
     private static final String DEFAULT_BASE_URL = "http://localhost";
+    private static final String DEFAULT_SERVICE_NAME = "authentication-service";
+    private static final String DEFAULT_AUTHENTICATION_PORT = "8082";
+    private static final String DEFAULT_AUTHENTICATION_URL = "localhost";
     private static final String DEFAULT_EXECUTOR_THREAD_POOL_SIZE = "20";
 
     private static final String DEFAULT_JWT_EXPIRE_LENGTH = "36000"; // 10 hours
@@ -29,6 +32,9 @@ public class Configuration
 
     private static final String PORT_PROPERTY = "port";
     private static final String BASE_URL_PROPERTY = "base.url";
+    private static final String SERVICE_NAME = "service.name";
+    private static final String AUTHENTICATION_PORT = "authentication.port";
+    private static final String AUTHENTICATION_URL = "authentication.url";
     private static final String EXECUTOR_THREAD_POOL_SIZE = "executor.threadPool.size";
 
     private static final String JWT_EXPIRE_LENGTH = "jwt.expire.length";
@@ -37,6 +43,10 @@ public class Configuration
     private int port;
     private String baseUrl;
     private String baseUrlAndPort;
+    private int authPort;
+    private String authUrl;
+    private String authUrlAndAuthPort;
+    private String serviceName;
     private int jwtExpireLength;
     private String jwtIssuer;
     private int executorThreadPoolSize;
@@ -55,10 +65,18 @@ public class Configuration
                 String.valueOf(RestExpress.DEFAULT_PORT)));
         this.baseUrl = p.getProperty(BASE_URL_PROPERTY, DEFAULT_BASE_URL);
         this.baseUrlAndPort = baseUrl + ":" + port;
+
+        this.authUrl = p.getProperty(AUTHENTICATION_URL, DEFAULT_AUTHENTICATION_URL);
+        this.authPort = Integer.parseInt(p.getProperty(
+                AUTHENTICATION_PORT, String.valueOf(DEFAULT_AUTHENTICATION_PORT)));
+        this.authUrlAndAuthPort = getAuthUrl() + ":" + authPort;
+
         this.jwtExpireLength = Integer.parseInt(p.getProperty(
                 JWT_EXPIRE_LENGTH, DEFAULT_JWT_EXPIRE_LENGTH));
         this.jwtIssuer = p.getProperty(
                 JWT_ISSUER, DEFAULT_JWT_ISSUER);
+        
+        this.serviceName = p.getProperty(SERVICE_NAME, DEFAULT_SERVICE_NAME);
         this.executorThreadPoolSize = Integer.parseInt(p.getProperty(
                 EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
         this.metricsSettings = new MetricsConfig(p);
@@ -71,7 +89,7 @@ public class Configuration
                 mongo.getClient(), mongo.getDbName());
         ClientService clientService = new ClientService(clientRepository);
         clientController = new ClientController(clientService);
-        jwtController = new JwtController(getBaseUrlAndPort(), getJwtExpireLength(), getJwtIssuer());
+        jwtController = new JwtController(authUrlAndAuthPort, jwtExpireLength, jwtIssuer);
         diagnosticController = new DiagnosticController();
     }
 
@@ -151,5 +169,26 @@ public class Configuration
      */
     public DiagnosticController getDiagnosticController() {
         return diagnosticController;
+    }
+
+    /**
+     * @return the authUrl
+     */
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    /**
+     * @return the authUrlAndAuthPort
+     */
+    public String getAuthUrlAndAuthPort() {
+        return authUrlAndAuthPort;
+    }
+
+    /**
+     * @return the serviceName
+     */
+    public String getServiceName() {
+        return serviceName;
     }
 }

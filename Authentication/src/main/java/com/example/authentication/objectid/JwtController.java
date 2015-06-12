@@ -35,19 +35,19 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class JwtController {
 
     private static final Logger LOG = LogManager.getLogger(JwtController.class.getName());
-    private final String baseUrlAndPort;
+    private final String authUrlAndAuthPort;
     private final int jwtExpireLength;
     private final String jwtIssuer;
 
     /**
      *
-     * @param baseUrlAndPort
+     * @param authUrlAndAuthPort
      * @param jwtExpireLength
      * @param jwtIssuer
      */
-    public JwtController(String baseUrlAndPort, int jwtExpireLength, String jwtIssuer) {
+    public JwtController(String authUrlAndAuthPort, int jwtExpireLength, String jwtIssuer) {
         super();
-        this.baseUrlAndPort = baseUrlAndPort;
+        this.authUrlAndAuthPort = authUrlAndAuthPort;
         this.jwtExpireLength = jwtExpireLength;
         this.jwtIssuer = jwtIssuer;
     }
@@ -164,7 +164,7 @@ public class JwtController {
     private String getSecret(String apiKey) {
         String output, secret = "";
         try {
-            URL url = new URL(baseUrlAndPort + "/clients/find/secret");
+            URL url = new URL(authUrlAndAuthPort + "/clients/find/secret");
             LOG.info("Authentication service URL called: " + url);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

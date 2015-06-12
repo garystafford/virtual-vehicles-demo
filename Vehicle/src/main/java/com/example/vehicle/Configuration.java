@@ -22,19 +22,22 @@ public class Configuration
     private static final String DEFAULT_BASE_URL = "http://localhost";
     private static final String DEFAULT_SERVICE_NAME = "vehicle-service";
     private static final String DEFAULT_AUTHENTICATION_PORT = "8082";
+    private static final String DEFAULT_AUTHENTICATION_URL = "localhost";
     private static final String DEFAULT_EXECUTOR_THREAD_POOL_SIZE = "20";
 
     private static final String PORT = "port";
     private static final String BASE_URL = "base.url";
     private static final String SERVICE_NAME = "service.name";
     private static final String AUTHENTICATION_PORT = "authentication.port";
+    private static final String AUTHENTICATION_URL = "authentication.url";
     private static final String EXECUTOR_THREAD_POOL_SIZE = "executor.threadPool.size";
 
     private int port;
     private String baseUrl;
     private String baseUrlAndPort;
     private int authPort;
-    private String baseUrlAndAuthPort;
+    private String authUrl;
+    private String authUrlAndAuthPort;
     private String serviceName;
     private int executorThreadPoolSize;
     private MetricsConfig metricsSettings;
@@ -52,9 +55,12 @@ public class Configuration
                 String.valueOf(RestExpress.DEFAULT_PORT)));
         this.baseUrl = p.getProperty(BASE_URL, DEFAULT_BASE_URL);
         this.baseUrlAndPort = baseUrl + ":" + port;
+
+        this.authUrl = p.getProperty(AUTHENTICATION_URL, DEFAULT_AUTHENTICATION_URL);
         this.authPort = Integer.parseInt(p.getProperty(
                 AUTHENTICATION_PORT, String.valueOf(DEFAULT_AUTHENTICATION_PORT)));
-        this.baseUrlAndAuthPort = baseUrl + ":" + authPort;
+        this.authUrlAndAuthPort = authUrl + ":" + authPort;
+
         this.serviceName = p.getProperty(SERVICE_NAME, DEFAULT_SERVICE_NAME);
         this.executorThreadPoolSize = Integer.parseInt(p.getProperty(
                 EXECUTOR_THREAD_POOL_SIZE, DEFAULT_EXECUTOR_THREAD_POOL_SIZE));
@@ -67,7 +73,7 @@ public class Configuration
         VehicleRepository vehiclesRepository = new VehicleRepository(
                 mongo.getClient(), mongo.getDbName());
         VehicleService vehicleService = new VehicleService(vehiclesRepository);
-        vehicleController = new VehicleController(vehicleService, getBaseUrlAndAuthPort());
+        vehicleController = new VehicleController(vehicleService, authUrlAndAuthPort);
         diagnosticController = new DiagnosticController();
     }
 
@@ -80,6 +86,13 @@ public class Configuration
     }
 
     /**
+     * @return the authUrl
+     */
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    /**
      * @return the authenticationPort
      */
     public int getAuthPort() {
@@ -87,10 +100,10 @@ public class Configuration
     }
 
     /**
-     * @return the baseUrlAndAuthPort
+     * @return the authUrlAndAuthPort
      */
-    public String getBaseUrlAndAuthPort() {
-        return baseUrlAndAuthPort;
+    public String getAuthUrlAndAuthPort() {
+        return authUrlAndAuthPort;
     }
 
     /**
@@ -146,12 +159,5 @@ public class Configuration
      */
     public String getServiceName() {
         return serviceName;
-    }
-
-    /**
-     * @param serviceName the serviceName to set
-     */
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
     }
 }

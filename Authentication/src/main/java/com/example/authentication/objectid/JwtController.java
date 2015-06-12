@@ -164,7 +164,7 @@ public class JwtController {
     private String getSecret(String apiKey) {
         String output, secret = "";
         try {
-            URL url = new URL(authUrlAndAuthPort + "/clients/find/secret");
+            URL url = new URL("http://" + authUrlAndAuthPort + "/clients/find/secret");
             LOG.info("Authentication service URL called: " + url);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

@@ -34,16 +34,16 @@ public class RecordController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final RecordService service;
-    private final String baseUrlAndAuthPort;
+    private final String authUrlAndAuthPort;
 
-    public RecordController(RecordService recordService, String baseUrlAndAuthPort) {
+    public RecordController(RecordService recordService, String authUrlAndAuthPort) {
         super();
         this.service = recordService;
-        this.baseUrlAndAuthPort = baseUrlAndAuthPort;
+        this.authUrlAndAuthPort = authUrlAndAuthPort;
     }
 
     public Record create(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -65,7 +65,7 @@ public class RecordController {
     }
 
     public Record read(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -79,7 +79,7 @@ public class RecordController {
     }
 
     public List<Record> readAll(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -108,7 +108,7 @@ public class RecordController {
     }
 
     public Record update(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -130,7 +130,7 @@ public class RecordController {
     }
 
     public void delete(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, baseUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
         }
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");

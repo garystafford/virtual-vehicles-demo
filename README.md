@@ -2,7 +2,9 @@
 [![Build Status](https://travis-ci.org/garystafford/virtual-vehicles-demo.svg?branch=master)](https://travis-ci.org/garystafford/virtual-vehicles-demo)
 
 ## Example Microservices-based REST API with RestExpress, JAVA, and MongoDB
-**_This project is still in early stage development_**
+**_This project is still in early stage development_**  
+
+See blog post series [here](http://wp.me/p1RD28-1pm).  
 
 Develop a well-architected and well-documented RESTful API example, built on a tightly-integrated collection of Java EE-based microservices. Build a MEAN Stack application, which relies on the RESTful API for a majority of functionality. Ensure the services are highly-available, secure, and scalable.
 

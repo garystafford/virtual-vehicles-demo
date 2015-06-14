@@ -1,5 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/garystafford/virtual-vehicle-demo.svg?label=ready&title=Ready)](http://waffle.io/garystafford/virtual-vehicle-demo)  
-[![Build Status](https://travis-ci.org/garystafford/virtual-vehicle-demo.svg?branch=master)](https://travis-ci.org/garystafford/virtual-vehicle-demo)
+[![Build Status](https://travis-ci.org/garystafford/virtual-vehicles-demo.svg?branch=master)](https://travis-ci.org/garystafford/virtual-vehicles-demo)
 
 ## Example Microservices-based REST API with RestExpress, JAVA, and MongoDB
 **_This project is still in early stage development_**

@@ -1,1 +1,0 @@
-{"_links":{"self":{"href":"http://localhost:8581/vehicles/554e8bd4c830093007d8b949"},"up":{"href":"http://localhost:8581/vehicles"}},"year":2015,"make":"Chevrolet","model":"Corvette Stingray","color":"White","type":"Coupe","mileage":902,"id":"554e8bd4c830093007d8b949","createdAt":"2015-05-09T22:36:04.808Z","updatedAt":"2015-06-05T18:06:54.312Z"}

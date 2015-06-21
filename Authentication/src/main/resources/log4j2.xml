@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
+<Configuration status="ERROR">
     <Properties>
         <Property name="log-path">${env:HOME}</Property>
     </Properties>
@@ -16,10 +16,10 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="root" level="debug" additivity="false">
-            <appender-ref ref="RollingFile" level="debug"/>
+        <Logger name="root" level="error" additivity="false">
+            <appender-ref ref="RollingFile" level="error"/>
         </Logger>
-        <Root level="debug" additivity="false">
+        <Root level="error" additivity="false">
             <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>

@@ -15,7 +15,7 @@ public class AuthenticateJwt {
 
     private static final Logger LOG = LogManager.getLogger(AuthenticateJwt.class.getName());
 
-    public static boolean authenticateJwt(Request request, String authUrlAndAuthPort) {
+    public static boolean authenticateJwt(Request request, String baseUrl) {
         String jwt, output, valid = "";
 
         try {
@@ -29,7 +29,7 @@ public class AuthenticateJwt {
         }
 
         try {
-            URL url = new URL("http://" + authUrlAndAuthPort + "/jwts/" + jwt);
+            URL url = new URL(baseUrl + "/jwts/" + jwt);
             LOG.info("Authentication service URL called: " + url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

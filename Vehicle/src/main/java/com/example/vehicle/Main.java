@@ -67,7 +67,7 @@ public class Main {
         LOG = LoggerFactory.getLogger(config.getServiceName());
         RestExpress server = new RestExpress()
                 .setName(config.getServiceName())
-                .setBaseUrl(config.getBaseUrlAndPort())
+                .setBaseUrl(config.getBaseUrl())
                 .setExecutorThreadCount(config.getExecutorThreadPoolSize())
                 .addMessageObserver(new SimpleConsoleLogMessageObserver());
 

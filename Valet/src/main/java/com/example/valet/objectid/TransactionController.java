@@ -34,17 +34,17 @@ public class TransactionController {
 
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final TransactionService service;
-    private final String authUrlAndAuthPort;
+    private final String baseUrl;
 
     /**
      *
      * @param valetService
-     * @param authUrlAndAuthPort
+     * @param baseUrl
      */
-    public TransactionController(TransactionService valetService, String authUrlAndAuthPort) {
+    public TransactionController(TransactionService valetService, String baseUrl) {
         super();
         this.service = valetService;
-        this.authUrlAndAuthPort = authUrlAndAuthPort;
+        this.baseUrl = baseUrl;
     }
 
     /**
@@ -54,7 +54,7 @@ public class TransactionController {
      * @return
      */
     public Transaction create(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -82,7 +82,7 @@ public class TransactionController {
      * @return
      */
     public Transaction read(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -102,7 +102,7 @@ public class TransactionController {
      * @return
      */
     public List<Transaction> readAll(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -137,7 +137,7 @@ public class TransactionController {
      * @return
      */
     public Transaction update(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -165,7 +165,7 @@ public class TransactionController {
      * @param response
      */
     public void delete(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
         }
         String id = request.getHeader(Constants.Url.TRANSACTION_ID, "No resource ID supplied");

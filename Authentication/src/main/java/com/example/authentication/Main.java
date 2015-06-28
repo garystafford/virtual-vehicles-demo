@@ -45,8 +45,7 @@ import com.strategicgains.syntaxe.ValidationException;
  */
 public class Main {
 
-    private static final String SERVICE_NAME = "virtual-authentication";
-    private static final Logger LOG = LoggerFactory.getLogger(SERVICE_NAME);
+    private static Logger LOG;
 
     /**
      *
@@ -68,9 +67,10 @@ public class Main {
         RestExpress.setSerializationProvider(new SerializationProvider());
 
         Configuration config = loadEnvironment(args);
+        LOG = LoggerFactory.getLogger(config.getServiceName());
         RestExpress server = new RestExpress()
-                .setName(SERVICE_NAME)
-                .setBaseUrl(config.getBaseUrlAndPort())
+                .setName(config.getServiceName())
+                .setBaseUrl(config.getBaseUrl())
                 .setExecutorThreadCount(config.getExecutorThreadPoolSize())
                 .addMessageObserver(new SimpleConsoleLogMessageObserver());
 

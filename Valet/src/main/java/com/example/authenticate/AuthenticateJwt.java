@@ -39,7 +39,7 @@ public class AuthenticateJwt {
         }
 
         try {
-            URL url = new URL(baseUrl + "/jwts/" + jwt);
+            URL url = new URL("http://" + baseUrl + "/jwts/" + jwt);
             LOG.info("Authentication service URL called: " + url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

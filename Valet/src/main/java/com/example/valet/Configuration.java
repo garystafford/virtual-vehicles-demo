@@ -19,7 +19,7 @@ import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
 public class Configuration
         extends Environment {
 
-    private static final String DEFAULT_BASE_URL = "http://localhost";
+    private static final String DEFAULT_BASE_URL = "localhost";
     private static final String DEFAULT_SERVICE_NAME = "valet-service";
     private static final String DEFAULT_EXECUTOR_THREAD_POOL_SIZE = "20";
 

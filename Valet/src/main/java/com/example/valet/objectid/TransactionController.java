@@ -21,6 +21,8 @@ import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -32,6 +34,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  */
 public class TransactionController {
 
+    private static final Logger LOG = LogManager.getLogger(TransactionController.class.getName());
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final TransactionService service;
     private final String baseUrl;
@@ -70,6 +73,8 @@ public class TransactionController {
         // Include the Location header...
         String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_TRANSACTION);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
+
+        LOG.info("valet record created: " + Identifiers.MONGOID.format(saved.getId()));
 
         // Return the newly-created resource...
         return saved;
@@ -153,6 +158,8 @@ public class TransactionController {
         // enrich the resource with links, etc. here...
         HyperExpress.bind(Constants.Url.TRANSACTION_ID, Identifiers.MONGOID.format(entity.getId()));
 
+        LOG.info("valet record updated: " + Identifiers.MONGOID.format(entity.getId()));
+
         return entity;
 
         // original response returned nothing
@@ -170,6 +177,9 @@ public class TransactionController {
         }
         String id = request.getHeader(Constants.Url.TRANSACTION_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
+
+        LOG.info("valet record deleted: " + Identifiers.MONGOID.parse(id));
+
         response.setResponseNoContent();
     }
 }

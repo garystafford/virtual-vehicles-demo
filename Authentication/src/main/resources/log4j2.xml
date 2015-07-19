@@ -5,7 +5,7 @@
     </Properties>
     <Appenders>
         <RollingFile name="RollingFile" fileName="${log-path}/virtual-authentication.log"
-             filePattern="${log-path}/virtual-authentication-%d{yyyy-MM-dd}-%i.log" >
+                     filePattern="${log-path}/virtual-authentication-%d{yyyy-MM-dd}-%i.log" >
             <PatternLayout>
                 <pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
             </PatternLayout>
@@ -14,13 +14,28 @@
             </Policies>
             <DefaultRolloverStrategy max="4"/>
         </RollingFile>
+        <Syslog name="RFC5424" format="RFC5424" host="api.virtual-vehicles.com" port="5000"
+                protocol="UDP" appName="virtual-authentication" includeMDC="true"
+                facility="SYSLOG" enterpriseNumber="18060" newLine="true"
+                messageId="log4j2" mdcId="mdc" id="App"
+                connectTimeoutMillis="1000" reconnectionDelayMillis="5000">
+            <LoggerFields>
+                <KeyValuePair key="thread" value="%t"/>
+                <KeyValuePair key="priority" value="%p"/>
+                <KeyValuePair key="category" value="%c"/>
+                <KeyValuePair key="exception" value="%ex"/>
+                <KeyValuePair key="message" value="%m"/>
+            </LoggerFields>
+        </Syslog>
     </Appenders>
     <Loggers>
         <Logger name="root" level="debug" additivity="false">
             <appender-ref ref="RollingFile" level="debug"/>
+            <appender-ref ref="RFC5424" level="debug"/>
         </Logger>
         <Root level="debug" additivity="false">
             <AppenderRef ref="RollingFile"/>
+            <appender-ref ref="RFC5424" level="debug"/>
         </Root>
     </Loggers>
 </Configuration>

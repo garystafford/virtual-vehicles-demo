@@ -21,6 +21,8 @@ import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -32,6 +34,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  */
 public class VehicleController {
 
+    private static final Logger LOG = LogManager.getLogger(VehicleController.class.getName());
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final VehicleService service;
     private final String baseUrl;
@@ -71,6 +74,8 @@ public class VehicleController {
         // Include the Location header...
         String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VEHICLE);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
+
+        LOG.info("vehicle created: " + Identifiers.MONGOID.format(saved.getId()));
 
         // Return the newly-created resource...
         return saved;
@@ -153,6 +158,8 @@ public class VehicleController {
         // enrich the resource with links, etc. here...
         HyperExpress.bind(Constants.Url.VEHICLE_ID, Identifiers.MONGOID.format(entity.getId()));
 
+        LOG.info("vehicle updated: " + Identifiers.MONGOID.format(entity.getId()));
+
         return entity;
 
         // original response returned nothing
@@ -170,6 +177,9 @@ public class VehicleController {
         }
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
+
+        LOG.info("vehicle updated: " + Identifiers.MONGOID.parse(id));
+
         response.setResponseNoContent();
     }
 }

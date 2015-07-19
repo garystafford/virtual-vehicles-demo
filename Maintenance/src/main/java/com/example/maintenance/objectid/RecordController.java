@@ -21,6 +21,8 @@ import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -32,6 +34,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  */
 public class RecordController {
 
+    private static final Logger LOG = LogManager.getLogger(RecordController.class.getName());
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final RecordService service;
     private final String baseUrl;
@@ -59,6 +62,8 @@ public class RecordController {
         // Include the Location header...
         String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_RECORD);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
+
+        LOG.info("maintenance record created: " + Identifiers.MONGOID.format(saved.getId()));
 
         // Return the newly-created resource...
         return saved;
@@ -124,6 +129,8 @@ public class RecordController {
         // enrich the resource with links, etc. here...
         HyperExpress.bind(Constants.Url.RECORD_ID, Identifiers.MONGOID.format(entity.getId()));
 
+        LOG.info("maintenance record upated: " + Identifiers.MONGOID.format(entity.getId()));
+
         return entity;
         // original response returned nothing
         //response.setResponseNoContent();
@@ -135,6 +142,9 @@ public class RecordController {
         }
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
+
+        LOG.info("maintenance record deleted: " + Identifiers.MONGOID.parse(id));
+
         response.setResponseNoContent();
     }
 }

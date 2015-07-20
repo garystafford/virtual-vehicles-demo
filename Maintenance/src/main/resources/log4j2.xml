@@ -15,7 +15,7 @@
             <DefaultRolloverStrategy max="4"/>
         </RollingFile>
         <Syslog name="RFC5424" format="RFC5424" host="elk" port="5000"
-                protocol="TCP" appName="virtual-maintenance" includeMDC="true"
+                protocol="UDP" appName="virtual-maintenance" includeMDC="true"
                 facility="SYSLOG" enterpriseNumber="18060" newLine="true"
                 messageId="log4j2" mdcId="mdc" id="App"
                 connectTimeoutMillis="1000" reconnectionDelayMillis="5000">

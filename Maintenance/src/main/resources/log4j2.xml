@@ -35,7 +35,7 @@
         </Logger>
         <Root level="debug" additivity="false">
             <AppenderRef ref="RollingFile"/>
-            <appender-ref ref="RFC5424" level="debug"/>
+            <AppenderRef ref="RFC5424"/>
         </Root>
     </Loggers>
 </Configuration>

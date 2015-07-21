@@ -22,7 +22,7 @@ public class AuthenticateJwt {
             LOG.info("request.getUrl(): " + request.getUrl());
             jwt = (request.getHeader("Authorization").split(" "))[1];
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            LOG.error("request.getHeader(\"Authorization\")... failed: "
+            LOG.error("request.getHeader(\"Authorization\") failed: "
                     + ExceptionUtils.getRootCauseMessage(e));
             LOG.debug(ExceptionUtils.getStackTrace(e));
             return false;
@@ -44,7 +44,7 @@ public class AuthenticateJwt {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            LOG.info("Output from Server:");
+            //LOG.info("Output from Server:");
             while ((output = br.readLine()) != null) {
                 valid = output;
             }

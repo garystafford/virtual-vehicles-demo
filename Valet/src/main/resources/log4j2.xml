@@ -30,8 +30,8 @@
     </Appenders>
     <Loggers>
         <Logger name="root" level="debug" additivity="false">
-            <appender-ref ref="RollingFile" level="debug"/>
-            <appender-ref ref="RFC5424" level="debug"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="RFC5424"/>
         </Logger>
         <Root level="debug" additivity="false">
             <AppenderRef ref="RollingFile"/>

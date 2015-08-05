@@ -15,6 +15,8 @@ deploy:
     - "Valet/target/config/test/environment.properties"
     - "Vehicle/target/Vehicle-1.0-SNAPSHOT.jar"
     - "Vehicle/target/config/test/environment.properties"
+  skip_cleanup: true
   on:
     repo: garystafford/virtual-vehicles-demo
     branch: reverseproxy
+    tags: true

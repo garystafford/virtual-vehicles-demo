@@ -1,20 +1,20 @@
 language: java
 jdk: oraclejdk8
 script:
-  - mvn clean install package validate -e
-
-  #- cd Authentication
-  #- mvn clean install
-  ##- nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
-
-  #- cd ../Maintenance
-  #- mvn clean install
-  ##- nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
-
-  #- cd ../Valet
-  #- mvn clean install
-  ##- nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
-
-  #- cd ../Vehicle
-  #- mvn clean install
-  ##- nohup mvn exec:java -Dexec.mainClass=test.Main -Dexec.args="dev"
+- mvn clean install package validate -e
+deploy:
+  provider: releases
+  api_key:
+    secure: H9e+KKY0MbPygphTVQBkjIfr0RPsV6FrLaChT3umAXNSdFpg1EVZiYc7dOex8/gO/ANn9hR8brWcKFikiODVGi7Zz+ZDIdWay3Iv88Ws0iHivJYQA4vFBDwC9q3/dtQa22658oknCVsBC8HCfaniJlgU4ypmIsFHxUXyBcsBIyE=
+  file: 
+    - "Authentication/target/Authentication-1.0-SNAPSHOT.jar"
+    - "Authentication/target/config/test/environment.properties"
+    - "Maintenance/target/Maintenance-1.0-SNAPSHOT.jar"
+    - "Maintenance/target/config/test/environment.properties"
+    - "Valet/target/Valet-1.0-SNAPSHOT.jar"
+    - "Valet/target/config/test/environment.properties"
+    - "Vehicle/target/Vehicle-1.0-SNAPSHOT.jar"
+    - "Vehicle/target/config/test/environment.properties"
+  on:
+    repo: garystafford/virtual-vehicles-demo
+    branch: reverseproxy

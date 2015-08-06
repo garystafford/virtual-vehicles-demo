@@ -2,16 +2,16 @@ language: java
 jdk: oraclejdk8
 script:
   - mvn clean install package validate -e
-#before_deploy:
-#  - chmod ugo+x travis_mv_artifacts.sh
-#  - ./travis_mv_artifacts.sh 
+before_deploy:
+  - chmod ugo+x travis_mv_artifacts.sh
+  - ./travis_mv_artifacts.sh
 deploy:
   provider: releases
   api_key:
     secure: H9e+KKY0MbPygphTVQBkjIfr0RPsV6FrLaChT3umAXNSdFpg1EVZiYc7dOex8/gO/ANn9hR8brWcKFikiODVGi7Zz+ZDIdWay3Iv88Ws0iHivJYQA4vFBDwC9q3/dtQa22658oknCVsBC8HCfaniJlgU4ypmIsFHxUXyBcsBIyE=
-  #file: 
-  #  - "artifacts/**"
-  #file_glob: true
+  file: 
+    - "artifacts/**"
+  file_glob: true
   skip_cleanup: true
   on:
     repo: garystafford/virtual-vehicles-demo

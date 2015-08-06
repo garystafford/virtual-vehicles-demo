@@ -2,6 +2,7 @@ language: java
 jdk: oraclejdk8
 script:
   - mvn clean install package validate -e
+sudo: required
 before_deploy:
   - ./travis_mv_artifacts.sh
 deploy:

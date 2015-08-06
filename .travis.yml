@@ -4,7 +4,7 @@ script:
   - mvn clean install package validate -e
 #before_deploy:
 #  - chmod ugo+x travis_mv_artifacts.sh
-#  - ./travis_mv_artifacts.sh
+#  - ./travis_mv_artifacts.sh 
 deploy:
   provider: releases
   api_key:

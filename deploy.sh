@@ -15,16 +15,16 @@ mkdir -p out/vehicle/
 mvn clean install package validate -e
 
 # copy artifacts to output directory
-cp Authentication/target/Authentication-1.0-SNAPSHOT.jar    out/authentication/
+cp Authentication/target/Authentication-1.0-SNAPSHOT.jar    out/authentication/Authentication-1.${TRAVIS_BUILD_NUMBER}.jar
 cp Authentication/config/test/environment.properties        out/authentication/
 
-cp Maintenance/target/Maintenance-1.0-SNAPSHOT.jar          out/maintenance/
+cp Maintenance/target/Maintenance-1.0-SNAPSHOT.jar          out/maintenance/Maintenance-1.${TRAVIS_BUILD_NUMBER}.jar
 cp Maintenance/config/test/environment.properties           out/maintenance/
 
-cp Valet/target/Valet-1.0-SNAPSHOT.jar                      out/valet/
+cp Valet/target/Valet-1.0-SNAPSHOT.jar                      out/valet/Valet-1.${TRAVIS_BUILD_NUMBER}.jar
 cp Valet/config/test/environment.properties                 out/valet/
 
-cp Vehicle/target/Vehicle-1.0-SNAPSHOT.jar                  out/vehicle/
+cp Vehicle/target/Vehicle-1.0-SNAPSHOT.jar                  out/vehicle/Vehicle-1.${TRAVIS_BUILD_NUMBER}.jar
 cp Vehicle/config/test/environment.properties               out/vehicle/
 
 # go to the out directory and create a *new* Git repo
@@ -38,7 +38,7 @@ git config user.email "auto-deploy@travis-ci.com"
 # The first and only commit to this new Git repo contains all the
 # files present with the commit message.
 git add .
-git commit -m "Deploy build ${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
+git commit -m "Deploy Travis CI build #${TRAVIS_BUILD_NUMBER} artifacts to GitHub"
 
 # Force push from the current repo's master branch to the remote
 # repo's build-artifacts branch. (All previous history on the gh-pages branch

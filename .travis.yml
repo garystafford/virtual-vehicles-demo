@@ -1,19 +1,18 @@
 language: java
 jdk: oraclejdk8
-script:
-  - ./deploy.sh
-  #- mvn clean install package validate -e
-before_deploy:
-  - chmod ugo+x deploy.sh
+script: bash ./deploy.sh
+before_deploy: chmod ugo+x deploy.sh
 deploy:
   provider: releases
   api_key:
     secure: H9e+KKY0MbPygphTVQBkjIfr0RPsV6FrLaChT3umAXNSdFpg1EVZiYc7dOex8/gO/ANn9hR8brWcKFikiODVGi7Zz+ZDIdWay3Iv88Ws0iHivJYQA4vFBDwC9q3/dtQa22658oknCVsBC8HCfaniJlgU4ypmIsFHxUXyBcsBIyE=
-  file: 
-    - "artifacts/*"
+  file: "artifacts/*"
   file_glob: true
   skip_cleanup: true
   on:
     repo: garystafford/virtual-vehicles-demo
     all_branches: true
     tags: true
+global:
+  - GH_REF: github.com/garystafford/virtual-vehicles-demo.git
+  - secure: "cq/0nsgYDeGGSFY9c4zVA7CAnQeeh9L5O4LJU9lpK7xL2OtHgWMJ1ytE7MT0QEhXVfxJkW8LimjH31XH3J+bVvHTtFCdQ98sSJp3gvnu+990PxFvdz1LlRAroVj8SbdhXY9pg22H3BKkhCekyDo9cmvsLSs+3nHLDhlvvvYqXGc="

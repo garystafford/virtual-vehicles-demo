@@ -13,6 +13,7 @@ deploy:
     repo: garystafford/virtual-vehicles-demo
     all_branches: true
     tags: true
-global:
-  - GH_REF: github.com/garystafford/virtual-vehicles-demo.git
-  - secure: "cq/0nsgYDeGGSFY9c4zVA7CAnQeeh9L5O4LJU9lpK7xL2OtHgWMJ1ytE7MT0QEhXVfxJkW8LimjH31XH3J+bVvHTtFCdQ98sSJp3gvnu+990PxFvdz1LlRAroVj8SbdhXY9pg22H3BKkhCekyDo9cmvsLSs+3nHLDhlvvvYqXGc="
+env:
+  global:
+    - GH_REF: github.com/garystafford/virtual-vehicles-demo.git
+    - secure: "cq/0nsgYDeGGSFY9c4zVA7CAnQeeh9L5O4LJU9lpK7xL2OtHgWMJ1ytE7MT0QEhXVfxJkW8LimjH31XH3J+bVvHTtFCdQ98sSJp3gvnu+990PxFvdz1LlRAroVj8SbdhXY9pg22H3BKkhCekyDo9cmvsLSs+3nHLDhlvvvYqXGc="

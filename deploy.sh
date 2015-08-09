@@ -16,16 +16,16 @@ mvn clean install package validate -e
 
 # copy artifacts to output directory
 cp Authentication/target/Authentication-1.0-SNAPSHOT.jar    out/authentication/Authentication-1.${TRAVIS_BUILD_NUMBER}.jar
-cp Authentication/config/test/environment.properties        out/authentication/
+cp Authentication/config/*                                  out/authentication/config/
 
 cp Maintenance/target/Maintenance-1.0-SNAPSHOT.jar          out/maintenance/Maintenance-1.${TRAVIS_BUILD_NUMBER}.jar
-cp Maintenance/config/test/environment.properties           out/maintenance/
+cp Maintenance/config/*                                     out/maintenance/config/
 
 cp Valet/target/Valet-1.0-SNAPSHOT.jar                      out/valet/Valet-1.${TRAVIS_BUILD_NUMBER}.jar
-cp Valet/config/test/environment.properties                 out/valet/
+cp Valet/config/*                                           out/valet/config/
 
 cp Vehicle/target/Vehicle-1.0-SNAPSHOT.jar                  out/vehicle/Vehicle-1.${TRAVIS_BUILD_NUMBER}.jar
-cp Vehicle/config/test/environment.properties               out/vehicle/
+cp Vehicle/config/*                                         out/vehicle/config/
 
 # go to the out directory and create a *new* Git repo
 cd out

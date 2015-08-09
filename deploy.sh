@@ -4,31 +4,32 @@
 
 set -e # exit with nonzero exit code if anything fails
 
-# clear and re-create the out directory
-rm -rf out || exit 0;
-mkdir -p out/authentication/
-mkdir -p out/maintenance/
-mkdir -p out/valet/
-mkdir -p out/vehicle/
+# clear and re-create the build-artifacts directory
+rm -rf build-artifacts || exit 0;
+
+mkdir -p build-artifacts/authentication/
+mkdir -p build-artifacts/maintenance/
+mkdir -p build-artifacts/valet/
+mkdir -p build-artifacts/vehicle/
 
 # compile
 mvn clean install package validate -e
 
 # copy artifacts to output directory
-cp Authentication/target/Authentication-1.0-SNAPSHOT.jar    out/authentication/Authentication-1.${TRAVIS_BUILD_NUMBER}.jar
-cp -r Authentication/config/                                out/authentication/
+cp Authentication/target/Authentication-1.0-SNAPSHOT.jar  build-artifacts/authentication/Authentication-1.${TRAVIS_BUILD_NUMBER}.jar
+cp -r Authentication/config/                              build-artifacts/authentication/
 
-cp Maintenance/target/Maintenance-1.0-SNAPSHOT.jar          out/maintenance/Maintenance-1.${TRAVIS_BUILD_NUMBER}.jar
-cp -r Maintenance/config/                                   out/maintenance/
+cp Maintenance/target/Maintenance-1.0-SNAPSHOT.jar        build-artifacts/maintenance/Maintenance-1.${TRAVIS_BUILD_NUMBER}.jar
+cp -r Maintenance/config/                                 build-artifacts/maintenance/
 
-cp Valet/target/Valet-1.0-SNAPSHOT.jar                      out/valet/Valet-1.${TRAVIS_BUILD_NUMBER}.jar
-cp -r Valet/config/                                         out/valet/
+cp Valet/target/Valet-1.0-SNAPSHOT.jar                    build-artifacts/valet/Valet-1.${TRAVIS_BUILD_NUMBER}.jar
+cp -r Valet/config/                                       build-artifacts/valet/
 
-cp Vehicle/target/Vehicle-1.0-SNAPSHOT.jar                  out/vehicle/Vehicle-1.${TRAVIS_BUILD_NUMBER}.jar
-cp -r Vehicle/config/                                       out/vehicle/
+cp Vehicle/target/Vehicle-1.0-SNAPSHOT.jar                build-artifacts/vehicle/Vehicle-1.${TRAVIS_BUILD_NUMBER}.jar
+cp -r Vehicle/config/                                     build-artifacts/vehicle/
 
-# go to the out directory and create a *new* Git repo
-cd out
+# go to the build-artifacts directory and create a *new* Git repo
+cd build-artifacts
 git init
 
 # inside this git repo we'll pretend to be a new user

@@ -22,6 +22,8 @@ import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -33,6 +35,7 @@ import org.apache.commons.lang.RandomStringUtils;
  */
 public class ClientController {
 
+    private static final Logger LOG = LogManager.getLogger(ClientController.class.getName());
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final ClientService service;
 
@@ -71,6 +74,8 @@ public class ClientController {
                 Constants.Routes.SINGLE_CLIENT);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern,
                 resolver));
+
+        LOG.info("client created: " + Identifiers.MONGOID.format(saved.getId()));
 
         // Return the newly-created resource...
         return saved;
@@ -148,6 +153,8 @@ public class ClientController {
         // enrich the resource with links, etc. here...
         HyperExpress.bind(Constants.Url.CLIENT_ID, Identifiers.MONGOID.format(entity.getId()));
 
+        LOG.info("client updated: " + Identifiers.MONGOID.format(entity.getId()));
+
         return entity;
         // original response returned nothing
         //response.setResponseNoContent();
@@ -162,6 +169,9 @@ public class ClientController {
         String id = request.getHeader(Constants.Url.CLIENT_ID,
                 "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
+
+        LOG.info("client deleted: " + Identifiers.MONGOID.parse(id));
+
         response.setResponseNoContent();
     }
 

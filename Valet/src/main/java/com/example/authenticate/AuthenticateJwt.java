@@ -22,24 +22,24 @@ public class AuthenticateJwt {
     /**
      *
      * @param request
-     * @param authUrlAndAuthPort
+     * @param baseUrl
      * @return
      */
-    public static boolean authenticateJwt(Request request, String authUrlAndAuthPort) {
+    public static boolean authenticateJwt(Request request, String baseUrl) {
         String jwt, output, valid = "";
 
         try {
             LOG.info("request.getUrl(): " + request.getUrl());
             jwt = (request.getHeader("Authorization").split(" "))[1];
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            LOG.error("request.getHeader(\"Authorization\")... failed: "
+            LOG.error("request.getHeader(\"Authorization\") failed: "
                     + ExceptionUtils.getRootCauseMessage(e));
             LOG.debug(ExceptionUtils.getStackTrace(e));
             return false;
         }
 
         try {
-            URL url = new URL("http://" + authUrlAndAuthPort + "/jwts/" + jwt);
+            URL url = new URL("http://" + baseUrl + "/jwts/" + jwt);
             LOG.info("Authentication service URL called: " + url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -54,7 +54,7 @@ public class AuthenticateJwt {
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            LOG.info("Output from Server:");
+            //LOG.info("Output from Server:");
             while ((output = br.readLine()) != null) {
                 valid = output;
             }

@@ -21,6 +21,8 @@ import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -32,20 +34,21 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  */
 public class VehicleController {
 
+    private static final Logger LOG = LogManager.getLogger(VehicleController.class.getName());
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final VehicleService service;
-    private final String authUrlAndAuthPort;
+    private final String baseUrl;
     private final AuthenticateJwt jwtImpl = new AuthenticateJwt();
 
     /**
      *
      * @param vehicleService
-     * @param authUrlAndAuthPort
+     * @param baseUrl
      */
-    public VehicleController(VehicleService vehicleService, String authUrlAndAuthPort) {
+    public VehicleController(VehicleService vehicleService, String baseUrl) {
         super();
         this.service = vehicleService;
-        this.authUrlAndAuthPort = authUrlAndAuthPort;
+        this.baseUrl = baseUrl;
     }
 
     /**
@@ -55,7 +58,7 @@ public class VehicleController {
      * @return
      */
     public Vehicle create(Request request, Response response) {
-        if (jwtImpl.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -72,6 +75,8 @@ public class VehicleController {
         String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_VEHICLE);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
 
+        LOG.info("vehicle created: " + Identifiers.MONGOID.format(saved.getId()));
+
         // Return the newly-created resource...
         return saved;
     }
@@ -83,7 +88,7 @@ public class VehicleController {
      * @return
      */
     public Vehicle read(Request request, Response response) {
-        if (jwtImpl.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -103,7 +108,7 @@ public class VehicleController {
      * @return
      */
     public List<Vehicle> readAll(Request request, Response response) {
-        if (jwtImpl.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -137,7 +142,7 @@ public class VehicleController {
      * @return
      */
     public Vehicle update(Request request, Response response) {
-        if (jwtImpl.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -153,6 +158,8 @@ public class VehicleController {
         // enrich the resource with links, etc. here...
         HyperExpress.bind(Constants.Url.VEHICLE_ID, Identifiers.MONGOID.format(entity.getId()));
 
+        LOG.info("vehicle updated: " + Identifiers.MONGOID.format(entity.getId()));
+
         return entity;
 
         // original response returned nothing
@@ -165,11 +172,14 @@ public class VehicleController {
      * @param response
      */
     public void delete(Request request, Response response) {
-        if (jwtImpl.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (jwtImpl.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
         }
         String id = request.getHeader(Constants.Url.VEHICLE_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
+
+        LOG.info("vehicle updated: " + Identifiers.MONGOID.parse(id));
+
         response.setResponseNoContent();
     }
 }

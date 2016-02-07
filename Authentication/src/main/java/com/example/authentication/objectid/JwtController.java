@@ -35,19 +35,19 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class JwtController {
 
     private static final Logger LOG = LogManager.getLogger(JwtController.class.getName());
-    private final String authUrlAndAuthPort;
+    private final String baseUrl;
     private final int jwtExpireLength;
     private final String jwtIssuer;
 
     /**
      *
-     * @param authUrlAndAuthPort
+     * @param baseUrl
      * @param jwtExpireLength
      * @param jwtIssuer
      */
-    public JwtController(String authUrlAndAuthPort, int jwtExpireLength, String jwtIssuer) {
+    public JwtController(String baseUrl, int jwtExpireLength, String jwtIssuer) {
         super();
-        this.authUrlAndAuthPort = authUrlAndAuthPort;
+        this.baseUrl = baseUrl;
         this.jwtExpireLength = jwtExpireLength;
         this.jwtIssuer = jwtIssuer;
     }
@@ -65,13 +65,13 @@ public class JwtController {
             apiKey = request.getQueryStringMap().get(Constants.Url.API_KEY);
             if (apiKey == null) {
                 LOG.error("request.getQueryStringMap().get(Constants.Url.API_KEY)"
-                        + "... failed: API key is null");
+                        + " failed: API key is null");
                 return "API key is null";
             }
             secret = request.getQueryStringMap().get(Constants.Url.SECRET);
             if (secret == null) {
                 LOG.error("request.getQueryStringMap().get(Constants.Url.SECRET)"
-                        + "... failed: Secret is null");
+                        + " failed: Secret is null");
                 return "Secret is null";
             }
 
@@ -87,8 +87,8 @@ public class JwtController {
             payload.put("apiKey", apiKey);
             jwt = jwts.sign(payload);
         } catch (Exception e) {
-            LOG.error("createJwt(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
-            LOG.debug("createJwt(...) failed: " + ExceptionUtils.getStackTrace(e));
+            LOG.error("createJwt() failed: " + ExceptionUtils.getRootCauseMessage(e));
+            LOG.debug("createJwt() failed: " + ExceptionUtils.getStackTrace(e));
             return "JWT creation failed";
         }
         return jwt;
@@ -115,8 +115,8 @@ public class JwtController {
                 return false;
             }
         } catch (RuntimeException | NoSuchAlgorithmException | InvalidKeyException | IOException | SignatureException | JWTVerifyException e) {
-            LOG.error("validateJwt(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
-            LOG.debug("validateJwt(...) failed: " + ExceptionUtils.getStackTrace(e));
+            LOG.error("validateJwt() failed: " + ExceptionUtils.getRootCauseMessage(e));
+            LOG.debug("validateJwt() failed: " + ExceptionUtils.getStackTrace(e));
             return false;
         }
 
@@ -135,8 +135,8 @@ public class JwtController {
             LOG.info("JWT claims: " + json.toJSONString());
             apiKey = json.get("apiKey").toString();
         } catch (UnsupportedEncodingException | ParseException e) {
-            LOG.error("getApiKey(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
-            LOG.debug("getApiKey(...) failed: " + ExceptionUtils.getStackTrace(e));
+            LOG.error("getApiKey() failed: " + ExceptionUtils.getRootCauseMessage(e));
+            LOG.debug("getApiKey() failed: " + ExceptionUtils.getStackTrace(e));
             return "Get API key failed";
         }
         return apiKey;
@@ -154,8 +154,8 @@ public class JwtController {
             LOG.info("JWT header: " + json.toJSONString());
             alg = json.get("alg").toString();
         } catch (UnsupportedEncodingException | ParseException e) {
-            LOG.error("validateJwt(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
-            LOG.debug("validateJwt(...) failed: " + ExceptionUtils.getStackTrace(e));
+            LOG.error("validateJwt() failed: " + ExceptionUtils.getRootCauseMessage(e));
+            LOG.debug("validateJwt() failed: " + ExceptionUtils.getStackTrace(e));
             return "Get signature algorithm failed";
         }
         return alg;
@@ -164,7 +164,7 @@ public class JwtController {
     private String getSecret(String apiKey) {
         String output, secret = "";
         try {
-            URL url = new URL("http://" + authUrlAndAuthPort + "/clients/find/secret");
+            URL url = new URL("http://" + baseUrl + "/clients/find/secret");
             LOG.info("Authentication service URL called: " + url);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -186,8 +186,8 @@ public class JwtController {
             }
             conn.disconnect();
         } catch (IOException e) {
-            LOG.error("getSecret(...) failed: " + ExceptionUtils.getRootCauseMessage(e));
-            LOG.debug("getSecret(...) failed: " + ExceptionUtils.getStackTrace(e));
+            LOG.error("getSecret() failed: " + ExceptionUtils.getRootCauseMessage(e));
+            LOG.debug("getSecret() failed: " + ExceptionUtils.getStackTrace(e));
             return "Get secret failed";
         }
         return secret.replaceAll("\"", "");

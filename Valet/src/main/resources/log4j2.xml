@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="ERROR">
+<Configuration status="DEBUG">
     <Properties>
-        <Property name="log-path">${env:HOME}</Property>
+        <Property name="log-path">/var/log</Property>
     </Properties>
     <Appenders>
         <RollingFile name="RollingFile" fileName="${log-path}/virtual-valet.log"
-             filePattern="${log-path}/virtual-valet-%d{yyyy-MM-dd}-%i.log" >
+                     filePattern="${log-path}/virtual-valet-%d{yyyy-MM-dd}-%i.log" >
             <PatternLayout>
                 <pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
             </PatternLayout>
@@ -14,13 +14,28 @@
             </Policies>
             <DefaultRolloverStrategy max="4"/>
         </RollingFile>
+        <Syslog name="RFC5424" format="RFC5424" host="elk" port="5001"
+                protocol="UDP" appName="virtual-valet" includeMDC="true"
+                facility="SYSLOG" enterpriseNumber="18060" newLine="true"
+                messageId="log4j2" mdcId="mdc" id="App"
+                connectTimeoutMillis="1000" reconnectionDelayMillis="5000">
+            <LoggerFields>
+                <KeyValuePair key="thread" value="%t"/>
+                <KeyValuePair key="priority" value="%p"/>
+                <KeyValuePair key="category" value="%c"/>
+                <KeyValuePair key="exception" value="%ex"/>
+                <KeyValuePair key="message" value="%m"/>
+            </LoggerFields>
+        </Syslog>
     </Appenders>
     <Loggers>
-        <Logger name="root" level="error" additivity="false">
-            <appender-ref ref="RollingFile" level="error"/>
-        </Logger>
-        <Root level="error" additivity="false">
+        <Logger name="root" level="debug" additivity="false">
             <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="RFC5424"/>
+        </Logger>
+        <Root level="debug" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="RFC5424"/>
         </Root>
     </Loggers>
 </Configuration>

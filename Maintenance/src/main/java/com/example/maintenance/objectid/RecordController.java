@@ -21,6 +21,8 @@ import com.strategicgains.hyperexpress.builder.TokenResolver;
 import com.strategicgains.hyperexpress.builder.UrlBuilder;
 import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -32,18 +34,19 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  */
 public class RecordController {
 
+    private static final Logger LOG = LogManager.getLogger(RecordController.class.getName());
     private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final RecordService service;
-    private final String authUrlAndAuthPort;
+    private final String baseUrl;
 
-    public RecordController(RecordService recordService, String authUrlAndAuthPort) {
+    public RecordController(RecordService recordService, String baseUrl) {
         super();
         this.service = recordService;
-        this.authUrlAndAuthPort = authUrlAndAuthPort;
+        this.baseUrl = baseUrl;
     }
 
     public Record create(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -60,12 +63,14 @@ public class RecordController {
         String locationPattern = request.getNamedUrl(HttpMethod.GET, Constants.Routes.SINGLE_RECORD);
         response.addLocationHeader(LOCATION_BUILDER.build(locationPattern, resolver));
 
+        LOG.info("maintenance record created: " + Identifiers.MONGOID.format(saved.getId()));
+
         // Return the newly-created resource...
         return saved;
     }
 
     public Record read(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -79,7 +84,7 @@ public class RecordController {
     }
 
     public List<Record> readAll(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -108,7 +113,7 @@ public class RecordController {
     }
 
     public Record update(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
             return null;
         }
@@ -124,17 +129,22 @@ public class RecordController {
         // enrich the resource with links, etc. here...
         HyperExpress.bind(Constants.Url.RECORD_ID, Identifiers.MONGOID.format(entity.getId()));
 
+        LOG.info("maintenance record upated: " + Identifiers.MONGOID.format(entity.getId()));
+
         return entity;
         // original response returned nothing
         //response.setResponseNoContent();
     }
 
     public void delete(Request request, Response response) {
-        if (AuthenticateJwt.authenticateJwt(request, authUrlAndAuthPort) != true) {
+        if (AuthenticateJwt.authenticateJwt(request, baseUrl) != true) {
             response.setResponseStatus(HttpResponseStatus.UNAUTHORIZED);
         }
         String id = request.getHeader(Constants.Url.RECORD_ID, "No resource ID supplied");
         service.delete(Identifiers.MONGOID.parse(id));
+
+        LOG.info("maintenance record deleted: " + Identifiers.MONGOID.parse(id));
+
         response.setResponseNoContent();
     }
 }

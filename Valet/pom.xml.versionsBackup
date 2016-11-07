@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>Maintenance</name>
+	<name>Valet</name>
 	<!-- 
 		To run the project: mvn clean package exec:java
 			* mongod must be running.
@@ -11,14 +11,14 @@
                    mvn clean package
                    mvn assembly:single
     -->
-    <description>Virtual Maintenance Microservice
+    <description>Virtual Valet Microservice
 
         Project built from Maven Archetype:
         restexpress-mongodb 1.15:
         A Basic, MongoDB-backed Service Suite</description>
     <url>https://github.com/RestExpress/RestExpress-Scaffold</url>
     <groupId>com.example</groupId>
-    <artifactId>Maintenance</artifactId>
+    <artifactId>Valet</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -26,57 +26,57 @@
         <dependency>
             <groupId>com.strategicgains</groupId>
             <artifactId>RestExpress</artifactId>
-            <version>0.11.3</version>
+            <version>0.11.0</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains</groupId>
             <artifactId>Syntaxe</artifactId>
-            <version>1.0</version>
+            <version>0.4.9</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains.repoexpress</groupId>
             <artifactId>repoexpress-mongodb</artifactId>
-            <version>0.4.8</version>
+            <version>0.4.5</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains.plugin-express</groupId>
             <artifactId>CacheControlPlugin</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains</groupId>
             <artifactId>HyperExpressPlugin</artifactId>
-            <version>2.6</version>
+            <version>2.3</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains.plugin-express</groupId>
             <artifactId>MetricsPlugin</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains.plugin-express</groupId>
             <artifactId>SwaggerPlugin</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.strategicgains.plugin-express</groupId>
             <artifactId>CORSPlugin</artifactId>
-            <version>0.3.3</version>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-graphite</artifactId>
-            <version>3.1.2</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jcl</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.5</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.11</version>
             <type>jar</type>
             <scope>test</scope>
             <optional>true</optional>
@@ -84,19 +84,19 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.7</version>
+            <version>2.2</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
+            <version>3.3.2</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.7</version>
+            <version>2.2</version>
         </dependency>
     </dependencies>
 
@@ -129,8 +129,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -139,7 +139,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
-                    <mainClass>com.example.maintenance.Main</mainClass>
+                    <mainClass>com.example.valet.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -152,7 +152,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>./lib/</classpathPrefix>
-                            <mainClass>com.example.maintenance.Main</mainClass>
+                            <mainClass>com.example.valet.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -183,7 +183,7 @@
                             <transformers>
                                 <!-- add Main-Class to manifest file -->
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.example.maintenance.Main</mainClass>
+                                    <mainClass>com.example.valet.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

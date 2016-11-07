@@ -16,10 +16,6 @@ public class XmlSerializationProcessor
     public XmlSerializationProcessor() {
         super();
         alias("valet", Transaction.class);
-//		alias("element_name", Element.class);
-//		alias("element_name", Element.class);
-//		alias("element_name", Element.class);
-//		alias("element_name", Element.class);
         registerConverter(new XstreamOidConverter());
     }
 }

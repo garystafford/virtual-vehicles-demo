@@ -1,10 +1,16 @@
 package com.example.vehicle.objectid;
 
 import com.example.authenticate.AuthenticateJwt;
-import java.util.List;
-
+import com.example.vehicle.Constants;
+import com.strategicgains.hyperexpress.HyperExpress;
+import com.strategicgains.hyperexpress.builder.DefaultUrlBuilder;
+import com.strategicgains.hyperexpress.builder.TokenBinder;
+import com.strategicgains.hyperexpress.builder.TokenResolver;
+import com.strategicgains.repoexpress.mongodb.Identifiers;
 import io.netty.handler.codec.http.HttpMethod;
-
+import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.restexpress.Request;
 import org.restexpress.Response;
 import org.restexpress.common.query.QueryFilter;
@@ -13,16 +19,8 @@ import org.restexpress.common.query.QueryRange;
 import org.restexpress.query.QueryFilters;
 import org.restexpress.query.QueryOrders;
 import org.restexpress.query.QueryRanges;
-import com.example.vehicle.Constants;
 
-import com.strategicgains.hyperexpress.HyperExpress;
-import com.strategicgains.hyperexpress.builder.TokenBinder;
-import com.strategicgains.hyperexpress.builder.TokenResolver;
-import com.strategicgains.hyperexpress.builder.UrlBuilder;
-import com.strategicgains.repoexpress.mongodb.Identifiers;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -35,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 public class VehicleController {
 
     private static final Logger LOG = LogManager.getLogger(VehicleController.class.getName());
-    private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
+    private static final DefaultUrlBuilder LOCATION_BUILDER = new DefaultUrlBuilder();
     private final VehicleService service;
     private final String baseUrl;
     private final AuthenticateJwt jwtImpl = new AuthenticateJwt();

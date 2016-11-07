@@ -1,10 +1,34 @@
 package com.example.valet;
 
+import static io.netty.handler.codec.http.HttpHeaders.Names.ACCEPT;
+import static io.netty.handler.codec.http.HttpHeaders.Names.AUTHORIZATION;
+import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
+import static io.netty.handler.codec.http.HttpHeaders.Names.LOCATION;
+import static io.netty.handler.codec.http.HttpHeaders.Names.REFERER;
+import static org.restexpress.Flags.Auth.PUBLIC_ROUTE;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
+
+import org.restexpress.Flags;
+import org.restexpress.RestExpress;
+import org.restexpress.exception.BadRequestException;
+import org.restexpress.exception.ConflictException;
+import org.restexpress.exception.NotFoundException;
+import org.restexpress.pipeline.SimpleConsoleLogMessageObserver;
+import org.restexpress.plugin.hyperexpress.HyperExpressPlugin;
+import org.restexpress.plugin.hyperexpress.Linkable;
+import com.example.valet.serialization.SerializationProvider;
+import org.restexpress.util.Environment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
-import com.example.valet.serialization.SerializationProvider;
 import com.strategicgains.repoexpress.exception.DuplicateItemException;
 import com.strategicgains.repoexpress.exception.InvalidObjectIdException;
 import com.strategicgains.repoexpress.exception.ItemNotFoundException;
@@ -14,25 +38,6 @@ import com.strategicgains.restexpress.plugin.metrics.MetricsConfig;
 import com.strategicgains.restexpress.plugin.metrics.MetricsPlugin;
 import com.strategicgains.restexpress.plugin.swagger.SwaggerPlugin;
 import com.strategicgains.syntaxe.ValidationException;
-import org.restexpress.Flags;
-import org.restexpress.RestExpress;
-import org.restexpress.exception.BadRequestException;
-import org.restexpress.exception.ConflictException;
-import org.restexpress.exception.NotFoundException;
-import org.restexpress.pipeline.SimpleConsoleLogMessageObserver;
-import org.restexpress.plugin.hyperexpress.HyperExpressPlugin;
-import org.restexpress.plugin.hyperexpress.Linkable;
-import org.restexpress.util.Environment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.concurrent.TimeUnit;
-
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
-import static org.restexpress.Flags.Auth.PUBLIC_ROUTE;
 
 /**
  *
@@ -59,7 +64,7 @@ public class Main {
      * @throws IOException
      */
     public static RestExpress initializeServer(String[] args) throws IOException {
-        RestExpress.setDefaultSerializationProvider(new SerializationProvider());
+        RestExpress.setSerializationProvider(new SerializationProvider());
 
         Configuration config = loadEnvironment(args);
         LOG = LoggerFactory.getLogger(config.getServiceName());

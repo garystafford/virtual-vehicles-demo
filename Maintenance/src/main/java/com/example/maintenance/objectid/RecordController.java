@@ -1,16 +1,10 @@
 package com.example.maintenance.objectid;
 
 import com.example.authenticate.AuthenticateJwt;
-import com.example.maintenance.Constants;
-import com.strategicgains.hyperexpress.HyperExpress;
-import com.strategicgains.hyperexpress.builder.DefaultUrlBuilder;
-import com.strategicgains.hyperexpress.builder.TokenBinder;
-import com.strategicgains.hyperexpress.builder.TokenResolver;
-import com.strategicgains.repoexpress.mongodb.Identifiers;
+import java.util.List;
+
 import io.netty.handler.codec.http.HttpMethod;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.restexpress.Request;
 import org.restexpress.Response;
 import org.restexpress.common.query.QueryFilter;
@@ -19,8 +13,16 @@ import org.restexpress.common.query.QueryRange;
 import org.restexpress.query.QueryFilters;
 import org.restexpress.query.QueryOrders;
 import org.restexpress.query.QueryRanges;
+import com.example.maintenance.Constants;
 
-import java.util.List;
+import com.strategicgains.hyperexpress.HyperExpress;
+import com.strategicgains.hyperexpress.builder.TokenBinder;
+import com.strategicgains.hyperexpress.builder.TokenResolver;
+import com.strategicgains.hyperexpress.builder.UrlBuilder;
+import com.strategicgains.repoexpress.mongodb.Identifiers;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is the 'controller' layer, where HTTP details are converted to domain
@@ -33,7 +35,7 @@ import java.util.List;
 public class RecordController {
 
     private static final Logger LOG = LogManager.getLogger(RecordController.class.getName());
-    private static final DefaultUrlBuilder LOCATION_BUILDER = new DefaultUrlBuilder();
+    private static final UrlBuilder LOCATION_BUILDER = new UrlBuilder();
     private final RecordService service;
     private final String baseUrl;
 

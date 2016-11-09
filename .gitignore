@@ -82,3 +82,4 @@ modules/views/
 /Vehicle/src/test/java/
 /Vehicle/targetconfig/
 out/
+/build-artifacts/

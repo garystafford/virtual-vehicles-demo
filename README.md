@@ -1,5 +1,7 @@
 <em>Develop a well-architected and well-documented REST API, built on a tightly integrated collection of Java EE-based microservices.</em>
 
+__PROJECT CODE UPDATED 11-09-2016 to v3.0.0__
+
 <a href="https://programmaticponderings.files.wordpress.com/2015/05/virtual-vehicles-architecture-4.png"><img class="aligncenter wp-image-5466 size-full" style="border:0 solid #ffffff;" src="https://programmaticponderings.files.wordpress.com/2015/05/virtual-vehicles-architecture-4.png" alt="Virtual-Vehicles Architecture" width="660" height="332" /></a>
 
 <span style="color:#ff0000;"><em>Note: All code available on <a href="https://github.com/garystafford/virtual-vehicle-demo">GitHub</a>. For the version of code that matches the details in this blog post, checkout v1.0 tag (after running git clone ..., run a 'git checkout tags/v1.0' command).</em></span>
